@@ -11,7 +11,7 @@
 |
 */
 
-// Tytou routy jsou pouze pro testovani, pak nutno osdtranit
+// Tyto routy jsou pouze pro testovani, pak nutno osdtranit
 // a presmerovavat pres controller (tam se implmentuje middleware)
 Route::get('/rozcesti', function () {
     return view('rozcesti');
