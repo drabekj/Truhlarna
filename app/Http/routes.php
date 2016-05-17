@@ -11,18 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('prihlaseni');
-});
-
+// Tytou routy jsou pouze pro testovani, pak nutno osdtranit
+// a presmerovavat pres controller (tam se implmentuje middleware)
 Route::get('/rozcesti', function () {
     return view('rozcesti');
 });
-
 Route::get('/pracovniVykaz', function () {
     return view('pracovniVykaz');
 });
-
 Route::get('/ukolovaMzda', function () {
     return view('ukolovaMzda');
 });
@@ -34,6 +30,5 @@ Route::get('/odvadeciVykaz', 'RozcestiController@odvadeciVykaz');
 /* Honza D - autentizace */
 Route::auth();
 
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-
+Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
