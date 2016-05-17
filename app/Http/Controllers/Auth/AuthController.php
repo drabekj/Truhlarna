@@ -28,8 +28,9 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
-
+    protected $redirectPath = '/pracovniVykaz';
+    protected $redirectTo = 'pracovniVykaz';
+    
     /**
      * Create a new authentication controller instance.
      *
@@ -63,10 +64,17 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $this->redirectTo = '/pracovniVykaz';
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+    
+    protected function getLogin()
+    {
+        return view('layouts/rozcesti');
     }
 }

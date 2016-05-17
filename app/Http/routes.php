@@ -22,3 +22,18 @@ Route::get('/rozcesti', function () {
 Route::get('/pracovniVykaz', function () {
     return view('pracovniVykaz');
 });
+
+Route::get('/ukolovaMzda', function () {
+    return view('ukolovaMzda');
+});
+
+Route::get('/pracovniVykaz', 'RozcestiController@pracovniVykaz');
+Route::get('/ukolovaMzda', 'RozcestiController@ukolovaMzda');
+Route::get('/odvadeciVykaz', 'RozcestiController@odvadeciVykaz');
+
+/* Honza D - autentizace */
+Route::auth();
+
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+
+Route::get('/home', 'HomeController@index');
