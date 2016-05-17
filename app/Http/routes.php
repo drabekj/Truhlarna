@@ -13,22 +13,25 @@
 
 // Tyto routy jsou pouze pro testovani, pak nutno osdtranit
 // a presmerovavat pres controller (tam se implmentuje middleware)
-Route::get('/rozcesti', function () {
+Route::get('rozcesti', function () {
     return view('rozcesti');
 });
-Route::get('/pracovniVykaz', function () {
+Route::get('pracovniVykaz', function () {
     return view('pracovniVykaz');
 });
-Route::get('/ukolovaMzda', function () {
+Route::get('ukolovaMzda', function () {
     return view('ukolovaMzda');
 });
+Route::get('register', function () {
+    return view('auth/register');
+});
 
-Route::get('/pracovniVykaz', 'RozcestiController@pracovniVykaz');
-Route::get('/ukolovaMzda', 'RozcestiController@ukolovaMzda');
-Route::get('/odvadeciVykaz', 'RozcestiController@odvadeciVykaz');
+Route::get('pracovniVykaz', 'RozcestiController@pracovniVykaz');
+Route::get('ukolovaMzda', 'RozcestiController@ukolovaMzda');
+Route::get('odvadeciVykaz', 'RozcestiController@odvadeciVykaz');
 
 /* Honza D - autentizace */
 Route::auth();
 
 Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
+Route::get('home', 'HomeController@index');
