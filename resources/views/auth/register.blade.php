@@ -27,8 +27,13 @@
                         <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Role</label>
 
-                            <div class="col-md-6">
-                                <input type="role" class="form-control" name="role" value="{{ old('role') }}">
+                            <div class="btn-group col-md-6" data-toggle="buttons">
+                              <label class="btn btn-primary active">
+                                <input type="radio" name="role" id="option1" autocomplete="off" checked value="standard"> standard
+                              </label>
+                              <label class="btn btn-primary">
+                                <input type="radio" name="role" id="option1" autocomplete="off" value="admin"> admin
+                              </label>
 
                                 @if ($errors->has('role'))
                                     <span class="help-block">
