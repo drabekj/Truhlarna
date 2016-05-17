@@ -28,9 +28,16 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectPath = '/pracovniVykaz';
-    protected $redirectTo = 'pracovniVykaz';
-    
+     protected $redirectTo = '/';
+
+     protected $redirectPath = 'rozcesti';
+
+     protected $redirectAfterLogout = 'login';
+
+     protected $username = 'username';
+
+
+
     /**
      * Create a new authentication controller instance.
      *
@@ -50,8 +57,8 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'username' => 'required|max:255|unique:login',
+            'role' => 'required',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -65,14 +72,15 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         $this->redirectTo = '/pracovniVykaz';
-        
+
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'username' => $data['username'],
+            // 'email' => $data['email'],
+            'role' => $data['role'],
             'password' => bcrypt($data['password']),
         ]);
     }
-    
+
     protected function getLogin()
     {
         return view('layouts/rozcesti');
