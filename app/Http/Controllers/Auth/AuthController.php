@@ -71,18 +71,13 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $this->redirectTo = '/pracovniVykaz';
+        // $this->redirectTo = '/pracovniVykaz';
 
         return User::create([
             'username' => $data['username'],
-            // 'email' => $data['email'],
             'role' => $data['role'],
             'password' => bcrypt($data['password']),
         ]);
     }
 
-    protected function getLogin()
-    {
-        return view('layouts/rozcesti');
-    }
 }

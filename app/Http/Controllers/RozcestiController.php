@@ -2,8 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+
 class RozcestiController extends Controller
 {
+  /**
+   * Create a new controller instance.
+   * Routes in this controlled are accessible only if user is authorized.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
+
+    public function rozcesti()
+    {
+        return view('rozcesti');
+    }
+
     public function pracovniVykaz()
     {
         return view('pracovniVykaz');
@@ -16,5 +34,5 @@ class RozcestiController extends Controller
     {
         return view('odvadeciVykaz');
     }
-    
+
 }

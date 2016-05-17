@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('master')
 
 @section('content')
 <div class="container">
@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Registrace</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/createUser') }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
