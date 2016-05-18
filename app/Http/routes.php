@@ -10,7 +10,28 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+// testing
+use App\Pracovni_den;
+use App\Zamestnanec;
+Route::get('/test', function(){
 
+  // $den = new Pracovni_den(['datum' => "1999-11-12", 'Cislo_VP' => '7778', 'Hodiny' => '20', 'Zamestnanec_id' => '3']);
+  // $den->save();
+
+  // $zam = new Zamestnanec(['Jmeno' => "Jonas", 'Prijmeni' => 'Metodej']);
+  // $zam->save();
+
+
+
+  // $TruhlarID = 1;
+
+  // $den = Pracovni_den::where('ID_Zam', $TruhlarID);
+
+  $zam = Zamestnanec::find(1);
+  echo $zam->hasPracovniDny;
+
+  // return view('test', compact('den'));
+});
 
 Route::get('rozcesti'     , 'RozcestiController@rozcesti');
 Route::get('pracovniVykaz', 'RozcestiController@pracovniVykaz');

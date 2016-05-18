@@ -24,7 +24,9 @@ $VPs = DB::table("Pracovni_den")->select("Cislo_VP")
 ->join('Zamestnanec', 'Zamestnanec.ID_Zam', '=', 'Pracovni_den.ID_Zam')
 ->whereRaw('extract(month from Datum) = ?', [$mesic])
 ->orderBy('cislo_VP', 'asc')->distinct()->get();
-/* 
+
+echo "MAM FAKIN COUNT! $VPs";
+/*
 $entries = DB::table("Pracovni_den")
 ->where("Pracovni_den.ID_Zam", "=", $TruhlarID)
 ->join('Zamestnanec', 'Zamestnanec.ID_Zam', '=', 'Pracovni_den.ID_Zam')
@@ -85,7 +87,7 @@ for ($i = 0; $i <= $numOfRows; $i++) {
 ->whereRaw('extract(year from Datum) = ?', [$rok])
 ->whereRaw('extract(day from Datum) = ?', [$j])
 ->orderBy('Datum', 'asc')->orderBy('cislo_VP', 'asc')->get();
-          if(count($day)!=0) 
+          if(count($day)!=0)
   $value=$day[0]->Hodiny;}
             echo "<td>" . "<input type='text' size='3' value=$value></td>";
         }
