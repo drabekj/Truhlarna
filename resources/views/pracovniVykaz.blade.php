@@ -17,7 +17,7 @@
     }
 </style>
 
-<form class="form-horizontal" role="form" method="POST" action="{{ url('rozcesti') }}">
+<form class="form-horizontal" role="form" method="POST" action="{{ url('pracovniVykaz/store') }}">
   {!! csrf_field() !!}
 <table border="1" width="80%" align="center">
 
@@ -55,10 +55,10 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         if ($col == 0 && $row != 0) {
             //vypise cislo VP
             if ($row < $numberofVPs + 1)
-                echo "<td><input>" . $VPs[$row - 1]->Cislo_VP . "</input></td>";
+                echo "<td><input name='[$row][$col]' value='" . $VPs[$row - 1]->Cislo_VP . "'></td>";
             else {
                 //jinak vypise policko pro vlozeni hodnoty
-                echo "<td size='8'><input name='[$row][$col]'>" . "<input type='text'>" . "</input></td>";
+                echo "<td size='8'><input type='text' name='[$row][$col]'>" . "</td>";
             }
         //naplneni hodnot do tabulky
         } elseif ($col != 0 && $row != 0) {
@@ -75,10 +75,10 @@ for ($row = 0; $row <= $numOfRows; $row++) {
 }
 ?>
 </table>
+<button type="submit" class="btn btn-primary btn-lg" value="Potvrdit" name="Potvrdit">
+  Uložit
+</button>
 </form>
-<p>
-    <input type="submit" value="Potvrdit" name="Potvrdit" onclick="insert()">
-</p>
 
 
 <hr>
