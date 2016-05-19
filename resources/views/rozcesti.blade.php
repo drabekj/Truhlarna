@@ -19,9 +19,10 @@
        list-style-type:none;
     }
     
-    ul:hover{
+    ul:not(.nav):hover{
         padding-bottom:2em;
     }
+
 </style>
 
 <div class="container">

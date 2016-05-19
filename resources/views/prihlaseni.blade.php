@@ -11,7 +11,7 @@
   Uživatelské jméno:<br>
   <input class="form-control" type="username" name="username" placeholder="Uživatelské jméno" required><br>
   Heslo:<br>
-  <input class="form-control" type="password" name="password" placeholder="Heslo" required><br><br>
+  <input class="form-control" type="password" name="password" placeholder="Heslo" value="" required><br><br>
   <input class="btn btn-primary" type="submit" name="login" value="Přihlaš"></form>
   
 
