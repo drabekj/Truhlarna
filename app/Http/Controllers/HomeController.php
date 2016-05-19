@@ -59,13 +59,13 @@ class HomeController extends Controller
       return redirect()->action('RozcestiController@rozcesti');
     }
 
-    <!--public function deleteUser(){
+    /*public function deleteUser(){
       $zamestnanci = Zamestnanec::select(\DB::raw('CONCAT(ID_ZAM , " ", jmeno, " ", prijmeni) AS fulljmeno, ID_ZAM'))->lists('fulljmeno', 'ID_ZAM');
       return view('auth/deleteUser')->with( 'zamestnanci', $zamestnanci);
-    }-->
+    }*/
     
     public function deleteUser(){
-      $zamestnanci = Zamestnanec::select(\DB::raw('CONCAT(ID_ZAM , " ", jmeno, " ", prijmeni) AS fulljmeno, ID_ZAM'))->lists('fulljmeno', 'ID_ZAM');
+      $zamestnanci = Login::select(\DB::raw('CONCAT(id , " ", username, " ", role) AS fulljmeno, id'))->lists('fulljmeno', 'id');
       return view('auth/deleteUser')->with( 'zamestnanci', $zamestnanci);
     }
      

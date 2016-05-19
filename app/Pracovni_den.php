@@ -37,7 +37,7 @@ class Pracovni_den extends Model
         for ($col = 1; $col <= $numOfCols; $col++) {
 
           $queryData[$row][$col] = Pracovni_den::where('ID_Zam', '=', $Truhlar->id)
-          ->where("Cislo_VP", "=", $VPs[$row - 1]->Cislo_VP)
+          ->where("Cislo_VP", "=", $VPs[$row - 1]->ID_Obj)
           ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
           ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
           ->whereRaw('extract(day from Datum) = ?', [$col])

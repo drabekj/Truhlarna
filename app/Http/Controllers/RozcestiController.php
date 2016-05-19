@@ -49,18 +49,8 @@ class RozcestiController extends Controller
           'numOfDays' => cal_days_in_month(CAL_GREGORIAN, $mesic, $rok)
         );
 
-<<<<<<< HEAD
-        // Get the 'Vyrobni prikazy' aka VPs for selected Truhlar and date
-        $VPs = DB::table("Pracovni_den")->select("Id_Obj")
-        ->where("Pracovni_den.ID_Zam", "=", $Truhlar->id)
-        ->join('Zamestnanec', 'Zamestnanec.ID_Zam', '=', 'Pracovni_den.ID_Zam')
-        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
-        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->orderBy('Id_Obj', 'asc')->distinct()->get();
-=======
         // Ziskej vyrobni prikazy (VPs) pro zadaneho truhlare a datum
         $VPs = Zamestnanec::getVPs($Truhlar->id, $Datum);
->>>>>>> 0c89eab5f850980337b35de4799a7bdd88bab48b
 
         // Dimenze tabulek, pocet sloupcu je pro obe stejny.
         $numOfCols = $Datum->numOfDays + 5;
@@ -69,24 +59,8 @@ class RozcestiController extends Controller
 
         // Ziskej dvourozmerne pole pracovnich dnu truhlar k datu
         $queryData=null;
-<<<<<<< HEAD
-        for ($row = 1; $row <= $numberofVPs; $row++) {
-          for ($col = 1; $col <= $numOfCols; $col++) {
-            $queryData[$row][$col] = DB::table("Pracovni_den")
-            ->select('Pracovni_den.Hodiny')
-            ->where("Pracovni_den.ID_Zam", "=", $Truhlar->id)
-            ->where("Id_Obj", "=", $VPs[$row - 1]->Id_Obj)
-            ->join('Zamestnanec', 'Zamestnanec.ID_Zam', '=', 'Pracovni_den.ID_Zam')
-            ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
-            ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-            ->whereRaw('extract(day from Datum) = ?', [$col])
-            ->get();
-          }
-        }
-=======
         $queryData = Pracovni_den::getPracovniDnyTruhlare($Truhlar,$Datum,$numOfCols);
-
->>>>>>> 0c89eab5f850980337b35de4799a7bdd88bab48b
+        
         return view('pracovniVykaz', [
           'Truhlar'       => $Truhlar,
           'Datum'         => $Datum,
