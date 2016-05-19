@@ -135,21 +135,20 @@ class RozcestiController extends Controller
         );
 
         // Get the 'Vyrobni prikazy' aka VPs for selected Truhlar and date
-        $VPs = DB::table("Objednavka")->select("Cislo_VP")
-//        ->join('Pracovni_den', 'Pracovni_den.Cislo_VP', '=', 'Objednavka.Cislo_VP')
-//        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
-//        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->orderBy('cislo_VP', 'asc')->distinct()->get();
+        $VPs = DB::table("Pracovni_den")
+        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+        ->get();
 
         $numberofVPs  = count($VPs);
-        $numOfRows    = $numberofVPs + 2;
+        $numOfRows    = $numberofVPs + 1;
 
 
         return view('odvadeciVykaz', [
+          '$numOfRows'    => $numOfRows,
           'numOfCols'     => $numOfCols,
           'Datum'         => $Datum,
           'VPs'           => $VPs,
         ]);
     }
-
 }

@@ -19,7 +19,7 @@ echo "<p class='navbar-brand' float='right'>Přihlášen jako: " . $accountType;
 
 <?php
 $numberofVPs  = count($VPs);
-$numOfRows    = $numberofVPs + 2;
+$numOfRows    = $numberofVPs + 1;
 $numOfCols = 18;
 
 $counter=0;
@@ -87,31 +87,34 @@ for ($row = 0; $row <= $numOfRows; $row++) {
                 echo "<td>Rozdíl</td>";
         }
         //vypsani sloupecku cisel VP
-        if ($col == 0 && $row > 1) {
-            /*forem vypsat jednotlive cislaCP do slopecku*/
+        if ($col == 0 && $row > 0) {
+          //  $value="";//$VPs[$row-1]->Cislo_VP;
+            echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
             }
-        if ($col == 1 && $row > 1) {
-            /*forem vypsat jednotlive nazvy akci (asi jen jmeno k vp) do slopecku*/
+        elseif ($col == 1 && $row > 1) {
+            //forem vypsat jednotlive nazvy akci (asi jen jmeno k vp) do slopecku
             }
-        if ($col > 1 && $row > 1 ){
+        elseif ($col > 1 && $row > 1 ){
             //nejakej dotazt do DB - podle struktury ulozeni v DB
-            $value = 5;
+            $value ="";
             echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
         }
  
     }
 }
-echo $numberofVPs;
 ?>
 </table>
 
 
 
 
-
-<ul style="margin-left:10%">
-    <a href="{{action('RozcestiController@rozcesti')}}"
-    class="btn btn-primary btn-lg">Zpět</a>
-</ul>
+<p>
+    <div class = "col-md-4">
+        <ul style="margin-left:10%">
+            <a href="{{action('RozcestiController@rozcesti')}}"
+            class="btn btn-primary btn-lg">Zpět</a>
+        </ul>
+    </div>
+</p>
 
 @stop

@@ -128,23 +128,27 @@ for ($row = 0; $row < $numOfRows; $row++) {
             if ($row == 7)
                 echo "<td>Přesčas</td>";
         }
-        elseif($col > 1 && $row > 1){
+        elseif($col > 1 && $row > 0){
             //dotaz do DB pro poc hod - nemoc, dovolena atd.
-        if ( $col == $numOfDays+2 && $row == 3 )
+        if ( $col == $numOfDays+2+1 && $row == 3 )
             echo "<td colspan='2'>Cestovné:</td>";
-        elseif ( $col == $numOfDays+3 && $row == 3 )
+        elseif ( $col == $numOfDays+3+1 && $row == 3 )
             echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
-        elseif ( $col == $numOfDays+2 && $row == 4 )
+        elseif ( $col == $numOfDays+2+1 && $row == 4 )
             echo "<td colspan='2'>Stravenky:</td>";
-        elseif ( $col == $numOfDays+3 && $row == 4 )
+        elseif ( $col == $numOfDays+3+1 && $row == 4 )
             echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
-        elseif ( $col == $numOfDays+2 && $row == 5 )
+        elseif ( $col == $numOfDays+2+1 && $row == 5 )
             echo "<td colspan='2'>Obědy:</td>";
-        elseif ( $col == $numOfDays+3 && $row == 5 )
+        elseif ( $col == $numOfDays+3+1 && $row == 5 )
             echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
         else{
+            if ( ($row == 1 || $row == 2 || $row == 6 || $row == 7) && ($col > $numOfDays+2) )
+                echo "<td></td>";
+            else{
             $value = 5;
-            echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
+                echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
+            }
         }
         }
 
