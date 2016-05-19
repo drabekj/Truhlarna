@@ -50,4 +50,5 @@ Route::auth();
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
 Route::get('register', 'HomeController@register');
+Route::get('delete', 'HomeController@delete');
 Route::post('createUser', 'HomeController@createUser');
