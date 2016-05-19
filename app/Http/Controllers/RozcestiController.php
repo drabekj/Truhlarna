@@ -74,12 +74,12 @@ class RozcestiController extends Controller
         );
 
         // Get the 'Vyrobni prikazy' aka VPs for selected Truhlar and date
-        $VPs = DB::table("Pracovni_den")->select("Cislo_VP")
+        $VPs = DB::table("Pracovni_den")->select("Id_Obj")
         ->where("Pracovni_den.ID_Zam", "=", $Truhlar->id)
         ->join('Zamestnanec', 'Zamestnanec.ID_Zam', '=', 'Pracovni_den.ID_Zam')
         ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
         ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->orderBy('cislo_VP', 'asc')->distinct()->get();
+        ->orderBy('Id_Obj', 'asc')->distinct()->get();
 
         $numberofVPs  = count($VPs);
         $numOfRows    = $numberofVPs + 2;
@@ -90,7 +90,7 @@ class RozcestiController extends Controller
             $queryData[$row][$col] = DB::table("Pracovni_den")
             ->select('Pracovni_den.Hodiny')
             ->where("Pracovni_den.ID_Zam", "=", $Truhlar->id)
-            ->where("Cislo_VP", "=", $VPs[$row - 1]->Cislo_VP)
+            ->where("Id_Obj", "=", $VPs[$row - 1]->Id_Obj)
             ->join('Zamestnanec', 'Zamestnanec.ID_Zam', '=', 'Pracovni_den.ID_Zam')
             ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
             ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
@@ -109,10 +109,48 @@ class RozcestiController extends Controller
 
 
 
-    public function ukolovaMzda()
+    public function ukolovaMzda(Request $mzda_data)
     {
-        return view('ukolovaMzda');
-    }
+         // Get Year send from Rozcesti
+        $rok = date("Y",strtotime($mzda_data->datumUklMzda));
+         // Get Month send from Rozcesti
+        $mesic = date("m",strtotime($mzda_data->datumUklMzda));
+
+        // Object holding information about selected date
+        $Datum = (object) array(
+          'mesic' => $mesic,
+          'rok'   => $rok
+        );
+        
+        $VPs=DB::table("Pracovni_den")
+        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+        ->select('Id_Obj')
+        ->orderBy('Id_Obj', 'asc')
+        ->distinct()->get();
+        $numberOfVPs=count($VPs);
+
+       /* $sum=DB::table("Pracovni_den")
+        ->join('Zamestnanec', 'Zamestnanec.ID_Zam', '=', 'Pracovni_den.ID_Zam')
+        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+        ->where("Id_Obj", "=", $VPs[0]->Id_Obj)
+        ->select('Id_Zam', DB::raw('sum(Hodiny) as total'))
+        ->groupBy('ID_Zam')
+        ->get();*/
+        $sum=DB::table("Pracovni_den")
+        ->select('Id_Zam', DB::raw('sum(Hodiny) as total'))
+        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+        ->where("Id_Obj", "=", $VPs[0]->Id_Obj)
+        ->groupBy('ID_Zam')
+        ->get();
+        echo $sum[0]->total ." ". $sum[0]->Id_Zam;
+        // echo $sum;
+        return view('ukolovaMzda', [
+          'Datum'         => $Datum,
+        ]);
+        }
 
 
 
@@ -134,11 +172,13 @@ class RozcestiController extends Controller
           'rok'   => $rok
         );
 
-        // Get the 'Vyrobni prikazy' aka VPs for selected Truhlar and date
+        // Get the 'Vyrobni prikazy' aka VPs for selected date
         $VPs = DB::table("Pracovni_den")
         ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
         ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->get();
+        ->select('Id_Obj')
+        ->orderBy('Id_Obj', 'asc')
+        ->distinct()->get();
 
         $numberofVPs  = count($VPs);
         $numOfRows    = $numberofVPs + 1;

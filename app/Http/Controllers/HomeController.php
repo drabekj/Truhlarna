@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Zamestnanec;
 use Hash;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -32,9 +33,6 @@ class HomeController extends Controller
     public function register(){
       return view('auth/register');
     }
-    /*public function register(){
-      return view('auth/delete');
-    }*/
 
     /**
      * Creates new user and saves to database.
@@ -60,4 +58,24 @@ class HomeController extends Controller
 
       return redirect()->action('RozcestiController@rozcesti');
     }
+
+    public function deleteUser(){
+      $zamestnanci = Zamestnanec::select(\DB::raw('CONCAT(ID_ZAM , " ", jmeno, " ", prijmeni) AS fulljmeno, ID_ZAM'))->lists('fulljmeno', 'ID_ZAM');
+      return view('auth/deleteUser')->with( 'zamestnanci', $zamestnanci);
+    }
+     
+    public function destroy(Request $request){
+
+      if (Hash::check($request->password, \Auth::user()->password))
+      {
+         //todo - smazani z databaze
+         return redirect()->action('RozcestiController@rozcesti');
+      }
+      else {
+        return \Redirect::back()->withErrors('password');
+      }
+      
+    }
+  
 }
+

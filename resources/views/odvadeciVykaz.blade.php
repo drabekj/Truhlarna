@@ -87,8 +87,8 @@ for ($row = 0; $row <= $numOfRows; $row++) {
                 echo "<td>Rozdíl</td>";
         }
         //vypsani sloupecku cisel VP
-        if ($col == 0 && $row > 0) {
-          //  $value="";//$VPs[$row-1]->Cislo_VP;
+        if ($col == 0 && $row > 1) {
+            $value=$VPs[$row-2]->Id_Obj;
             echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
             }
         elseif ($col == 1 && $row > 1) {

@@ -13,7 +13,9 @@ echo "<p class='navbar-brand' float='right'>Přihlášen jako: " . $accountType;
 @section('content')
 
 <h1 align="center">Generovani ukolove mzdy</h1>
+<?php
 
+?>
 <p>
     <div class = "col-md-4">
         <ul style="margin-left:10%">

@@ -30,6 +30,7 @@ CREATE TABLE `Zamestnanec`
 	`ID_Zam` INT NOT NULL,
 	`Jmeno` VARCHAR(50) 	 NULL,
 	`Prijmeni` VARCHAR(50) 	 NULL,
+	`Sazba` INT 	 NULL,
 	CONSTRAINT `PK_Table1` PRIMARY KEY (`ID_Zam`)
 )
 
@@ -37,46 +38,51 @@ CREATE TABLE `Zamestnanec`
 
 CREATE TABLE `Login`
 (
-	`ID_Login` INT NOT NULL,
-	`Username` VARCHAR(50) 	 NULL,
-	`Password` VARCHAR(50) 	 NULL,
-  `Role` VARCHAR(50)  NULL,
+	`id` INT NOT NULL,
+	`username` VARCHAR(50) 	 NULL,
+	`password` VARCHAR(50) 	 NULL,
+  	`role` VARCHAR(50)  NULL,
+  	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  	`updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  	`remember_token` int(11) NOT NULL,
 	`ID_Zam` INT 	 NULL,
-	CONSTRAINT `PK_Table1` PRIMARY KEY (`ID_Login`)
+	CONSTRAINT `PK_Table1` PRIMARY KEY (`id`)
 )
 
 ;
 
 CREATE TABLE `Pracovni_den`
 (
+	`id` INT NOT NULL,
 	`Datum` DATE NOT NULL,
 	`Hodiny` INT 	 NULL,
 	`ID_Zam` INT 	 NULL,
-	`Cislo_VP` INT	 NULL,
-	CONSTRAINT `PK_Table1` PRIMARY KEY (`Datum`)
+	`ID_Obj` INT	 NULL,
+	CONSTRAINT `PK_Table1` PRIMARY KEY (`id`)
 )
 
 ;
 
 CREATE TABLE `Absencni_den`
 (
+	`id` INT NOT NULL,
 	`Datum` DATE NOT NULL,
 	`ID_Zam` INT 	 NULL,
 	`Hodiny` INT 	 NULL,
 	`Duvod` VARCHAR(200) 	 NULL,
-	CONSTRAINT `PK_Table1` PRIMARY KEY (`Datum`)
+	CONSTRAINT `PK_Table1` PRIMARY KEY (`id`)
 )
 
 ;
 
 CREATE TABLE `Objednavka`
 (
+	`id` INT NOT NULL,
 	`Cislo_VP` INT NOT NULL,
 	`Jmeno` VARCHAR(50) 	 NULL,
 	`Od` DATE 	 NULL,
 	`Do` DATE 	 NULL,
-	`Sazba` INT 	 NULL,
-	CONSTRAINT `PK_Table1` PRIMARY KEY (`Cislo_VP`)
+	CONSTRAINT `PK_Table1` PRIMARY KEY (`id`)
 )
 
 ;
@@ -92,7 +98,7 @@ ALTER TABLE `Pracovni_den`
 ;
 
 ALTER TABLE `Pracovni_den` 
- ADD INDEX `IXFK_Pracovni_den_Objednavka` (`Cislo_VP` ASC)
+ ADD INDEX `IXFK_Pracovni_den_Objednavka` (`id` ASC)
 ;
 
 ALTER TABLE `Absencni_den` 
@@ -114,7 +120,7 @@ ALTER TABLE `Pracovni_den`
 
 ALTER TABLE `Pracovni_den` 
  ADD CONSTRAINT `FK_Pracovni_den_Objednavka`
-	FOREIGN KEY (`Cislo_VP`) REFERENCES `Objednavka` (`Cislo_VP`) ON DELETE Restrict ON UPDATE Restrict
+	FOREIGN KEY (`ID_Obj`) REFERENCES `Objednavka` (`id`) ON DELETE Restrict ON UPDATE Restrict
 ;
 
 ALTER TABLE `Absencni_den` 

@@ -61,7 +61,7 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         if ($col == 0 && $row != 0) {
             //vypise cislo VP
             if ($row < $numberofVPs + 1)
-                echo "<td><input name='[$row][$col]' value='" . $VPs[$row - 1]->Cislo_VP . "'></td>";
+                echo "<td><input name='[$row][$col]' value='" . $VPs[$row - 1]->Id_Obj . "'></td>";
             else {
                 //jinak vypise policko pro vlozeni hodnoty
                 echo "<td size='8'><input type='text' name='[$row][$col]'>" . "</td>";

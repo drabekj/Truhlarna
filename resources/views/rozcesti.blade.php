@@ -54,9 +54,16 @@
             </form>
         </ul>
         <ul>
-            <li><a href="{{action('RozcestiController@ukolovaMzda')}}"
-            class="btn btn-primary btn-lg btn-block show">Generování úkolové mzdy</a></li>
+             <form class="form-horizontal" role="form" method="POST" action="{{ url('ukolovaMzda') }}">
+                {!! csrf_field() !!}
+            <li class="show">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    Generování úkolové mzdy
+                </button>
+            </li>
             <li class="skryte"><input type="month" name="datumUklMzda" required></li>
+            <!--type month je v html5 ktery firefox nepodporuje, nutno urpavit-->
+            </form>
         </ul>
         <ul>
             <form class="form-horizontal" role="form" method="POST" action="{{ url('odvadeciVykaz') }}">
@@ -79,7 +86,7 @@
     <ul>
     <a href="{{action('HomeController@register')}}"
     class="btn btn-primary btn-lg btn-block">Registrace nového uživatele</a>
-    <a href="{{action('HomeController@register')}}"
+    <a href="{{action('HomeController@deleteUser')}}"
     class="btn btn-primary btn-lg btn-block">Smazání uživatele</a>
     </ul>
   </div>
