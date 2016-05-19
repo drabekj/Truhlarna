@@ -15,6 +15,10 @@
         border-spacing: 0;
         border-collapse: separate;
     }
+    
+    #space{
+        padding:2em;
+    }
 </style>
 
 <form class="form-horizontal" role="form" method="POST" action="{{ url('pracovniVykaz/store') }}">
@@ -25,6 +29,8 @@
 /*dotaz na databazi - pocet radku z databaze*/
 $numberofVPs  = count($VPs);
 $numOfRows    = $numberofVPs + 2;
+$numOfDays    = cal_days_in_month(CAL_GREGORIAN, $Datum->mesic, $Datum->rok);
+$numOfCols = $numOfDays + 5;
 
 $counter=0;
 for ($row = 0; $row <= $numOfRows; $row++) {
@@ -40,13 +46,13 @@ for ($row = 0; $row <= $numOfRows; $row++) {
             echo "<td>" . "Číslo VP" . "</td>";
         //naplaneni prvniho radku
         if ($row == 0) {
-            if ($col == 32)
-                echo "<td>" . "Hod" . "</td>";
-            elseif ($col == 33)
-                echo "<td>" . "sazba" . "</td>";
-            elseif ($col == 34)
+            if ($col == $numOfCols-3)
+               echo "<td>" . "sazba" . "</td>";
+            elseif ($col == $numOfCols-4)
+                echo "<td>" . "Hodiny" . "</td>";
+            elseif ($col == $numOfCols-2)
                 echo "<td>" . "Mzda U" . "</td>";
-            elseif ($col == 35)
+            elseif ($col == $numOfCols-1)
                 echo "<td>" . "Mzda C" . "</td>";
             elseif ($col != 0)
                 echo "<td><b>" . $col . "</b></td>";
@@ -76,17 +82,87 @@ for ($row = 0; $row <= $numOfRows; $row++) {
 ?>
 </table>
 
-<button type="submit" class="btn btn-primary btn-lg" value="Potvrdit" name="Potvrdit">
-  Uložit
-</button>
-<a href="{{action('RozcestiController@rozcesti')}}"
-    button type="button" class="btn btn-primary btn-lg">Zpět</a>
+<!-- NEMAZAT! -->
+<div id="space"></div>
 
+<table border="1" width="80%" align="center">
 
-<!--<ul style="margin-left:10%">
-    <a href="{{action('RozcestiController@rozcesti')}}"
-    class="btn btn-primary">Zpět</a>
-</ul>-->
+<?php
+/*dotaz na databazi - pocet radku z databaze*/
+$numberofVPs  = count($VPs);
+$numOfRows    = 8;
+$numOfDays    = cal_days_in_month(CAL_GREGORIAN, $Datum->mesic, $Datum->rok);
+$numOfCols = $numOfDays + 5;
+
+$counter=0;
+for ($row = 0; $row < $numOfRows; $row++) {
+    for ($col = 0; $col < $numOfCols; $col++) {
+        //zacatek radku
+        if ($col == 0)
+            echo "<tr>";
+        //konec radku
+       if ($col == $numOfCols)
+            echo "</tr>";
+        //naplaneni prvniho radku
+        if ($row == 0) {
+            if ( $col == 0 || $col > $numOfDays )
+                echo "<td></td>";
+            else
+                echo "<td><b>" . $col . "</b></td>";
+        }
+        //vypsani sloupecku cisel VP
+        if ($col == 0 && $row != 0) {
+            //vypise cislo VP
+            if ($row == 1)
+                echo "<td>Odp dny</td>";
+            if ($row == 2)
+                echo "<td>Dovolena</td>";
+            if ($row == 3)
+                echo "<td>Nemoc</td>";
+            if ($row == 4)
+                echo "<td>Svátek</td>";
+            if ($row == 5)
+                echo "<td>Celkem dny</td>";
+            if ($row == 6)
+                echo "<td>Celkem hod</td>";
+            if ($row == 7)
+                echo "<td>Přesčas</td>";
+        }
+        elseif($col > 1 && $row > 1){
+            //dotaz do DB pro poc hod - nemoc, dovolena atd.
+        if ( $col == $numOfDays+2 && $row == 3 )
+            echo "<td colspan='2'>Cestovné:</td>";
+        elseif ( $col == $numOfDays+3 && $row == 3 )
+            echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
+        elseif ( $col == $numOfDays+2 && $row == 4 )
+            echo "<td colspan='2'>Stravenky:</td>";
+        elseif ( $col == $numOfDays+3 && $row == 4 )
+            echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
+        elseif ( $col == $numOfDays+2 && $row == 5 )
+            echo "<td colspan='2'>Obědy:</td>";
+        elseif ( $col == $numOfDays+3 && $row == 5 )
+            echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
+        else{
+            $value = 5;
+            echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
+        }
+        }
+
+    }
+}
+?>
+</table>
+
+<p>
+    <div class = "col-md-4">
+        <a href="{{action('RozcestiController@rozcesti')}}"
+            button type="button" class="btn btn-primary btn-lg">Zpět</a>
+            
+        <button type="submit" class="btn btn-primary btn-lg" value="Potvrdit" name="Potvrdit">
+          Uložit
+        </button>
+    </div>
+</p>
 </form>
 
 <hr>

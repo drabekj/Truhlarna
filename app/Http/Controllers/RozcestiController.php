@@ -28,6 +28,7 @@ class RozcestiController extends Controller
 
     public function pracovniVykaz(Request $vykaz_data)
     {
+    
         // 31 days + 5 (Cislo VP, Hod, sazba, Mzda U, Mzda C)
         $numOfCols    = 36;
 
@@ -70,7 +71,7 @@ class RozcestiController extends Controller
         $numberofVPs  = count($VPs);
         $numOfRows    = $numberofVPs + 2;
 
-        $queryData;
+        $queryData=null;
         for ($row = 1; $row <= $numberofVPs; $row++) {
           for ($col = 1; $col <= $numOfCols; $col++) {
             $queryData[$row][$col] = DB::table("Pracovni_den")
@@ -84,7 +85,6 @@ class RozcestiController extends Controller
             ->get();
           }
         }
-
         return view('pracovniVykaz', [
           'numOfCols'     => $numOfCols,
           'Truhlar'       => $Truhlar,
@@ -93,15 +93,50 @@ class RozcestiController extends Controller
           'queryData'     => $queryData
         ]);
     }
+    
+    
 
     public function ukolovaMzda()
     {
         return view('ukolovaMzda');
     }
 
-    public function odvadeciVykaz()
+
+    
+     public function odvadeciVykaz(Request $odvod_data)
     {
-        return view('odvadeciVykaz');
+        // 31 days + 5 (Cislo VP, Hod, sazba, Mzda U, Mzda C)
+        $numOfCols    = 36;
+
+
+        // Get Month send from Rozcesti
+        $mesic = date("m",strtotime($odvod_data->datumOdVykaz));
+
+        // Get Year send from Rozcesti
+        $rok = date("Y",strtotime($odvod_data->datumOdVykaz));
+
+        // Object holding information about selected date
+        $Datum = (object) array(
+          'mesic' => $mesic,
+          'rok'   => $rok
+        );
+
+        // Get the 'Vyrobni prikazy' aka VPs for selected Truhlar and date
+        $VPs = DB::table("Objednavka")->select("Cislo_VP")
+//        ->join('Pracovni_den', 'Pracovni_den.Cislo_VP', '=', 'Objednavka.Cislo_VP')
+//        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+//        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+        ->orderBy('cislo_VP', 'asc')->distinct()->get();
+
+        $numberofVPs  = count($VPs);
+        $numOfRows    = $numberofVPs + 2;
+
+        
+        return view('odvadeciVykaz', [
+          'numOfCols'     => $numOfCols,
+          'Datum'         => $Datum,
+          'VPs'           => $VPs,
+        ]);
     }
 
 }

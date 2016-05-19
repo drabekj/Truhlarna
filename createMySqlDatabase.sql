@@ -50,9 +50,9 @@ CREATE TABLE `Login`
 CREATE TABLE `Pracovni_den`
 (
 	`Datum` DATE NOT NULL,
-	`Cislo_VP` INT 	 NULL,
 	`Hodiny` INT 	 NULL,
 	`ID_Zam` INT 	 NULL,
+	`Cislo_VP` INT	 NULL,
 	CONSTRAINT `PK_Table1` PRIMARY KEY (`Datum`)
 )
 
@@ -91,6 +91,10 @@ ALTER TABLE `Pracovni_den`
  ADD INDEX `IXFK_Pracovni_den_Zamestnanec` (`ID_Zam` ASC)
 ;
 
+ALTER TABLE `Pracovni_den` 
+ ADD INDEX `IXFK_Pracovni_den_Objednavka` (`Cislo_VP` ASC)
+;
+
 ALTER TABLE `Absencni_den` 
  ADD INDEX `IXFK_Absencni_den_Zamestnanec` (`ID_Zam` ASC)
 ;
@@ -106,6 +110,11 @@ ALTER TABLE `Login`
 ALTER TABLE `Pracovni_den` 
  ADD CONSTRAINT `FK_Pracovni_den_Zamestnanec`
 	FOREIGN KEY (`ID_Zam`) REFERENCES `Zamestnanec` (`ID_Zam`) ON DELETE Restrict ON UPDATE Restrict
+;
+
+ALTER TABLE `Pracovni_den` 
+ ADD CONSTRAINT `FK_Pracovni_den_Objednavka`
+	FOREIGN KEY (`Cislo_VP`) REFERENCES `Objednavka` (`Cislo_VP`) ON DELETE Restrict ON UPDATE Restrict
 ;
 
 ALTER TABLE `Absencni_den` 

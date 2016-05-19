@@ -16,7 +16,7 @@ echo "<p class='navbar-brand' float='right'>Přihlášen jako: " . $accountType;
 
 <ul style="margin-left:10%">
     <a href="{{action('RozcestiController@rozcesti')}}"
-    class="btn btn-primary">Zpět</a>
+    class="btn btn-primary btn-lg">Zpět</a>
 </ul>
 
 @stop

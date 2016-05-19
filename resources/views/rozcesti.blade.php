@@ -38,6 +38,7 @@
             </li>
             <li class="skryte"><input type="username" name="username" placeholder="Uživatelské ID" required></li>
             <li class="skryte"><input type="month" name="datumPracvykaz" required></li>
+            <!--type month je v html5 ktery firefox nepodporuje, nutno urpavit-->
             </form>
         </ul>
         <ul>
@@ -48,7 +49,7 @@
         <ul>
             <li><a href="{{action('RozcestiController@odvadeciVykaz')}}"
             class="btn btn-primary btn-lg btn-block">Odváděcí výkaz</a></li>
-            <li class="skryte"><input type="month" name="datumOdvVykaz" required></li>
+            <li class="skryte"><input type="month" name="datumOdVykaz" required></li>
         </ul>
     </div>
   </div>
