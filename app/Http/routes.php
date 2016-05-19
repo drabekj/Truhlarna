@@ -36,7 +36,10 @@ Route::get('/test', function(){
 Route::get('rozcesti'      , 'RozcestiController@rozcesti');
 Route::post('pracovniVykaz', 'RozcestiController@pracovniVykaz');
 Route::get('ukolovaMzda'   , 'RozcestiController@ukolovaMzda');
-Route::get('odvadeciVykaz' , 'RozcestiController@odvadeciVykaz');
+Route::post('odvadeciVykaz' , 'RozcestiController@odvadeciVykaz');
+Route::get('odvadeciVykaz', function(){
+  return redirect('rozcesti');
+});
 Route::get('pracovniVykaz', function(){
   return redirect('rozcesti');
 });

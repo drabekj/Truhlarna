@@ -108,10 +108,13 @@ echo $numberofVPs;
 
 
 
-
-<ul style="margin-left:10%">
-    <a href="{{action('RozcestiController@rozcesti')}}"
-    class="btn btn-primary btn-lg">Zpět</a>
-</ul>
+<p>
+    <div class = "col-md-4">
+        <ul style="margin-left:10%">
+            <a href="{{action('RozcestiController@rozcesti')}}"
+            class="btn btn-primary btn-lg">Zpět</a>
+        </ul>
+    </div>
+</p>
 
 @stop

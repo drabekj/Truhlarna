@@ -47,9 +47,16 @@
             <li class="skryte"><input type="month" name="datumUklMzda" required></li>
         </ul>
         <ul>
-            <li><a href="{{action('RozcestiController@odvadeciVykaz')}}"
-            class="btn btn-primary btn-lg btn-block">Odváděcí výkaz</a></li>
-            <li class="skryte"><input type="month" name="datumOdVykaz" required></li>
+            <form class="form-horizontal" role="form" method="POST" action="{{ url('odvadeciVykaz') }}">
+                {!! csrf_field() !!}
+                <li class="show">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    Odváděcí výkaz
+                    </button>
+                </li>
+                <li class="skryte"><input type="month" name="datumOdVykaz" required></li>
+                <!--type month je v html5 ktery firefox nepodporuje, nutno urpavit-->
+             </form>
         </ul>
     </div>
   </div>
@@ -60,6 +67,8 @@
     <ul>
     <a href="{{action('HomeController@register')}}"
     class="btn btn-primary btn-lg btn-block">Registrace nového uživatele</a>
+    <a href="{{action('HomeController@register')}}"
+    class="btn btn-primary btn-lg btn-block">Smazání uživatele</a>
     </ul>
   </div>
   @endif
