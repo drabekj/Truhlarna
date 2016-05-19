@@ -26,11 +26,8 @@
     .validate_error{
       margin: auto;
       width: 60%;
-      padding: 10px;
-    }
-
-    .validate_error{
-      text-align: center
+      padding: 0.7em;
+      text-align: center;
     }
 
 </style>
