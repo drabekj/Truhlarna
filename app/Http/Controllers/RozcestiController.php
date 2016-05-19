@@ -28,51 +28,28 @@ class RozcestiController extends Controller
 
     public function pracovniVykaz(Request $vykaz_data)
     {
-
         $this->validate($vykaz_data, [
           'username' => 'exists:Zamestnanec,ID_Zam',
         ]);
 
-        // $v = Validator::make($vykaz_data->all(), [
-        //   'username' => 'exists:Zamestnanec,ID_Zam',
-        // ]);
-        //
-        // if ($v->fails())
-        // {
-        //     return redirect()->back()->withErrors($v->errors());
-        // }
+        // Objekt s informacemi o truhlari podle ID z formulare
+        // promenne: id, jmeno, prijmeni
+        $Truhlar = Zamestnanec::getTruhlar($vykaz_data->username);
 
-        // 31 days + 5 (Cislo VP, Hod, sazba, Mzda U, Mzda C)
-        $numOfCols    = 36;
-
-        // Get Truhlar ID send from Rozcesti
-        $TruhlarID    = $vykaz_data->username ;
-
-        // Get first and last name of Truhlar for given ID
-        $jmenoTruhlare = DB::table("Zamestnanec")
-        ->select("Jmeno", "Prijmeni")
-        ->where("ID_Zam", "=", $TruhlarID)
-        ->first();
-
-        // Get Month send from Rozcesti
+        // Ziskej mesic datumu z formulare na rozcesti
         $mesic = date("m",strtotime($vykaz_data->datumPracvykaz));
 
-        // Get Year send from Rozcesti
+        // Ziskej rok datumu z formulare na rozcesti
         $rok = date("Y",strtotime($vykaz_data->datumPracvykaz));
-
-        // Object holding information about selected Truhlar
-        $Truhlar = (object) array(
-          'jmeno'    => $jmenoTruhlare->Jmeno,
-          'prijmeni' => $jmenoTruhlare->Prijmeni,
-          'id'       => $TruhlarID
-        );
 
         // Object holding information about selected date
         $Datum = (object) array(
           'mesic' => $mesic,
-          'rok'   => $rok
+          'rok'   => $rok,
+          'numOfDays' => cal_days_in_month(CAL_GREGORIAN, $mesic, $rok)
         );
 
+<<<<<<< HEAD
         // Get the 'Vyrobni prikazy' aka VPs for selected Truhlar and date
         $VPs = DB::table("Pracovni_den")->select("Id_Obj")
         ->where("Pracovni_den.ID_Zam", "=", $Truhlar->id)
@@ -80,11 +57,19 @@ class RozcestiController extends Controller
         ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
         ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
         ->orderBy('Id_Obj', 'asc')->distinct()->get();
+=======
+        // Ziskej vyrobni prikazy (VPs) pro zadaneho truhlare a datum
+        $VPs = Zamestnanec::getVPs($Truhlar->id, $Datum);
+>>>>>>> 0c89eab5f850980337b35de4799a7bdd88bab48b
 
-        $numberofVPs  = count($VPs);
-        $numOfRows    = $numberofVPs + 2;
+        // Dimenze tabulek, pocet sloupcu je pro obe stejny.
+        $numOfCols = $Datum->numOfDays + 5;
+        $numOfRowsT1 = $VPs->count() + 2;
+        $numOfRowsT2 = 8;
 
+        // Ziskej dvourozmerne pole pracovnich dnu truhlar k datu
         $queryData=null;
+<<<<<<< HEAD
         for ($row = 1; $row <= $numberofVPs; $row++) {
           for ($col = 1; $col <= $numOfCols; $col++) {
             $queryData[$row][$col] = DB::table("Pracovni_den")
@@ -98,12 +83,18 @@ class RozcestiController extends Controller
             ->get();
           }
         }
+=======
+        $queryData = Pracovni_den::getPracovniDnyTruhlare($Truhlar,$Datum,$numOfCols);
+
+>>>>>>> 0c89eab5f850980337b35de4799a7bdd88bab48b
         return view('pracovniVykaz', [
-          'numOfCols'     => $numOfCols,
           'Truhlar'       => $Truhlar,
           'Datum'         => $Datum,
           'VPs'           => $VPs,
-          'queryData'     => $queryData
+          'queryData'     => $queryData,
+          'numOfCols'     => $numOfCols,
+          'numOfRowsT1'   => $numOfRowsT1,
+          'numOfRowsT2'   => $numOfRowsT2
         ]);
     }
 
@@ -154,23 +145,23 @@ class RozcestiController extends Controller
 
 
 
-     public function odvadeciVykaz(Request $odvod_data)
-    {
-        // 31 days + 5 (Cislo VP, Hod, sazba, Mzda U, Mzda C)
-        $numOfCols    = 36;
+    public function odvadeciVykaz(Request $odvod_data)
+   {
+       // 31 days + 5 (Cislo VP, Hod, sazba, Mzda U, Mzda C)
+       $numOfCols    = 36;
 
 
-        // Get Month send from Rozcesti
-        $mesic = date("m",strtotime($odvod_data->datumOdVykaz));
+       // Ziskej mesic datumu z formulare na rozcesti
+       $mesic = date("m",strtotime($odvod_data->datumOdVykaz));
 
-        // Get Year send from Rozcesti
-        $rok = date("Y",strtotime($odvod_data->datumOdVykaz));
+       // Ziskej rok datumu z formulare na rozcesti
+       $rok = date("Y",strtotime($odvod_data->datumOdVykaz));
 
-        // Object holding information about selected date
-        $Datum = (object) array(
-          'mesic' => $mesic,
-          'rok'   => $rok
-        );
+       $Datum = (object) array(
+         'mesic' => $mesic,
+         'rok'   => $rok
+       );
+
 
         // Get the 'Vyrobni prikazy' aka VPs for selected date
         $VPs = DB::table("Pracovni_den")
@@ -180,15 +171,20 @@ class RozcestiController extends Controller
         ->orderBy('Id_Obj', 'asc')
         ->distinct()->get();
 
-        $numberofVPs  = count($VPs);
-        $numOfRows    = $numberofVPs + 1;
+       // Ziskej vyrobni prikazy (VPs) pro zadaneho truhlare a datum
+//       $VPs = Zamestnanec::getVPs($Truhlar->id, $Datum);
 
 
-        return view('odvadeciVykaz', [
-          '$numOfRows'    => $numOfRows,
-          'numOfCols'     => $numOfCols,
-          'Datum'         => $Datum,
-          'VPs'           => $VPs,
-        ]);
-    }
+       $numberofVPs  = count($VPs);
+       $numOfRows    = $numberofVPs + 1;
+
+
+       return view('odvadeciVykaz', [
+         '$numOfRows'    => $numOfRows,
+         'numOfCols'     => $numOfCols,
+         'Datum'         => $Datum,
+         'VPs'           => $VPs,
+       ]);
+   }
+
 }

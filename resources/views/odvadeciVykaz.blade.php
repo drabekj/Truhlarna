@@ -3,7 +3,7 @@
 @section('title', 'Odváděcí výkaz')
 
 @section('loggedAs')
-<?php 
+<?php
 $accountType = "Karel (admin)";
 echo "<p class='navbar-brand' float='right'>Přihlášen jako: " . $accountType;
 ?>
@@ -99,7 +99,7 @@ for ($row = 0; $row <= $numOfRows; $row++) {
             $value ="";
             echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
         }
- 
+
     }
 }
 ?>

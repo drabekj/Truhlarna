@@ -15,7 +15,7 @@
         border-spacing: 0;
         border-collapse: separate;
     }
-    
+
     #space{
         padding:2em;
     }
@@ -27,11 +27,7 @@
 
 <?php
 /*dotaz na databazi - pocet radku z databaze*/
-$numberofVPs  = count($VPs);
-$numOfRows    = $numberofVPs + 2;
-$numOfDays    = cal_days_in_month(CAL_GREGORIAN, $Datum->mesic, $Datum->rok);
-$numOfCols = $numOfDays + 5;
-
+$numOfRows = $numOfRowsT1;
 $counter=0;
 for ($row = 0; $row <= $numOfRows; $row++) {
     for ($col = 0; $col < $numOfCols; $col++) {
@@ -60,8 +56,13 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         //vypsani sloupecku cisel VP
         if ($col == 0 && $row != 0) {
             //vypise cislo VP
+<<<<<<< HEAD
             if ($row < $numberofVPs + 1)
                 echo "<td><input name='[$row][$col]' value='" . $VPs[$row - 1]->Id_Obj . "'></td>";
+=======
+            if ($row < $VPs->count() + 1)
+                echo "<td><input name='[$row][$col]' value='" . $VPs[$row - 1]->Cislo_VP . "'></td>";
+>>>>>>> 0c89eab5f850980337b35de4799a7bdd88bab48b
             else {
                 //jinak vypise policko pro vlozeni hodnoty
                 echo "<td size='8'><input type='text' name='[$row][$col]'>" . "</td>";
@@ -70,7 +71,7 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         } elseif ($col != 0 && $row != 0) {
             //SQL dotaz do databaze
             $value="";
-            if ($row < $numberofVPs + 1){
+            if ($row < $VPs->count() + 1){
               if(count($queryData[$row][$col])!=0)
                 $value=$queryData[$row][$col][0]->Hodiny;
             }
@@ -89,12 +90,8 @@ for ($row = 0; $row <= $numOfRows; $row++) {
 
 <?php
 /*dotaz na databazi - pocet radku z databaze*/
-$numberofVPs  = count($VPs);
-$numOfRows    = 8;
-$numOfDays    = cal_days_in_month(CAL_GREGORIAN, $Datum->mesic, $Datum->rok);
-$numOfCols = $numOfDays + 5;
-
 $counter=0;
+$numOfRows = $numOfRowsT2;
 for ($row = 0; $row < $numOfRows; $row++) {
     for ($col = 0; $col < $numOfCols; $col++) {
         //zacatek radku
@@ -105,7 +102,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
             echo "</tr>";
         //naplaneni prvniho radku
         if ($row == 0) {
-            if ( $col == 0 || $col > $numOfDays )
+            if ( $col == 0 || $col > $Datum->numOfDays )
                 echo "<td></td>";
             else
                 echo "<td><b>" . $col . "</b></td>";
@@ -130,20 +127,20 @@ for ($row = 0; $row < $numOfRows; $row++) {
         }
         elseif($col > 1 && $row > 0){
             //dotaz do DB pro poc hod - nemoc, dovolena atd.
-        if ( $col == $numOfDays+2+1 && $row == 3 )
+        if ( $col == $Datum->numOfDays+2+1 && $row == 3 )
             echo "<td colspan='2'>Cestovné:</td>";
-        elseif ( $col == $numOfDays+3+1 && $row == 3 )
+        elseif ( $col == $Datum->numOfDays+3+1 && $row == 3 )
             echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
-        elseif ( $col == $numOfDays+2+1 && $row == 4 )
+        elseif ( $col == $Datum->numOfDays+2+1 && $row == 4 )
             echo "<td colspan='2'>Stravenky:</td>";
-        elseif ( $col == $numOfDays+3+1 && $row == 4 )
+        elseif ( $col == $Datum->numOfDays+3+1 && $row == 4 )
             echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
-        elseif ( $col == $numOfDays+2+1 && $row == 5 )
+        elseif ( $col == $Datum->numOfDays+2+1 && $row == 5 )
             echo "<td colspan='2'>Obědy:</td>";
-        elseif ( $col == $numOfDays+3+1 && $row == 5 )
+        elseif ( $col == $Datum->numOfDays+3+1 && $row == 5 )
             echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
         else{
-            if ( ($row == 1 || $row == 2 || $row == 6 || $row == 7) && ($col > $numOfDays+2) )
+            if ( ($row == 1 || $row == 2 || $row == 6 || $row == 7) && ($col > $Datum->numOfDays+2) )
                 echo "<td></td>";
             else{
             $value = 5;
@@ -161,7 +158,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
     <div class = "col-md-4">
         <a href="{{action('RozcestiController@rozcesti')}}"
             button type="button" class="btn btn-primary btn-lg">Zpět</a>
-            
+
         <button type="submit" class="btn btn-primary btn-lg" value="Potvrdit" name="Potvrdit">
           Uložit
         </button>
