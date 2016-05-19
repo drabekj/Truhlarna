@@ -3,7 +3,7 @@
 @section('title', 'Generování úkolové mzdy')
 
 @section('loggedAs')
-<?php 
+<?php
 $accountType = "Karel (admin)";
 echo "<p class='navbar-brand' float='right'>Přihlášen jako: " . $accountType;
 ?>

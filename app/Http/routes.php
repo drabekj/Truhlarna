@@ -33,10 +33,12 @@ Route::get('/test', function(){
   // return view('test', compact('den'));
 });
 
-Route::get('rozcesti'     , 'RozcestiController@rozcesti');
+Route::get('rozcesti'      , 'RozcestiController@rozcesti');
 Route::post('pracovniVykaz', 'RozcestiController@pracovniVykaz');
-Route::get('ukolovaMzda'  , 'RozcestiController@ukolovaMzda');
-Route::get('odvadeciVykaz', 'RozcestiController@odvadeciVykaz');
+Route::get('ukolovaMzda'   , 'RozcestiController@ukolovaMzda');
+Route::get('odvadeciVykaz' , 'RozcestiController@odvadeciVykaz');
+
+Route::post('pracovniVykaz/store', 'PracovniVykazController@store');
 
 Route::auth();
 Route::get('/', 'HomeController@index');
