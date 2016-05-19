@@ -28,7 +28,20 @@ class RozcestiController extends Controller
 
     public function pracovniVykaz(Request $vykaz_data)
     {
-    
+
+        $this->validate($vykaz_data, [
+          'username' => 'exists:Zamestnanec,ID_Zam',
+        ]);
+
+        // $v = Validator::make($vykaz_data->all(), [
+        //   'username' => 'exists:Zamestnanec,ID_Zam',
+        // ]);
+        //
+        // if ($v->fails())
+        // {
+        //     return redirect()->back()->withErrors($v->errors());
+        // }
+
         // 31 days + 5 (Cislo VP, Hod, sazba, Mzda U, Mzda C)
         $numOfCols    = 36;
 
@@ -93,8 +106,8 @@ class RozcestiController extends Controller
           'queryData'     => $queryData
         ]);
     }
-    
-    
+
+
 
     public function ukolovaMzda()
     {
@@ -102,7 +115,7 @@ class RozcestiController extends Controller
     }
 
 
-    
+
      public function odvadeciVykaz(Request $odvod_data)
     {
         // 31 days + 5 (Cislo VP, Hod, sazba, Mzda U, Mzda C)
@@ -130,7 +143,7 @@ class RozcestiController extends Controller
         $numberofVPs  = count($VPs);
         $numOfRows    = $numberofVPs + 1;
 
-        
+
         return view('odvadeciVykaz', [
           '$numOfRows'    => $numOfRows,
           'numOfCols'     => $numOfCols,
