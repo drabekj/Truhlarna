@@ -31,9 +31,9 @@ class Zamestnanec extends Model
     ->hasPracovniDny()
     ->whereRaw('extract(month from Datum) = ?', [$datum->mesic])
     ->whereRaw('extract(year from Datum) = ?', [$datum->rok])
-    ->select("Cislo_VP")
+    ->select("ID_Obj")
     ->distinct()
-    ->orderBy('cislo_VP', 'asc')
+    ->orderBy('ID_Obj', 'asc')
     ->get();
 
     return $VPs;

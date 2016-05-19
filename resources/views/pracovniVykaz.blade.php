@@ -56,13 +56,8 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         //vypsani sloupecku cisel VP
         if ($col == 0 && $row != 0) {
             //vypise cislo VP
-<<<<<<< HEAD
-            if ($row < $numberofVPs + 1)
-                echo "<td><input name='[$row][$col]' value='" . $VPs[$row - 1]->Id_Obj . "'></td>";
-=======
             if ($row < $VPs->count() + 1)
-                echo "<td><input name='[$row][$col]' value='" . $VPs[$row - 1]->Cislo_VP . "'></td>";
->>>>>>> 0c89eab5f850980337b35de4799a7bdd88bab48b
+                echo "<td><input name='[$row][$col]' value='" . $VPs[$row - 1]->ID_Obj . "'></td>";
             else {
                 //jinak vypise policko pro vlozeni hodnoty
                 echo "<td size='8'><input type='text' name='[$row][$col]'>" . "</td>";

@@ -9,7 +9,7 @@ class Pracovni_den extends Model
 {
     protected $table = 'Pracovni_den';
 
-    protected $fillable = ['datum', 'Cislo_VP', 'Hodiny', 'ID_Zam'];
+    protected $fillable = ['datum', 'ID_Obj', 'Hodiny', 'ID_Zam'];
 
     /**
     * Vztah k zamestnanci
@@ -37,7 +37,7 @@ class Pracovni_den extends Model
         for ($col = 1; $col <= $numOfCols; $col++) {
 
           $queryData[$row][$col] = Pracovni_den::where('ID_Zam', '=', $Truhlar->id)
-          ->where("Cislo_VP", "=", $VPs[$row - 1]->ID_Obj)
+          ->where("ID_Obj", "=", $VPs[$row - 1]->ID_Obj)
           ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
           ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
           ->whereRaw('extract(day from Datum) = ?', [$col])
