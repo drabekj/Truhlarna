@@ -75,14 +75,20 @@ for ($row = 0; $row <= $numOfRows; $row++) {
 }
 ?>
 </table>
+
 <button type="submit" class="btn btn-primary btn-lg" value="Potvrdit" name="Potvrdit">
   Uložit
 </button>
+<a href="{{action('RozcestiController@rozcesti')}}"
+    button type="button" class="btn btn-primary btn-lg">Zpět</a>
+
+
+<!--<ul style="margin-left:10%">
+    <a href="{{action('RozcestiController@rozcesti')}}"
+    class="btn btn-primary">Zpět</a>
+</ul>-->
 </form>
 
-
 <hr>
-
-
 
 @stop
