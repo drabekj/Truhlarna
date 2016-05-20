@@ -50,6 +50,50 @@ class Pracovni_den extends Model
 
       return $queryData;
     }
+    
+          /** Ziskej vsechna data pro Ukolovou Mzdu
+      * @param Collection $Datum       Kolekce obsahujici rok a mesic pro ktere
+      * chceme ziskat vystup.
+      *
+      * @return Collection  Kolekce se vsemi daty pro Ukolovou Mzdu
+      **/
+    
+            public static function getDataUkolovaMzda($Datum)
+    {
+        $rok = $Datum->rok;
+        $mesic = $Datum->mesic;
+
+        $VPs = Pracovni_den::getVPsAll($Datum);
+        $numberOfVPs=count($VPs);
+
+        for($j=0;$j<$numberOfVPs;$j++){
+            $sum[$j]=DB::table("Pracovni_den")
+            ->leftJoin('Zamestnanec', 'Zamestnanec.ID_Zam', '=', 'Pracovni_den.ID_Zam')
+            ->select('Pracovni_den.ID_Zam as ID_Zam', DB::raw('sum(Hodiny) as pocetHodin'), 'Jmeno', 'Prijmeni', 'sazba')
+            ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+            ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+            ->where("Id_Obj", "=", $VPs[$j]->ID_Obj)
+            ->groupBy('ID_Zam')
+            ->get();
+            $celkoveHodin=0;
+            for($i=0; $i<count($sum[$j]);$i++){
+                $celkoveHodin=$celkoveHodin + $sum[$j][$i]->pocetHodin;
+            }
+            $jmenoObj=DB::table("Objednavka")
+            ->where("Id", "=", $VPs[$j]->ID_Obj)
+            ->select("Jmeno")
+            ->get();
+            $objednavky[$j]=(object) array(
+                'ID_Obj' => $VPs[$j],
+                'jmeno_Obj' => $jmenoObj[0]->Jmeno,
+                'truhlari' => $sum[$j],
+                'celkoveHodin' => $celkoveHodin
+                );
+
+        }
+        return $objednavky;
+
+    }
 
       /**
       * Ziskej ID vyrobnich prikazu pro danneho truhlare

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    @yield('js')
     <head>
         <title>@yield('title')</title>
         <meta charset="UTF-8">

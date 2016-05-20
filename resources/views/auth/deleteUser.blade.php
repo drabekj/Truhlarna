@@ -12,7 +12,7 @@
                         {!! csrf_field() !!}
                         {{ Form::hidden('_method', 'DELETE') }}
                         <div class="form-group-row">
-                            {{ Form::select('truhlari', $zamestnanci, null, array('class' => 'form-control')) }}
+                            {{ Form::select('ids', $zamestnanci, null, array('class' => 'form-control')) }}
                         </div>
                         <p>
                         </p>
@@ -24,7 +24,7 @@
                       
                                 @if ($errors->any())
                                     <span class="help-block">
-                                        <strong>nesprávné heslo</strong>
+                                        <strong>Nesprávné heslo</strong>
                                     </span>
                                 @endif
                             </div>

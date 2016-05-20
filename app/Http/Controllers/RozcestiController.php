@@ -86,38 +86,11 @@ class RozcestiController extends Controller
           'mesic' => $mesic,
           'rok'   => $rok
         );
-
-        // $VPs=DB::table("Pracovni_den")
-        // ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
-        // ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        // ->select('Id_Obj')
-        // ->orderBy('Id_Obj', 'asc')
-        // ->distinct()->get();
-        $VPs = Pracovni_den::getVPsAll($Datum);
-        $numberOfVPs=count($VPs);
-
-       /* $sum=DB::table("Pracovni_den")
-        ->join('Zamestnanec', 'Zamestnanec.ID_Zam', '=', 'Pracovni_den.ID_Zam')
-        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
-        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->where("Id_Obj", "=", $VPs[0]->Id_Obj)
-        ->select('Id_Zam', DB::raw('sum(Hodiny) as total'))
-        ->groupBy('ID_Zam')
-        ->get();*/
-        $sum=DB::table("Pracovni_den")
-        ->select('ID_Zam', DB::raw('sum(Hodiny) as total'))
-        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
-        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->where("Id_Obj", "=", $VPs[0]->ID_Obj)
-        ->groupBy('ID_Zam')
-        ->get();
-
-        echo $sum[0]->total . " " . $sum[0]->ID_Zam;
-        // echo $sum;
+        $objednavky=Pracovni_den::getDataUkolovaMzda($Datum);
         return view('ukolovaMzda', [
-          'Datum'         => $Datum,
-        ]);
-        }
+          'Objednavky'         => $objednavky,
+        ]);    
+    }
 
 
 

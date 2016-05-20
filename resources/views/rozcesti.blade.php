@@ -79,7 +79,8 @@
         </ul>
     </div>
   </div>
-
+    
+  
   @if (Auth::User()->role == 'admin')
   <div class="col-md-4 col-md-offset-4">
     <hr>
@@ -91,6 +92,15 @@
     </ul>
   </div>
   @endif
+</div>
+<div>
+  <!--vypsani oznameni o odstraneni uzivatele-->
+  @if(Session::has('success'))
+    <div class="alert alert-success col-md-4 col-md-offset-4">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Úspěch!</strong> {{ Session::get('message', '') }}
+    </div>
+    @endif
 </div>
 
 
