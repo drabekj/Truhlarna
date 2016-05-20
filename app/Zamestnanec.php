@@ -15,6 +15,14 @@ class Zamestnanec extends Model
     return $this->hasMany('App\Pracovni_den' , 'ID_Zam');
   }
 
+  /**
+  * Podle ID truhlare v parametru dohleda jmeno a prijmeni a vsechna data vrati v
+  * objektu.
+  *
+  * @param int $truhlarID ID truhlare ktereho hledame
+  *
+  * @return Objekt obsahujici id,jmeno a prijmeni
+  */
   public static function getTruhlar($truhlarID){
     $truhlarJmeno = Zamestnanec::find($truhlarID)
     ->select("Jmeno", "Prijmeni")

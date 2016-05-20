@@ -32,7 +32,7 @@ class Pracovni_den extends Model
     * @return Collection          Dvourozmerne pole kolekci pracovnich dnu
     */
     public static function getPracovniDnyTruhlare($Truhlar, $Datum, $numOfCols){
-      $VPs = Zamestnanec::getVPs($Truhlar->id, $Datum);
+      $VPs = Pracovni_den::getVPsForUser($Truhlar->id, $Datum);
 
       for ($row = 1; $row <= $VPs->count(); $row++) {
         for ($col = 1; $col <= $numOfCols; $col++) {
@@ -62,8 +62,7 @@ class Pracovni_den extends Model
       * pravidel v argumentu.
       **/
       public static function getVPsForUser($TruhlarID, $Datum){
-        $VPs = Pracovni_den::all()
-        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+        $VPs = Pracovni_den::whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
         ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
         ->select("ID_Obj")
         ->distinct()
@@ -89,7 +88,7 @@ class Pracovni_den extends Model
         ->distinct()
         ->orderBy('ID_Obj', 'asc')
         ->get();
-        
+
         return $VPs;
       }
 }
