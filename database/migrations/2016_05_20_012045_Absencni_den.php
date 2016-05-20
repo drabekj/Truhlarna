@@ -17,6 +17,7 @@ class AbsencniDen extends Migration
           $table->date('Datum');
           $table->integer('ID_Zam');
           $table->integer('Hodiny');
+          $table->string('Duvod');
           $table->timestamps();
         });
     }

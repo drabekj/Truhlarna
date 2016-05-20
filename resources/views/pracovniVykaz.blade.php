@@ -26,7 +26,7 @@
 <table border="1" width="80%" align="center">
 
 <?php
-/*dotaz na databazi - pocet radku z databaze*/
+/* __ PRVNI TABULKA __*/
 $numOfRows = $numOfRowsT1;
 $counter=0;
 for ($row = 0; $row <= $numOfRows; $row++) {
@@ -84,7 +84,7 @@ for ($row = 0; $row <= $numOfRows; $row++) {
 <table border="1" width="80%" align="center">
 
 <?php
-/*dotaz na databazi - pocet radku z databaze*/
+/* __ DRUHA TABULKA __*/
 $counter=0;
 $numOfRows = $numOfRowsT2;
 for ($row = 0; $row < $numOfRows; $row++) {
@@ -120,28 +120,69 @@ for ($row = 0; $row < $numOfRows; $row++) {
             if ($row == 7)
                 echo "<td>Přesčas</td>";
         }
-        elseif($col > 1 && $row > 0){
+        elseif($col > 0 && $col<$Datum->numOfDays+2 && $row > 0){
             //dotaz do DB pro poc hod - nemoc, dovolena atd.
-        if ( $col == $Datum->numOfDays+2+1 && $row == 3 )
-            echo "<td colspan='2'>Cestovné:</td>";
-        elseif ( $col == $Datum->numOfDays+3+1 && $row == 3 )
-            echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
-        elseif ( $col == $Datum->numOfDays+2+1 && $row == 4 )
-            echo "<td colspan='2'>Stravenky:</td>";
-        elseif ( $col == $Datum->numOfDays+3+1 && $row == 4 )
-            echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
-        elseif ( $col == $Datum->numOfDays+2+1 && $row == 5 )
-            echo "<td colspan='2'>Obědy:</td>";
-        elseif ( $col == $Datum->numOfDays+3+1 && $row == 5 )
-            echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
-        else{
-            if ( ($row == 1 || $row == 2 || $row == 6 || $row == 7) && ($col > $Datum->numOfDays+2) )
-                echo "<td></td>";
-            else{
-            $value = 5;
-                echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
+
+            // row - Odpracovane dny
+            if ( $row == 1 ){
+              $value = $odpracovaneDny[$col];
+              echo "<td><input type='text' size='8' name='t2_[$row][$col]' value=$value></td>";
             }
-        }
+            // row - Dovolena
+            if ( $row == 2 ){
+              $value = $dovolena[$col];
+              echo "<td><input type='text' size='8' name='t2_[$row][$col]' value=$value></td>";
+
+              if ( $col == $Datum->numOfDays+1 ){
+                echo "<td colspan='2'>Cestovné:</td>";
+                echo "<td>" . "<input type='text' size='8' name='[$row][$col+1]'></td>";
+              }
+            }
+            // row - Nemoc
+            if ( $row == 3 ){
+              $value = $nemoc[$col];
+              echo "<td><input type='text' size='8' name='t2_[$row][$col]' value=$value></td>";
+
+              if ( $col == $Datum->numOfDays+1 ){
+                echo "<td colspan='2'>Stravenky:</td>";
+                echo "<td>" . "<input type='text' size='8' name='[$row][$col+1]'></td>";
+              }
+            }
+            // row - Svatek
+            if ( $row == 4 ){
+              $value = $svatek[$col];
+              echo "<td><input type='text' size='8' name='t2_[$row][$col]' value=$value></td>";
+
+              if ( $col == $Datum->numOfDays+1 ){
+                echo "<td colspan='2'>Obědy:</td>";
+                echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
+              }
+            }
+            if ( $row == 5 ){
+              if ($celkemAbsenceHodiny[$col])
+                echo "<td>" . $celkemAbsenceHodiny[$col] . "</td>";
+              else
+                echo "<td></td>";
+            }
+            if ( $row == 6 ){
+              if ($celkemAbsenceHodiny[$col])
+                echo "<td>" . $celkemAbsenceHodiny[$col]*8 . "</td>";
+              else
+                echo "<td></td>";
+            }
+            if ( $row == 7 ){
+              echo "<td></td>";
+            }
+
+
+            // else{
+            //     if ( ($row == 1 || $row == 2 || $row == 6 || $row == 7) && ($col > $Datum->numOfDays+2) )
+            //         echo "<td></td>";
+            //     else{
+            //     $value = 0;
+            //         echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
+            //     }
+            // }
         }
 
     }
