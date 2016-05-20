@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Pracovni_den;
 use App\Zamestnanec;
+use App\Absencni_den;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -59,16 +60,29 @@ class RozcestiController extends Controller
 
         // Ziskej dvourozmerne pole pracovnich dnu truhlar k datu
         $queryData=null;
-        $queryData = Pracovni_den::getPracovniDnyTruhlare($Truhlar,$Datum,$numOfCols);
+        $T1Data = Pracovni_den::getPracovniDnyTruhlare($Truhlar,$Datum,$numOfCols);
+
+        $odpracovaneDny = Pracovni_den::getOdpracovaneDny($Truhlar, $Datum);
+        $dovolena = Absencni_den::getAbsence($Truhlar, $Datum, 'dovolena');
+        $nemoc    = Absencni_den::getAbsence($Truhlar, $Datum, 'nemoc');
+        $svatek   = Absencni_den::getAbsence($Truhlar, $Datum, 'svatek');
+
+        for ($i=1; $i<=count($dovolena); $i++)
+          $celkemAbsenceHodiny[$i] = $odpracovaneDny[$i] + $dovolena[$i] + $nemoc[$i] + $svatek[$i];
 
         return view('pracovniVykaz', [
           'Truhlar'       => $Truhlar,
           'Datum'         => $Datum,
           'VPs'           => $VPs,
-          'queryData'     => $queryData,
+          'queryData'     => $T1Data,
           'numOfCols'     => $numOfCols,
           'numOfRowsT1'   => $numOfRowsT1,
-          'numOfRowsT2'   => $numOfRowsT2
+          'numOfRowsT2'   => $numOfRowsT2,
+          'odpracovaneDny' => $odpracovaneDny,
+          'dovolena'      => $dovolena,
+          'nemoc'         => $nemoc,
+          'svatek'        => $svatek,
+          'celkemAbsenceHodiny' => $celkemAbsenceHodiny
         ]);
     }
 
@@ -89,7 +103,7 @@ class RozcestiController extends Controller
         $objednavky=Pracovni_den::getDataUkolovaMzda($Datum);
         return view('ukolovaMzda', [
           'Objednavky'         => $objednavky,
-        ]);    
+        ]);
     }
 
 

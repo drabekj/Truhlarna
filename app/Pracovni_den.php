@@ -32,6 +32,7 @@ class Pracovni_den extends Model
     * @return Collection          Dvourozmerne pole kolekci pracovnich dnu
     */
     public static function getPracovniDnyTruhlare($Truhlar, $Datum, $numOfCols){
+
       $VPs = Pracovni_den::getVPsForUser($Truhlar->id, $Datum);
       $queryData = null;
 
@@ -50,16 +51,16 @@ class Pracovni_den extends Model
 
       return $queryData;
     }
-    
+
           /** Ziskej vsechna data pro Ukolovou Mzdu
       * @param Collection $Datum       Kolekce obsahujici rok a mesic pro ktere
       * chceme ziskat vystup.
       *
       * @return Collection  Kolekce se vsemi daty pro Ukolovou Mzdu
       **/
-    
-            public static function getDataUkolovaMzda($Datum)
-    {
+
+    public static function getDataUkolovaMzda($Datum){
+
         $rok = $Datum->rok;
         $mesic = $Datum->mesic;
 
@@ -95,45 +96,72 @@ class Pracovni_den extends Model
 
     }
 
-      /**
-      * Ziskej ID vyrobnich prikazu pro danneho truhlare
-      * pro zadane datum.
-      *
-      * @param int        $TruhlarID   ID truhlare pro ktereho chceme ziskat vystup.
-      * @param Collection $Datum       Kolekce obsahujici rok a mesic pro ktere
-      * chceme ziskat vystup.
-      *
-      * @return Collection  Kolekce obsahujici vyrobni prikazy filtrovane podle
-      * pravidel v argumentu.
-      **/
-      public static function getVPsForUser($TruhlarID, $Datum){
-        $VPs = Pracovni_den::whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
-        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->select("ID_Obj")
-        ->distinct()
-        ->orderBy('ID_Obj', 'asc')
-        ->get();
+    /**
+    * Ziskej ID vyrobnich prikazu pro danneho truhlare
+    * pro zadane datum.
+    *
+    * @param int        $TruhlarID   ID truhlare pro ktereho chceme ziskat vystup.
+    * @param Collection $Datum       Kolekce obsahujici rok a mesic pro ktere
+    * chceme ziskat vystup.
+    *
+    * @return Collection  Kolekce obsahujici vyrobni prikazy filtrovane podle
+    * pravidel v argumentu.
+    **/
+    public static function getVPsForUser($TruhlarID, $Datum){
 
-        return $VPs;
+      $VPs = Pracovni_den::whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+      ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+      ->select("ID_Obj")
+      ->distinct()
+      ->orderBy('ID_Obj', 'asc')
+      ->get();
+
+      return $VPs;
+    }
+
+    /**
+    * Ziskej ID vsech vyrobnich prikazu pro zadane datum.
+    *
+    * @param Collection $Datum   Kolekce obsahujici rok a mesic pro ktere
+    * chceme ziskat vystup.
+    *
+    * @return Collection  Kolekce obsahujici vyrobni prikazy filtrovane podle
+    * pravidel v argumentu.
+    **/
+    public static function getVPsAll($Datum){
+
+      $VPs = Pracovni_den::whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+      ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+      ->select("ID_Obj")
+      ->distinct()
+      ->orderBy('ID_Obj', 'asc')
+      ->get();
+
+      return $VPs;
+    }
+
+    public static function getOdpracovaneDny($Truhlar, $Datum){
+
+      $result = null;
+      $VPs = Pracovni_den::getVPsForUser($Truhlar->id, $Datum);
+      $pracovniDnyTruhlare = Pracovni_den::getPracovniDnyTruhlare($Truhlar, $Datum, $Datum->numOfDays+5);
+
+      $superSum = 0;
+      for ( $col=1; $col<=$Datum->numOfDays; $col++ ){
+        $sum = 0;
+        for ($row=1; $row<=$VPs->count(); $row++){
+          if ( count($pracovniDnyTruhlare[$row][$col]) ){
+            $sum += $pracovniDnyTruhlare[$row][$col][0]->Hodiny / 8;
+          }
+        }
+        $result[$col] = $sum;
+        $superSum += $sum;
       }
 
-      /**
-      * Ziskej ID vsech vyrobnich prikazu pro zadane datum.
-      *
-      * @param Collection $Datum   Kolekce obsahujici rok a mesic pro ktere
-      * chceme ziskat vystup.
-      *
-      * @return Collection  Kolekce obsahujici vyrobni prikazy filtrovane podle
-      * pravidel v argumentu.
-      **/
-      public static function getVPsAll($Datum){
-        $VPs = Pracovni_den::whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
-        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->select("ID_Obj")
-        ->distinct()
-        ->orderBy('ID_Obj', 'asc')
-        ->get();
+      $result[$Datum->numOfDays+1] = $superSum;
 
-        return $VPs;
-      }
+      return $result;
+    }
+
+
 }
