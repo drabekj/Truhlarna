@@ -33,6 +33,7 @@ class Pracovni_den extends Model
     */
     public static function getPracovniDnyTruhlare($Truhlar, $Datum, $numOfCols){
       $VPs = Pracovni_den::getVPsForUser($Truhlar->id, $Datum);
+      $queryData = null;
 
       for ($row = 1; $row <= $VPs->count(); $row++) {
         for ($col = 1; $col <= $numOfCols; $col++) {

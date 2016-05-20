@@ -13,9 +13,10 @@ class NewZamestnanecTable extends Migration
     public function up()
     {
         Schema::create('Zamestnanec', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ID_Zam');
             $table->string('Jmeno');
             $table->string('Prijmeni');
+            $table->integer('Sazba');
             $table->timestamps();
         });
     }

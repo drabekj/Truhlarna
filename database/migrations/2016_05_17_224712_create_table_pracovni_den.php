@@ -14,10 +14,10 @@ class CreateTablePracovniDen extends Migration
     {
         Schema::create('Pracovni_den', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('datum');
-            $table->integer('Cislo_VP');
+            $table->date('Datum');
+            $table->integer('ID_Obj');
             $table->integer('Hodiny');
-            $table->integer('Zamestnanec_id');
+            $table->integer('ID_Zam');
             $table->timestamps();
         });
     }
