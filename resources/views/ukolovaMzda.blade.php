@@ -1,12 +1,68 @@
 @extends('master')
 
-@section('js', "<script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js'></script>")
+@section('js')
+
+<script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js'></script>
+<script src="lib/js/ui-grid/3.0.7/ui-grid.js"></script>
+
+@stop
 
 @section('title', 'Generování úkolové mzdy')
 
 @section('content')
 
 <h1 align="center">Generovani ukolove mzdy</h1>
+
+
+
+<div ng-app="myApp" ng-controller="customersCtrl"> 
+<table>
+  <tr ng-repeat="x in names">
+    <td>{{ x.Name }}</td>
+    <td>{{ x.Country }}</td>
+  </tr>
+</table>
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+    $http.get("http://www.w3schools.com/angular/customers.php")
+    .then(function (response) {$scope.names = response.data.records;});
+});
+</script>
+
+<!--
+
+<div ng-app="myApp" ng-controller="customersCtrl"> 
+
+<table>
+
+  <tr ng-repeat="data in obj track by $index">
+    <td>{{ x.Name }}</td>    <td>{{ x.Country }}</td>    <td>{{ x.Cislo_VP }}</td>    <td>{{ x.ID_Zam }}</td>    <td>{{ x.Prijmeni }}</td>    <td>{{ x.meno }}</td> 
+    <td>{{ data.pocetHodin }}</td>
+    <td>{{ data.Sazba }}</td>
+  </tr>
+  
+</table>
+
+</div>
+
+
+<script type="text/javascript">
+//var angular;
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+    $http.get("http://truhla-truhla.c9users.io/ukolovaMzda")
+    .then(function (response) {
+        $scope.obj = response;
+    });
+});
+
+</script>
+
+-->
 
 
 

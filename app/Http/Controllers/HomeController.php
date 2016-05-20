@@ -56,7 +56,8 @@ class HomeController extends Controller
 
       $user->save();
 
-      return redirect()->action('RozcestiController@rozcesti');
+      //return redirect()->action('RozcestiController@rozcesti');
+      return \Redirect::to('/rozcesti')->with('success', true)->with('message','Uživatel úspěšně přidán.');
     }
 
     /*public function deleteUser(){
@@ -64,6 +65,11 @@ class HomeController extends Controller
       return view('auth/deleteUser')->with( 'zamestnanci', $zamestnanci);
     }*/
     
+    /**
+     * to var zamestnanci assigns names and ids of all users execpt currently signed user
+     *
+     * @return view deleteUser with var zamestnanci
+     */
     public function deleteUser(){
       $zamestnanci = User::select(\DB::raw('CONCAT(id , " ", username, " (", role, ")") AS fulljmeno, id'))
       ->where('id', '<>', \Auth::user()->id)->pluck('fulljmeno', 'id');
@@ -72,9 +78,9 @@ class HomeController extends Controller
       return view('auth/deleteUser')->with( 'zamestnanci', $zamestnanci);
     }
     
+    
+    
     public function destroy(Request $request){
-      
-      
       //dd(\Auth::user());
       if (Hash::check($request->password, \Auth::user()->password))
       {
