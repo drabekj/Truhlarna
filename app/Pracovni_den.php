@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Zamestnanec;
+use DB;
 
 class Pracovni_den extends Model
 {
@@ -48,4 +49,47 @@ class Pracovni_den extends Model
 
       return $queryData;
     }
+
+      /**
+      * Ziskej ID vyrobnich prikazu pro danneho truhlare
+      * pro zadane datum.
+      *
+      * @param int        $TruhlarID   ID truhlare pro ktereho chceme ziskat vystup.
+      * @param Collection $Datum       Kolekce obsahujici rok a mesic pro ktere
+      * chceme ziskat vystup.
+      *
+      * @return Collection  Kolekce obsahujici vyrobni prikazy filtrovane podle
+      * pravidel v argumentu.
+      **/
+      public static function getVPsForUser($TruhlarID, $Datum){
+        $VPs = Pracovni_den::all()
+        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+        ->select("ID_Obj")
+        ->distinct()
+        ->orderBy('ID_Obj', 'asc')
+        ->get();
+
+        return $VPs;
+      }
+
+      /**
+      * Ziskej ID vsech vyrobnich prikazu pro zadane datum.
+      *
+      * @param Collection $Datum   Kolekce obsahujici rok a mesic pro ktere
+      * chceme ziskat vystup.
+      *
+      * @return Collection  Kolekce obsahujici vyrobni prikazy filtrovane podle
+      * pravidel v argumentu.
+      **/
+      public static function getVPsAll($Datum){
+        $VPs = Pracovni_den::whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+        ->select("ID_Obj")
+        ->distinct()
+        ->orderBy('ID_Obj', 'asc')
+        ->get();
+        
+        return $VPs;
+      }
 }

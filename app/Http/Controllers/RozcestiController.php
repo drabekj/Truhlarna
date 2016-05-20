@@ -50,7 +50,7 @@ class RozcestiController extends Controller
         );
 
         // Ziskej vyrobni prikazy (VPs) pro zadaneho truhlare a datum
-        $VPs = Zamestnanec::getVPs($Truhlar->id, $Datum);
+        $VPs = Pracovni_den::getVPsForUser($Truhlar->id, $Datum);
 
         // Dimenze tabulek, pocet sloupcu je pro obe stejny.
         $numOfCols = $Datum->numOfDays + 5;
@@ -60,7 +60,7 @@ class RozcestiController extends Controller
         // Ziskej dvourozmerne pole pracovnich dnu truhlar k datu
         $queryData=null;
         $queryData = Pracovni_den::getPracovniDnyTruhlare($Truhlar,$Datum,$numOfCols);
-        
+
         return view('pracovniVykaz', [
           'Truhlar'       => $Truhlar,
           'Datum'         => $Datum,
@@ -86,13 +86,14 @@ class RozcestiController extends Controller
           'mesic' => $mesic,
           'rok'   => $rok
         );
-        
-        $VPs=DB::table("Pracovni_den")
-        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
-        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->select('Id_Obj')
-        ->orderBy('Id_Obj', 'asc')
-        ->distinct()->get();
+
+        // $VPs=DB::table("Pracovni_den")
+        // ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+        // ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+        // ->select('Id_Obj')
+        // ->orderBy('Id_Obj', 'asc')
+        // ->distinct()->get();
+        $VPs = Pracovni_den::getVPsAll($Datum);
         $numberOfVPs=count($VPs);
 
        /* $sum=DB::table("Pracovni_den")
@@ -104,13 +105,14 @@ class RozcestiController extends Controller
         ->groupBy('ID_Zam')
         ->get();*/
         $sum=DB::table("Pracovni_den")
-        ->select('Id_Zam', DB::raw('sum(Hodiny) as total'))
+        ->select('ID_Zam', DB::raw('sum(Hodiny) as total'))
         ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
         ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->where("Id_Obj", "=", $VPs[0]->Id_Obj)
+        ->where("Id_Obj", "=", $VPs[0]->ID_Obj)
         ->groupBy('ID_Zam')
         ->get();
-        echo $sum[0]->total ." ". $sum[0]->Id_Zam;
+
+        echo $sum[0]->total . " " . $sum[0]->ID_Zam;
         // echo $sum;
         return view('ukolovaMzda', [
           'Datum'         => $Datum,
@@ -137,16 +139,16 @@ class RozcestiController extends Controller
        );
 
 
-        // Get the 'Vyrobni prikazy' aka VPs for selected date
-        $VPs = DB::table("Pracovni_den")
-        ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
-        ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
-        ->select('Id_Obj')
-        ->orderBy('Id_Obj', 'asc')
-        ->distinct()->get();
+        // Ziskej vyrobni prikazy (VPs) pro zadane datum
+        // $VPs = DB::table("Pracovni_den")
+        // ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+        // ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+        // ->select('Id_Obj')
+        // ->orderBy('Id_Obj', 'asc')
+        // ->distinct()->get();
 
        // Ziskej vyrobni prikazy (VPs) pro zadaneho truhlare a datum
-//       $VPs = Zamestnanec::getVPs($Truhlar->id, $Datum);
+      $VPs = Pracovni_den::getVPsAll($Datum);
 
 
        $numberofVPs  = count($VPs);
