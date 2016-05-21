@@ -10,19 +10,10 @@
     <h1><% yourName %></h1>
   </div>
 
+
   <hr>
 
-  {{-- for ($row = 0; $row < $numOfRows; $row++) {
-      for ($col = 0; $col < $numOfCols; $col++) { --}}
-
-      {{-- <ul>
-       <li ng-repeat="phone in phones">
-         <span>{{phone.name}}</span>
-         <p>{{phone.snippet}}</p>
-       </li>
-     </ul> --}}
-
-     <div ng-controller="customersCtrl">
+   <div ng-controller="customersCtrl">
 
     <table>
      <tr ng-repeat="x in names">
@@ -31,6 +22,6 @@
      </tr>
     </table>
 
-    </div>
+  </div>
 
 @stop

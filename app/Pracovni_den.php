@@ -25,6 +25,18 @@ class Pracovni_den extends Model
       return $this->belongsTo('App\Zamestnanec', 'ID_Zam');
     }
 
+    /**
+     * Ulozi zaznam pracovniho dne do databaze.
+     * 
+     * Ulozi zaznam pracovniho dne do databaze, pokud jiz existuje takovy zaznam,
+     * aktualizuje jeho hodnotu.
+     * 
+     * @param $Datum  datum ke kteremu se pracovni zaznam vztahuje
+     * @param $Hodiny hodnota ktera se ulozi atributu zaznamu Hodiny
+     * @param $ID_Zam primarni klic zamestnance ke kteremu se zaznam vztahuje
+     * @param $ID_Obj primarni klic objednavky ke ktere se zaznam vztahuje
+     * @param   $den    den ke kteremu sezaznam vztahuje
+     */
     public static function store($Datum, $Hodiny, $ID_Zam, $ID_Obj, $den){
       $formatDatum = $Datum->rok . '-' . $Datum->mesic . '-' . $den;
 
@@ -168,6 +180,14 @@ class Pracovni_den extends Model
       return $VPs;
     }
 
+    /**
+     * Vrati pole zaznamu pracovnich dnu vztazenuch k dannemu truhlari a datu
+     * 
+     * @param $Truhlar  Objekt truhlare pro ktery chceme ziskat vysledek
+     *        obsehujici id, jmeno, prijmeni truhlare.
+     * @param $Datum    Objekt data pro ktery chceme ziskat vysledek,
+     *        obsahujici id, jmeno, prijmeni.
+     */
     public static function getOdpracovaneDny($Truhlar, $Datum){
 
       $result = null;

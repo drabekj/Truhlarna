@@ -26,9 +26,14 @@ class PracovniVykazController extends Controller
     {
       $this->middleware('auth');
     }
-    public function error(Request $request){
-}
-
+    
+    /**
+    * Funkce, která uloží jednotlivé data z DB
+    * do proměnných, do kterých lze přistupovat
+    *
+    * @param $request je proměnná, která předává vstupní hodnoty do funkce
+    * @return void @link to /rozcesti
+    */
     public function store(Request $request){
       if(Auth::guest())
         return redirect('rozcesti');
@@ -50,18 +55,15 @@ class PracovniVykazController extends Controller
       // debug
       // var_dump($input['t2']);
 
-      // kolik mam VPs vyplnenych !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // kolik mam VPs vyplnenych
       $numberOfRows = 11;
       $parsedVPs = null;
       $parsedData = null;
-      // kolik mam VPs vyplnenych !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // kolik mam VPs vyplnenych
 
       // VPs
       for ( $row=1; $row<=$numberOfRows; $row++){
         $parsedVPs[$row] = $input[$row.'_0'];
-        if(!IntegrityChecks::checkInt($parsedVPs[$row])){
-          return Redirect::to('pracovniVykaz')->withInput();
-          }
         Objednavka::store($parsedVPs[$row]);
       }
 

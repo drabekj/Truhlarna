@@ -39,8 +39,14 @@ class Zamestnanec extends Model
 
     return $VPs;
   }
-
   
+  /**
+   * Ziskej Truhlare z databaze podle jeho ID
+   * 
+   * Provede dotaz na databazi vrati objek Truhlare.
+   * 
+   * @return Truhlar objekt obsahujici id, jmeno a prijmeni
+   **/
   public static function getTruhlar($truhlarID){
     $truhlarJmeno = Zamestnanec::find($truhlarID)
     ->select("Jmeno", "Prijmeni")

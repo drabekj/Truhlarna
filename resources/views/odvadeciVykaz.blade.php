@@ -2,18 +2,23 @@
 
 @section('title', 'Odváděcí výkaz')
 
-@section('loggedAs')
-<?php
-$accountType = "Karel (admin)";
-echo "<p class='navbar-brand' float='right'>Přihlášen jako: " . $accountType;
-?>
-</p>
-@stop
-
 @section('content')
 
 <h1 align="center">Odváděcí výkaz</h1>
 
+<style type="text/css">
+    table{
+        text-align:center;
+    }
+    td{
+        width:100px;
+        height:2em;
+    }
+    input{
+        /*width:100px;*/
+        width:100%;
+    }
+</style>
 
 <table border="1" width="80%" align="center">
 
@@ -24,13 +29,10 @@ $numOfCols = 18;
 
 $counter=0;
 for ($row = 0; $row <= $numOfRows; $row++) {
-    for ($col = 0; $col < $numOfCols; $col++) {
+    for ($col = 0; $col <= $numOfCols; $col++) {
         //zacatek radku
         if ($col == 0)
             echo "<tr>";
-        //konec radku
-       if ($col == $numOfCols)
-            echo "</tr>";
         //naplaneni prvniho radku
         if ($row == 0) {
             if ( $col == 0 )
@@ -89,17 +91,25 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         //vypsani sloupecku cisel VP
         if ($col == 0 && $row > 1) {
             $value=$VPs[$row-2]->Id_Obj;
-            echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
+            if ( !empty($value) )
+                echo "<td>" . "<input type='text' name='[$row][$col]' value=$value></td>";
+            else
+                echo "<td></td>";
             }
         elseif ($col == 1 && $row > 1) {
             //forem vypsat jednotlive nazvy akci (asi jen jmeno k vp) do slopecku
             }
         elseif ($col > 1 && $row > 1 ){
             //nejakej dotazt do DB - podle struktury ulozeni v DB
-            $value ="";
-            echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
+            $value =$VPs[$row-2]->jmeno_Obj;
+            if ( !empty($value) )
+                echo "<td>" . "<input type='text' name='[$row][$col]' value=$value></td>";
+            else
+                echo "<td></td>";
         }
-
+        //konec radku
+       if ($col == $numOfCols)
+            echo "</tr>";
     }
 }
 ?>

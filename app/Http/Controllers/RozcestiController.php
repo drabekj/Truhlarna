@@ -29,11 +29,12 @@ class RozcestiController extends Controller
     }
 
     /**
-   * Funkce pracovniVykaz() p
+   * Funkce pracovniVykaz() předpřipraví data, která následně předá na
+   * stránku /pracVykaz
    * 
-   * 
-   * @param numA This is the first paramter to addNum method
-   * @return 
+   * @param $vykaz_data je proměnná, ve které jsou vstupní data pro pro tuto funkci
+   *        předané formulářem na rozcestií (id truhlare, datum)
+   * @return vrací pole v JSON struktuře
    */
     public function pracovniVykaz(Request $vykaz_data)
     {
@@ -103,12 +104,12 @@ class RozcestiController extends Controller
 
 
 
-    /**
-   * This method is used to add two integers. This is
-   * a the simplest form of a class method, just to
+   /**
+   * Funkce ukolovaMzda() předpřipraví data, která následně předá na
+   * stránku /ukolMzda
    * 
-   * @param 
-   * @return 
+   * @param $mzda_data je proměnná, ve které jsou vstupní data pro pro tuto funkci
+   * @return vrací pole v JSON struktuře
    */
     public function ukolovaMzda(Request $mzda_data)
     {
@@ -129,14 +130,14 @@ class RozcestiController extends Controller
     }
 
 
-    /**
-   * This method is used to add two integers. This is
-   * a the simplest form of a class method, just to
+   /**
+   * Funkce odvadeciVykaz() předpřipraví data, která následně předá na
+   * stránku /ukolMzda
    * 
-   * @param numA This is the first paramter to addNum method
-   * @return 
+   * @param $odvod_data je proměnná, ve které jsou vstupní data pro pro tuto funkci
+   * @return vrací pole v JSON struktuře
    */
-    public function odvadeciVykaz(Request $odvod_data)
+   public function odvadeciVykaz(Request $odvod_data)
    {
        // 31 days + 5 (Cislo VP, Hod, sazba, Mzda U, Mzda C)
        $numOfCols    = 36;
@@ -171,7 +172,7 @@ class RozcestiController extends Controller
 
 
        return view('odvadeciVykaz', [
-         '$numOfRows'    => $numOfRows,
+         'numOfRows'    => $numOfRows,
          'numOfCols'     => $numOfCols,
          'Datum'         => $Datum,
          'VPs'           => $VPs,

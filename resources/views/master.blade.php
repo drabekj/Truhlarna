@@ -7,7 +7,7 @@
 *
 * @author  Jan Drábek, Jan Zimolka, Lukáš Buňát, Jan Parma, Jiří Růžička
 * @version 1.0
-* @since   2016-04-22 
+* @since   2016-04-22
 */
 -->
 <html>
@@ -96,12 +96,16 @@
               $interpolateProvider.startSymbol('<%');
               $interpolateProvider.endSymbol('%>');
           });
+          
+          // app.controller('customersCtrl', function($scope, $http) {
+          //    $http.get("http://www.w3schools.com/angular/customers.php")
+          //    .then(function (response) {$scope.names = response.data.records;});
+          // });
 
-app.controller('customersCtrl', function($scope, $http) {
-   $http.get("http://www.w3schools.com/angular/customers.php")
-   .then(function (response) {$scope.names = response.data.records;});
-});
-</script>
+          app.controller('customersCtrl', function($scope, $http) {
+                then(function (response) {$scope.names = $Objednavky;});
+          });
+
         </script>
         {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     </body>

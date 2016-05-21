@@ -12,6 +12,13 @@ class Objednavka extends Model
 
   protected $fillable = ['id', 'Cislo_VP', 'Jmeno', 'Cislo_VP','Od', 'Do'];
 
+  /**
+   * Ulozi novy zaznam objednavky
+   * 
+   * Pokud jiz takovy zaznam nexistuje, ulozi novy zaznam objednavky pro zadane primarni klic ($id)
+   * 
+   * @param $id primarni klic objednavky
+   */
   public static function store($id){
 
     $exists = Objednavka::find($id);
