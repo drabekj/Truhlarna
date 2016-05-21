@@ -24,9 +24,14 @@
 <form class="form-horizontal" role="form" method="POST" action="{{ url('pracovniVykaz/store') }}">
 {{-- <form class="form-horizontal" role="form" method="POST" action="{{ url('/test') }}"> --}}
   {!! csrf_field() !!}
-  
+
 <table border="1" width="80%" align="center">
 <?php
+
+echo "<hr>";
+var_dump($odpracovaneDny);
+echo "<hr>";
+
 /* __ PRVNI TABULKA __*/
 echo "<input hidden name='truhlar_id' value='" . $Truhlar->id . "'>";
 echo "<input hidden name='rok' value='" . $Datum->rok . "'>";
@@ -34,7 +39,7 @@ echo "<input hidden name='mesic' value='" . $Datum->mesic . "'>";
 
 $numOfRows = $numOfRowsT1;
 $counter=0;
-for ($row = 0; $row <= $numOfRows-2; $row++) {
+for ($row = 0; $row <= $numOfRows+1; $row++) {
     for ($col = 0; $col < $numOfCols; $col++) {
         //zacatek radku
         if ($col == 0)
@@ -70,9 +75,18 @@ for ($row = 0; $row <= $numOfRows-2; $row++) {
         //naplneni hodnot do tabulky
         } elseif ($col != 0 && $row != 0) {
             $value="";
-            if ($row < $VPs->count() + 1){
+            if ($row < $VPs->count() + 1 && $col<=$Datum->numOfDays){
               if(count($queryData[$row][$col])!=0)
                 $value=$queryData[$row][$col][0]->Hodiny;
+            }
+            // naplneni hodnot souctu na prave strane tabulky
+            else{
+              if ( $col == $Datum->numOfDays+1 )
+                $value = $pravyPanelData[$Datum->numOfDays+1][$row];
+              if ( $col == $Datum->numOfDays+2 )
+                $value = $pravyPanelData[$Datum->numOfDays+2][$row];
+              if ( $col == $Datum->numOfDays+3 )
+                $value = $pravyPanelData[$Datum->numOfDays+3][$row];
             }
             //hodiny z databaze
             echo "<td>" . "<input type='text' size='4' name='$row.$col' value=$value></td>";

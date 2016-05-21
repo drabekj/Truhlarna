@@ -31,7 +31,7 @@ class RozcestiController extends Controller
     /**
    * Funkce pracovniVykaz() předpřipraví data, která následně předá na
    * stránku /pracVykaz
-   * 
+   *
    * @param $vykaz_data je proměnná, ve které jsou vstupní data pro pro tuto funkci
    *        předané formulářem na rozcestií (id truhlare, datum)
    * @return vrací pole v JSON struktuře
@@ -84,6 +84,30 @@ class RozcestiController extends Controller
           $celkemAbsenceHodiny[$i] = $odpracovaneDny[$i] + $dovolena[$i] + $nemoc[$i] + $svatek[$i];
 
           // return json_encode($VPs);
+        $soucetOdpracovanychHodin = Pracovni_den::getSoucetOdpracovanychHodin($Truhlar, $Datum);
+
+        echo "QueryData <br>";
+        var_dump($T1Data);
+        $sazba = Zamestnanec::find($Truhlar->id)->Sazba;
+        $sumSazba = 0;
+        $pravyPanelData = null;
+        for ( $i=1; $i<=14; $i++){
+          // ulozit data pro sloupecek Hodiny
+          if (array_key_exists($i, $soucetOdpracovanychHodin ))
+            $pravyPanelData[$Datum->numOfDays+1][$i] = $soucetOdpracovanychHodin[$i];
+          else
+            $pravyPanelData[$Datum->numOfDays+1][$i] = 0;
+
+          // ulozit data pro sloupecek Sazba
+          if ($i > count($VPs))
+            $sazba = "";
+          $pravyPanelData[$Datum->numOfDays+2][$i] = $sazba;
+
+          // ulozit data pro sloupecek Mzda U
+          $pravyPanelData[$Datum->numOfDays+3][$i] = $pravyPanelData[$Datum->numOfDays+1][$i] * $pravyPanelData[$Datum->numOfDays+2][$i];
+          $sumSazba += $pravyPanelData[$Datum->numOfDays+3][$i];
+        }
+        $pravyPanelData[$Datum->numOfDays+3][14] =  $sumSazba;
 
         return view('pracovniVykaz', [
           'Truhlar'       => $Truhlar,
@@ -97,7 +121,8 @@ class RozcestiController extends Controller
           'dovolena'      => $dovolena,
           'nemoc'         => $nemoc,
           'svatek'        => $svatek,
-          'celkemAbsenceHodiny' => $celkemAbsenceHodiny
+          'celkemAbsenceHodiny' => $celkemAbsenceHodiny,
+          'pravyPanelData' => $pravyPanelData
         ]);
 
     }
@@ -107,7 +132,7 @@ class RozcestiController extends Controller
    /**
    * Funkce ukolovaMzda() předpřipraví data, která následně předá na
    * stránku /ukolMzda
-   * 
+   *
    * @param $mzda_data je proměnná, ve které jsou vstupní data pro pro tuto funkci
    * @return vrací pole v JSON struktuře
    */
@@ -133,7 +158,7 @@ class RozcestiController extends Controller
    /**
    * Funkce odvadeciVykaz() předpřipraví data, která následně předá na
    * stránku /ukolMzda
-   * 
+   *
    * @param $odvod_data je proměnná, ve které jsou vstupní data pro pro tuto funkci
    * @return vrací pole v JSON struktuře
    */

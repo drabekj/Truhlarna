@@ -27,10 +27,10 @@ class Pracovni_den extends Model
 
     /**
      * Ulozi zaznam pracovniho dne do databaze.
-     * 
+     *
      * Ulozi zaznam pracovniho dne do databaze, pokud jiz existuje takovy zaznam,
      * aktualizuje jeho hodnotu.
-     * 
+     *
      * @param $Datum  datum ke kteremu se pracovni zaznam vztahuje
      * @param $Hodiny hodnota ktera se ulozi atributu zaznamu Hodiny
      * @param $ID_Zam primarni klic zamestnance ke kteremu se zaznam vztahuje
@@ -182,7 +182,10 @@ class Pracovni_den extends Model
 
     /**
      * Vrati pole zaznamu pracovnich dnu vztazenuch k dannemu truhlari a datu
-     * 
+     *
+     * Data v poli jsou soucen odpracovanych hodin v danny den vydeleny cislem 8.
+     * To znamena kolik bylo odpracovano z 8-mi hodinove pracovni doby.
+     *
      * @param $Truhlar  Objekt truhlare pro ktery chceme ziskat vysledek
      *        obsehujici id, jmeno, prijmeni truhlare.
      * @param $Datum    Objekt data pro ktery chceme ziskat vysledek,
@@ -211,5 +214,51 @@ class Pracovni_den extends Model
       return $result;
     }
 
+    /**
+     * Vrati pole zaznamu pracovnich dnu vztazenuch k dannemu truhlari a datu
+     *
+     * Data v poli jsou soucen odpracovanych hodin v danny den vydeleny cislem 8.
+     * To znamena kolik bylo odpracovano z 8-mi hodinove pracovni doby.
+     *
+     * @param $Truhlar  Objekt truhlare pro ktery chceme ziskat vysledek
+     *        obsehujici id, jmeno, prijmeni truhlare.
+     * @param $Datum    Objekt data pro ktery chceme ziskat vysledek,
+     *        obsahujici id, jmeno, prijmeni.
+     */
+    public static function getSoucetOdpracovanychHodin($Truhlar, $Datum){
 
+      $result = null;
+      $VPs = Pracovni_den::getVPsForUser($Truhlar->id, $Datum);
+      // echo $VPs[0]->ID_Obj;
+      $pracovniDnyTruhlare = Pracovni_den::getPracovniDnyTruhlare($Truhlar, $Datum, $Datum->numOfDays+5);
+      // var_dump($pracovniDnyTruhlare);
+      // echo "Days=" . $Datum->numOfDays;
+
+      $result = null;
+      $sum = 0;
+      $superSum = 0;
+      // pro kazdy vyrobni prikaz
+      for ( $row=1; $row<=count($pracovniDnyTruhlare); $row++ ){
+        // pro kazdy den co se pracovalo na vyrobnim prikazu
+        for ( $col=1; $col<=$Datum->numOfDays; $col++ ){
+          if ( count($pracovniDnyTruhlare[$row][$col]) ){
+            $sum += $pracovniDnyTruhlare[$row][$col][0]->Hodiny;
+          }
+        }
+        $result[$row] = $sum;
+        $superSum += $sum;
+        $sum = 0;
+      }
+
+      // na 12. radku je C.hod.ukol.
+      $result[12] = $superSum;
+      $result[13] = 0;
+      $result[14] = $result[12 ]+ $result[13];
+
+      echo "Result";
+      var_dump($result);
+      echo "<hr>";
+
+      return $result;
+    }
 }
