@@ -11,17 +11,30 @@
 |
 */
 // testing
+use App\Pracovni_den;
+use App\Zamestnanec;
 Route::get('/test', function(){
 
-  // $TruhlarID = 1;
-  // $rok = 2015;
-  // $mesic = 1;
-  //
-  // $Datum = (object) array(
-  //   'mesic'    => $input['mesic'],
-  //   'rok'      => $input['rok'],
-  //   'numOfDays' => cal_days_in_month(CAL_GREGORIAN, $input['mesic'], $input['rok']),
-  // );
+  $TruhlarID = 1;
+  $rok = 2015;
+  $mesic = 1;
+
+  $Datum = (object) array(
+    'mesic'    => $mesic,
+    'rok'      => $rok,
+    'numOfDays' => cal_days_in_month(CAL_GREGORIAN, $mesic, $rok)
+  );
+
+  $Truhlar = Zamestnanec::getTruhlar($TruhlarID);
+  $data = Pracovni_den::getPracovniDnyTruhlare($Truhlar, $Datum, $Datum->numOfDays);
+
+  // var_dump($data[1][1]);
+
+  // echo $data[1][1][0]->Hodiny;
+
+  return view("test", [
+    'data' => $data
+  ]);
 
 });
 
