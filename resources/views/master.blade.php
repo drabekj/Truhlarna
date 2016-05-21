@@ -96,6 +96,10 @@
               $interpolateProvider.startSymbol('<%');
               $interpolateProvider.endSymbol('%>');
           });
+          
+          app.controller('customersCtrl', function($scope, $http) {
+                then(function (response) {$scope.names = $Objednavky;});
+          });
         </script>
         {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     </body>

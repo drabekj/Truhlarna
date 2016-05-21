@@ -11,7 +11,9 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Vytvoří novou instanci HomeController
+     * 
+     * Do rout v tomto controleru ma pristup pouze prihlaseny uzivatel.
      *
      * @return void
      */
@@ -21,7 +23,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Presmeruje na rozcesti aplikace.
      *
      * @return \Illuminate\Http\Response
      */
@@ -35,7 +37,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Creates new user and saves to database.
+     * Vytvori noveho uzivatele a ulozi do databaze
      *
      * @return RozcestiController@rozcesti
      */
@@ -66,7 +68,7 @@ class HomeController extends Controller
     }*/
     
     /**
-     * to var zamestnanci assigns names and ids of all users execpt currently signed user
+     * Smaze uzivatele z databaze
      *
      * @return view deleteUser with var zamestnanci
      */
@@ -79,7 +81,11 @@ class HomeController extends Controller
     }
     
     
-    
+     /**
+     * Smaze uzivatele z databaze
+     *
+     * @return view deleteUser with var zamestnanci
+     */
     public function destroy(Request $request){
       //dd(\Auth::user());
       if (Hash::check($request->password, \Auth::user()->password))

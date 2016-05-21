@@ -10,5 +10,13 @@
     <h1><% yourName %></h1>
   </div>
 
+  <div ng-controller="customersCtrl">
+  <table>
+   <tr ng-repeat="x in names">
+     <td><% x.Name %></td>
+     <td><% x.Country %></td>
+   </tr>
+  </table>
+  </div>
 
 @stop
