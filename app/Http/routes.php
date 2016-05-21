@@ -35,7 +35,11 @@ Route::get('ukolovaMzda', function(){
 Route::get('odvadeciVykaz', function(){
   return redirect('rozcesti');
 });
-Route::get('pracovniVykaz', 'RozcestiController@pracovniVykaz');
+Route::get('pracovniVykaz', function(){
+if (Auth::guest())
+  return redirect('rozcesti');
+  return redirect('pracovniVykaz');
+});
 
 Route::post('pracovniVykaz/store', 'PracovniVykazController@store');
 
