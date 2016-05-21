@@ -100,12 +100,15 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
                 echo "<td>Celkem</td>";
 
         //naplneni hodnot do tabulky
-        } elseif ($col != 0 && $row != 0) {
+      } elseif ($col != 0 && $row != 0) {
             $value="";
+            // vyplneni odpracovanych hodin ke dnum v mecici pro VP
             if ($row < $VPs->count() + 1 && $col<=$Datum->numOfDays){
               if(count($queryData[$row][$col])!=0)
                 $value=$queryData[$row][$col][0]->Hodiny;
             }
+            if ( $row == 14 && $col < 32 )
+                $value = $celkemJednotliveDny[$col];
             // naplneni hodnot souctu na prave strane tabulky
             else{
               if ( $col == $Datum->numOfDays+1 )
