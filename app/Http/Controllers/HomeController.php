@@ -87,7 +87,7 @@ class HomeController extends Controller
      * @return view deleteUser with var zamestnanci
      */
     public function destroy(Request $request){
-      //dd(\Auth::user());
+      
       if (Hash::check($request->password, \Auth::user()->password))
       {
          User::deleteLogin($request->ids);

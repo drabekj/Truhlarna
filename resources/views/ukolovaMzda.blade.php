@@ -20,9 +20,14 @@
     }
     th{
         font-size:1.5em;
+        background-color:#6BB9F0; /*#6699CC;*/
     }
     table{
         text-align:center;
+        width:80%;
+    }
+    .col-md-4{
+        width:100%;
     }
 </style>
 
@@ -77,11 +82,9 @@
 </div>
 
 <p>
-    <div class = "col-md-4">
-        <ul style="margin-left:10%">
+    <div class = "col-md-4" align="center">
             <a href="{{action('RozcestiController@rozcesti')}}"
             class="btn btn-primary btn-lg">Zpět</a>
-        </ul>
     </div>
 </p>
 

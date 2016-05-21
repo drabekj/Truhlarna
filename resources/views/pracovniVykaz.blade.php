@@ -7,17 +7,42 @@
 <p align="center">Zaměstnanec: {{ $Truhlar->jmeno }} {{ $Truhlar->prijmeni }} Odbdobí: {{ $Datum->rok }}-{{ $Datum->mesic }}  </p>
 
 <style type="text/css">
-    td{
-        text-align: center;
-    }
-
     table{
-        border-spacing: 0;
-        border-collapse: separate;
+        text-align: center;
+        width:85%;
+    }
+    
+    input{
+        width:100%;
+        height:2em;
     }
 
+    td{
+        height:2em;
+    }
+    .text{
+        width:5%;
+        height:2em;
+    }
+
+    .textLonger{
+        /*width has to 2times more than in .text*/
+        width:10%;
+    }
+    
+    .firstRow{
+        font-weight: bold;
+        height:3em;
+        background-color:#6BB9F0; /*#6699CC;*/
+    }
+    
     #space{
         padding:2em;
+    }
+    
+    .col-md-4{
+        width:100%;
+        align:center;
     }
 </style>
 
@@ -25,7 +50,7 @@
 {{-- <form class="form-horizontal" role="form" method="POST" action="{{ url('/test') }}"> --}}
   {!! csrf_field() !!}
   
-<table border="1" width="80%" align="center">
+<table align="center" border='1'>
 <?php
 /* __ PRVNI TABULKA __*/
 echo "<input hidden name='truhlar_id' value='" . $Truhlar->id . "'>";
@@ -44,19 +69,19 @@ for ($row = 0; $row <= $numOfRows-2; $row++) {
             echo "</tr>";
         // bunka [0,0]
         if ($col == 0 && $row == 0)
-            echo "<td>" . "Číslo VP" . "</td>";
+            echo "<td class='text firstRow'>" . "Číslo VP" . "</td>";
         //naplaneni prvniho radku
         if ($row == 0) {
             if ($col == $numOfCols-3)
-               echo "<td>" . "sazba" . "</td>";
+               echo "<td class='text firstRow'>" . "sazba" . "</td>";
             elseif ($col == $numOfCols-4)
-                echo "<td>" . "Hodiny" . "</td>";
+                echo "<td class='text firstRow'>" . "Hodiny" . "</td>";
             elseif ($col == $numOfCols-2)
-                echo "<td>" . "Mzda U" . "</td>";
+                echo "<td class='text firstRow'>" . "Mzda U" . "</td>";
             elseif ($col == $numOfCols-1)
-                echo "<td>" . "Mzda C" . "</td>";
+                echo "<td class='text firstRow'>" . "Mzda C" . "</td>";
             elseif ($col != 0)
-                echo "<td><b>" . $col . "</b></td>";
+                echo "<td class='firstRow'>" . $col . "</td>";
         }
         //vypsani sloupecku cisel VP
         if ($col == 0 && $row != 0) {
@@ -65,7 +90,7 @@ for ($row = 0; $row <= $numOfRows-2; $row++) {
                 echo "<td><input name='$row.$col' value='" . $VPs[$row - 1]->ID_Obj . "'></td>";
             else {
                 //jinak vypise policko pro vlozeni hodnoty
-                echo "<td size='8'><input type='text' name='$row.$col'>" . "</td>";
+                echo "<td><input type='text' name='$row.$col'>" . "</td>";
             }
         //naplneni hodnot do tabulky
         } elseif ($col != 0 && $row != 0) {
@@ -75,7 +100,7 @@ for ($row = 0; $row <= $numOfRows-2; $row++) {
                 $value=$queryData[$row][$col][0]->Hodiny;
             }
             //hodiny z databaze
-            echo "<td>" . "<input type='text' size='4' name='$row.$col' value=$value></td>";
+            echo "<td>" . "<input type='text' name='$row.$col' value=$value></td>";
             $counter++;
         }
     }
@@ -85,7 +110,7 @@ for ($row = 0; $row <= $numOfRows-2; $row++) {
 
 <div id="space"></div>
 
-<table border="1" width="80%" align="center">
+<table align="center" border='1'>
 <?php
 /* __ DRUHA TABULKA __*/
 $counter=0;
@@ -100,10 +125,12 @@ for ($row = 0; $row < $numOfRows; $row++) {
             echo "</tr>";
         //naplaneni prvniho radku
         if ($row == 0) {
-            if ( $col == 0 || $col > $Datum->numOfDays )
-                echo "<td></td>";
+            if ( $col == 0 )
+                echo "<td class='text'></td>";
+            elseif ( $col > $Datum->numOfDays )
+               echo "";//"<td class='text2'></td>";
             else
-                echo "<td><b>" . $col . "</b></td>";
+                echo "<td class='firstRow'>" . $col . "</td>";
         }
         //vypsani sloupecku cisel VP
         if ($col == 0 && $row != 0) {
@@ -131,34 +158,37 @@ for ($row = 0; $row < $numOfRows; $row++) {
               $value = $odpracovaneDny[$col];
               echo "<td>" . $value . "</td>";
             }
-            // row - Dovolena
+            //row - Dovolena
             if ( $row == 2 ){
               $value = $dovolena[$col];
-              echo "<td><input type='text' size='8' name='t2[$row][$col]' value=$value></td>";
+              if ( $col>=32 )
+                echo "<td class='text'><input type='text' name='t2[$row][$col]' value=$value></td>";
+              else
+                echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
 
               if ( $col == $Datum->numOfDays+1 ){
-                echo "<td colspan='2'>Cestovné:</td>";
-                echo "<td>" . "<input type='text' size='8' name='t2[$row][$col+1]'></td>";
+                echo "<td class='textLonger' colspan='2'>Cestovné:</td>";
+                echo "<td class='text'>" . "<input type='text' name='t2[$row][$col+1]'></td>";
               }
             }
             // row - Nemoc
             if ( $row == 3 ){
               $value = $nemoc[$col];
-              echo "<td><input type='text' size='8' name='t2[$row][$col]' value=$value></td>";
+              echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td colspan='2'>Stravenky:</td>";
-                echo "<td>" . "<input type='text' size='8' name='t2[$row][$col+1]'></td>";
+                echo "<td>" . "<input type='text' name='t2[$row][$col+1]'></td>";
               }
             }
             // row - Svatek
             if ( $row == 4 ){
               $value = $svatek[$col];
-              echo "<td><input type='text' size='8' name='t2[$row][$col]' value=$value></td>";
+              echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td colspan='2'>Obědy:</td>";
-                echo "<td>" . "<input type='text' size='8' name='t2[$row][$col]'></td>";
+                echo "<td>" . "<input type='text' name='t2[$row][$col]'></td>";
               }
             }
             if ( $row == 5 ){
@@ -183,16 +213,15 @@ for ($row = 0; $row < $numOfRows; $row++) {
 ?>
 </table>
 
-<p>
-    <div class = "col-md-4">
-        <a href="{{action('RozcestiController@rozcesti')}}"
-            button type="button" class="btn btn-primary btn-lg">Zpět</a>
+<div id="space" clear="both"></div>
+<div>
+<div class="col-md-4" align="center">
+    <a href="{{action('RozcestiController@rozcesti')}}"
+        button type="button" class="btn btn-primary btn-lg">Zpět</a>
 
-        <button type="submit" class="btn btn-primary btn-lg" value="Potvrdit">
-          Uložit
-        </button>
-    </div>
-</p>
+    <button type="submit" class="btn btn-primary btn-lg" value="Potvrdit">Uložit</button>
+</div>
+</div>
 </form>
 
 <hr>

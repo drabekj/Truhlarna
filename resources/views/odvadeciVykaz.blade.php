@@ -18,13 +18,16 @@
         /*width:100px;*/
         width:100%;
     }
+    .col-md-4{
+        width:100%;
+    }
 </style>
 
 <table border="1" width="80%" align="center">
 
 <?php
 $numberofVPs  = count($VPs);
-$numOfRows    = $numberofVPs + 1;
+$numOfRows    = $numberofVPs + 1; //count($Objednavky); 
 $numOfCols = 18;
 
 $counter=0;
@@ -90,7 +93,7 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         }
         //vypsani sloupecku cisel VP
         if ($col == 0 && $row > 1) {
-            $value=$Objednavky[$i]->ID_Obj->ID_Obj; //$VPs[$row-2]->Id_Obj;
+            $value=$VPs[$row-2]->Id_Obj; //$Objednavky[$i]->ID_Obj->ID_Obj; 
             if ( !empty($value) )
                 echo "<td>" . "<input type='text' name='[$row][$col]' value=$value></td>";
             else
@@ -101,7 +104,7 @@ for ($row = 0; $row <= $numOfRows; $row++) {
             }
         elseif ($col > 1 && $row > 1 ){
             //nejakej dotazt do DB - podle struktury ulozeni v DB
-            $value = $Objednavky[$i]->jmeno_Obj; //$VPs[$row-2]->jmeno_Obj;
+            $value = $VPs[$row-2]->jmeno_Obj; //$Objednavky[$i]->jmeno_Obj;
             if ( !empty($value) )
                 echo "<td>" . "<input type='text' name='[$row][$col]' value=$value></td>";
             else
@@ -119,11 +122,9 @@ for ($row = 0; $row <= $numOfRows; $row++) {
 
 
 <p>
-    <div class = "col-md-4">
-        <ul style="margin-left:10%">
+    <div class = "col-md-4" align="center">
             <a href="{{action('RozcestiController@rozcesti')}}"
             class="btn btn-primary btn-lg">Zpět</a>
-        </ul>
     </div>
 </p>
 
