@@ -23,6 +23,28 @@ class Pracovni_den extends Model
       return $this->belongsTo('App\Zamestnanec', 'ID_Zam');
     }
 
+    public static function store($Datum, $Hodiny, $ID_Zam, $ID_Obj, $den){
+      $formatDatum = $Datum->rok . '-' . $Datum->mesic . '-' . $den;
+
+      $pracDen = Pracovni_den::where('ID_Zam', $ID_Zam)
+      ->where('ID_Obj', $ID_Obj)
+      ->where('Datum', $formatDatum)->first();
+
+      if (!$pracDen && $Hodiny){
+        $pracDen = new Pracovni_den;
+      }
+
+      if ($Hodiny){
+        $pracDen->Datum = $formatDatum;
+        $pracDen->Hodiny = $Hodiny;
+        $pracDen->ID_Zam = $ID_Zam;
+        $pracDen->ID_Obj = $ID_Obj;
+        
+        $pracDen->save();
+      }
+
+    }
+
     /**
     * Ziskej dvourozmerne pole pracovnich dnu truhlare
     *

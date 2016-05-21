@@ -22,14 +22,19 @@
 </style>
 
 <form class="form-horizontal" role="form" method="POST" action="{{ url('pracovniVykaz/store') }}">
+{{-- <form class="form-horizontal" role="form" method="POST" action="{{ url('/test') }}"> --}}
   {!! csrf_field() !!}
 <table border="1" width="80%" align="center">
 
 <?php
 /* __ PRVNI TABULKA __*/
+echo "<input hidden name='truhlar_id' value='" . $Truhlar->id . "'>";
+echo "<input hidden name='rok' value='" . $Datum->rok . "'>";
+echo "<input hidden name='mesic' value='" . $Datum->mesic . "'>";
+
 $numOfRows = $numOfRowsT1;
 $counter=0;
-for ($row = 0; $row <= $numOfRows; $row++) {
+for ($row = 0; $row <= $numOfRows-2; $row++) {
     for ($col = 0; $col < $numOfCols; $col++) {
         //zacatek radku
         if ($col == 0)
@@ -55,22 +60,22 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         }
         //vypsani sloupecku cisel VP
         if ($col == 0 && $row != 0) {
-            //vypise cislo VP
+            //cislo VP
             if ($row < $VPs->count() + 1)
-                echo "<td><input name='[$row][$col]' value='" . $VPs[$row - 1]->ID_Obj . "'></td>";
+                echo "<td><input name='$row.$col' value='" . $VPs[$row - 1]->ID_Obj . "'></td>";
             else {
                 //jinak vypise policko pro vlozeni hodnoty
-                echo "<td size='8'><input type='text' name='[$row][$col]'>" . "</td>";
+                echo "<td size='8'><input type='text' name='$row.$col'>" . "</td>";
             }
         //naplneni hodnot do tabulky
         } elseif ($col != 0 && $row != 0) {
-            //SQL dotaz do databaze
             $value="";
             if ($row < $VPs->count() + 1){
               if(count($queryData[$row][$col])!=0)
                 $value=$queryData[$row][$col][0]->Hodiny;
             }
-            echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
+            //hodiny z databaze
+            echo "<td>" . "<input type='text' size='4' name='$row.$col' value=$value></td>";
             $counter++;
         }
     }
@@ -126,12 +131,12 @@ for ($row = 0; $row < $numOfRows; $row++) {
             // row - Odpracovane dny
             if ( $row == 1 ){
               $value = $odpracovaneDny[$col];
-              echo "<td><input type='text' size='8' name='t2_[$row][$col]' value=$value></td>";
+              echo "<td>" . $value . "</td>";
             }
             // row - Dovolena
             if ( $row == 2 ){
               $value = $dovolena[$col];
-              echo "<td><input type='text' size='8' name='t2_[$row][$col]' value=$value></td>";
+              echo "<td><input type='text' size='8' name='t2[$row][$col]' value=$value></td>";
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td colspan='2'>Cestovné:</td>";
@@ -141,7 +146,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
             // row - Nemoc
             if ( $row == 3 ){
               $value = $nemoc[$col];
-              echo "<td><input type='text' size='8' name='t2_[$row][$col]' value=$value></td>";
+              echo "<td><input type='text' size='8' name='t2[$row][$col]' value=$value></td>";
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td colspan='2'>Stravenky:</td>";
@@ -151,7 +156,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
             // row - Svatek
             if ( $row == 4 ){
               $value = $svatek[$col];
-              echo "<td><input type='text' size='8' name='t2_[$row][$col]' value=$value></td>";
+              echo "<td><input type='text' size='8' name='t2[$row][$col]' value=$value></td>";
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td colspan='2'>Obědy:</td>";
@@ -195,7 +200,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
         <a href="{{action('RozcestiController@rozcesti')}}"
             button type="button" class="btn btn-primary btn-lg">Zpět</a>
 
-        <button type="submit" class="btn btn-primary btn-lg" value="Potvrdit" name="Potvrdit">
+        <button type="submit" class="btn btn-primary btn-lg" value="Potvrdit">
           Uložit
         </button>
     </div>

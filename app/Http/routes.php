@@ -11,33 +11,17 @@
 |
 */
 // testing
-use App\Pracovni_den;
-use App\Zamestnanec;
-use App\Absencni_den;
 Route::get('/test', function(){
-  // $den = Pracovni_den::find(1)->ofZamestnanec;
-  $mesic = 1;
-  $rok = 2015;
-  $TruhlarID = 1;
-  $Datum = (object) array(
-    'mesic'    => $mesic,
-    'rok'      => $rok,
-    'numOfDays' => cal_days_in_month(CAL_GREGORIAN, $mesic, $rok),
-  );
+
+  // $TruhlarID = 1;
+  // $rok = 2015;
+  // $mesic = 1;
   //
-  $Truhlar = Zamestnanec::getTruhlar($TruhlarID);
-  // $VPs     = Zamestnanec::getVPs($Truhlar->id, $Datum);
-
-  $pracovniDnyTruhlare = Pracovni_den::getPracovniDnyTruhlare($Truhlar, $Datum, $Datum->numOfDays);
-
-  $VPs = Pracovni_den::getVPsForUser($Truhlar->id, $Datum);
-
-  $result = Absencni_den::getDovolena($Truhlar, $Datum);
-
-
-  var_dump($result);
-  echo "<hr>";
-  echo $result[1];
+  // $Datum = (object) array(
+  //   'mesic'    => $input['mesic'],
+  //   'rok'      => $input['rok'],
+  //   'numOfDays' => cal_days_in_month(CAL_GREGORIAN, $input['mesic'], $input['rok']),
+  // );
 
 });
 

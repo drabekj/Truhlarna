@@ -9,5 +9,20 @@ class Objednavka extends Model
   protected $primaryKey = 'id';
   protected $table = 'Objednavka';
 
-  protected $fillable = [ 'Jmeno', 'Cislo_VP','Od', 'Do'];
+  protected $fillable = ['id', 'Cislo_VP', 'Jmeno', 'Cislo_VP','Od', 'Do'];
+
+  public static function store($id){
+
+    $exists = Objednavka::find($id);
+
+    if (!$exists){
+      $objednavka = new Objednavka;
+      $objednavka->id = $id;
+      $objednavka->save();
+    }
+
+  }
+
+
+
 }
