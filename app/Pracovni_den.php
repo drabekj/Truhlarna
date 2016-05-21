@@ -255,10 +255,6 @@ class Pracovni_den extends Model
       $result[13] = 0;
       $result[14] = $result[12 ]+ $result[13];
 
-      echo "Result";
-      var_dump($result);
-      echo "<hr>";
-
       return $result;
     }
 }

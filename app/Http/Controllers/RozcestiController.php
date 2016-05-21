@@ -86,8 +86,8 @@ class RozcestiController extends Controller
           // return json_encode($VPs);
         $soucetOdpracovanychHodin = Pracovni_den::getSoucetOdpracovanychHodin($Truhlar, $Datum);
 
-        echo "QueryData <br>";
-        var_dump($T1Data);
+        // echo "QueryData <br>";
+        // var_dump($T1Data);
         $sazba = Zamestnanec::find($Truhlar->id)->Sazba;
         $sumSazba = 0;
         $pravyPanelData = null;
@@ -202,7 +202,7 @@ class RozcestiController extends Controller
          'Datum'         => $Datum,
          'VPs'           => $VPs,
        ]);
-       
+
        //zkouska funkcnosti
       $objednavky=Pracovni_den::getDataUkolovaMzda($Datum);
         return view('ukolovaMzda', [
