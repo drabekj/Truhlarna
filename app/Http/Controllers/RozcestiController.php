@@ -6,6 +6,7 @@ use DB;
 use App\Pracovni_den;
 use App\Zamestnanec;
 use App\Absencni_den;
+use App\IntegrityChecks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 

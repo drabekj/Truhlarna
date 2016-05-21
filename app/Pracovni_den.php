@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Zamestnanec;
+use App\IntegrityChecks;
 use DB;
 
 class Pracovni_den extends Model

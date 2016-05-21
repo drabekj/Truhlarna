@@ -46,7 +46,13 @@ class PracovniVykazController extends Controller
       // VPs
       for ( $row=1; $row<=$numberOfRows; $row++){
         $parsedVPs[$row] = $input[$row.'_0'];
+        if(\IntegrityChecks::checkInt($parsedVPs[$row]))
         Objednavka::store($parsedVPs[$row]);
+        else
+        {
+          echo "nene";
+          return;
+        }
       }
 
       // Inner table data
