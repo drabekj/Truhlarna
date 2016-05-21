@@ -13,8 +13,8 @@ use Illuminate\Support\Collection;
 class RozcestiController extends Controller
 {
     /**
-    * Create a new controller instance.
-    * Routes in this controlled are accessible only if user is authorized.
+    * Vytvori novou instanci kontroleru
+    * Routy v tomto kontroleru jsou pristupne pouze pro autorizovaneho uzivatele.
     *
     * @return void
     */
@@ -29,21 +29,20 @@ class RozcestiController extends Controller
     }
 
     /**
-   * This method is used to add two integers. This is
-   * a the simplest form of a class method, just to
+   * Funkce pracovniVykaz() p
+   * 
    * 
    * @param numA This is the first paramter to addNum method
    * @return 
    */
-    public function pracovniVykaz(/*Request $vykaz_data*/)
-    {   $vykaz_data=(object) array(
-        'username' => 1,
-        'datumPracvykaz' => '2015-1'
-        );
-  /*      $this->validate($vykaz_data, [
+    public function pracovniVykaz(Request $vykaz_data)
+    {
+        if(is_null($vykaz_data->username))
+        return redirect('rozcesti');
+        $this->validate($vykaz_data, [
           'username' => 'exists:Zamestnanec,ID_Zam',
         ]);
-*/
+
         // Objekt s informacemi o truhlari podle ID z formulare
         // promenne: id, jmeno, prijmeni
         $Truhlar = Zamestnanec::getTruhlar($vykaz_data->username);

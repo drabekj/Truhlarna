@@ -40,6 +40,7 @@ class Zamestnanec extends Model
     return $VPs;
   }
 
+  
   public static function getTruhlar($truhlarID){
     $truhlarJmeno = Zamestnanec::find($truhlarID)
     ->select("Jmeno", "Prijmeni")
