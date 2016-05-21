@@ -88,10 +88,17 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
             //cislo VP
             if ($row < $VPs->count() + 1)
                 echo "<td><input name='$row.$col' value='" . $VPs[$row - 1]->ID_Obj . "'></td>";
-            else {
+            else if ($row < 12){
                 //jinak vypise policko pro vlozeni hodnoty
                 echo "<td><input type='text' name='$row.$col'>" . "</td>";
             }
+            else if ( $row == 12)
+                echo "<td>C.hod.úkol</td>";
+            else if ( $row == 13)
+                echo "<td>Režie</td>";
+            else if ( $row == 14)
+                echo "<td>Celkem</td>";
+
         //naplneni hodnot do tabulky
         } elseif ($col != 0 && $row != 0) {
             $value="";
