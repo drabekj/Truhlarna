@@ -174,6 +174,12 @@ class RozcestiController extends Controller
          'Datum'         => $Datum,
          'VPs'           => $VPs,
        ]);
+       
+       //zkouska funkcnosti
+      $objednavky=Pracovni_den::getDataUkolovaMzda($Datum);
+        return view('ukolovaMzda', [
+          'Objednavky'         => $objednavky,
+        ]);
    }
 
 }

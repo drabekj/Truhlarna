@@ -90,7 +90,7 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         }
         //vypsani sloupecku cisel VP
         if ($col == 0 && $row > 1) {
-            $value=$VPs[$row-2]->Id_Obj;
+            $value=$Objednavky[$i]->ID_Obj->ID_Obj; //$VPs[$row-2]->Id_Obj;
             if ( !empty($value) )
                 echo "<td>" . "<input type='text' name='[$row][$col]' value=$value></td>";
             else
@@ -101,7 +101,7 @@ for ($row = 0; $row <= $numOfRows; $row++) {
             }
         elseif ($col > 1 && $row > 1 ){
             //nejakej dotazt do DB - podle struktury ulozeni v DB
-            $value =$VPs[$row-2]->jmeno_Obj;
+            $value = $Objednavky[$i]->jmeno_Obj; //$VPs[$row-2]->jmeno_Obj;
             if ( !empty($value) )
                 echo "<td>" . "<input type='text' name='[$row][$col]' value=$value></td>";
             else
