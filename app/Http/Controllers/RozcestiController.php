@@ -82,6 +82,8 @@ class RozcestiController extends Controller
         for ($i=1; $i<=count($dovolena); $i++)
           $celkemAbsenceHodiny[$i] = $odpracovaneDny[$i] + $dovolena[$i] + $nemoc[$i] + $svatek[$i];
 
+          // return json_encode($VPs);
+
         return view('pracovniVykaz', [
           'Truhlar'       => $Truhlar,
           'Datum'         => $Datum,
@@ -96,6 +98,7 @@ class RozcestiController extends Controller
           'svatek'        => $svatek,
           'celkemAbsenceHodiny' => $celkemAbsenceHodiny
         ]);
+
     }
 
 
