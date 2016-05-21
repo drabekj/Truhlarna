@@ -9,6 +9,10 @@ use App\Objednavka;
 use App\Pracovni_den;
 use App\Zamestnanec;
 use App\Absencni_den;
+use App\IntegrityChecks;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Input;
+
 
 class PracovniVykazController extends Controller
 {
@@ -22,9 +26,14 @@ class PracovniVykazController extends Controller
     {
       $this->middleware('auth');
     }
+    public function error(Request $request){
+}
 
     public function store(Request $request){
-
+      $this->validate($request, [
+          '0.5' => 'integer',
+        ]);
+        return redirect('/pracovniVykaz');
       $input = $request->input();
       unset($input['_token']);
 
@@ -51,13 +60,7 @@ class PracovniVykazController extends Controller
       // VPs
       for ( $row=1; $row<=$numberOfRows; $row++){
         $parsedVPs[$row] = $input[$row.'_0'];
-        if(\IntegrityChecks::checkInt($parsedVPs[$row]))
         Objednavka::store($parsedVPs[$row]);
-        else
-        {
-          echo "nene";
-          return;
-        }
       }
 
       // Inner table data

@@ -24,8 +24,8 @@
 <form class="form-horizontal" role="form" method="POST" action="{{ url('pracovniVykaz/store') }}">
 {{-- <form class="form-horizontal" role="form" method="POST" action="{{ url('/test') }}"> --}}
   {!! csrf_field() !!}
+  
 <table border="1" width="80%" align="center">
-
 <?php
 /* __ PRVNI TABULKA __*/
 echo "<input hidden name='truhlar_id' value='" . $Truhlar->id . "'>";
@@ -83,11 +83,9 @@ for ($row = 0; $row <= $numOfRows-2; $row++) {
 ?>
 </table>
 
-<!-- NEMAZAT! -->
 <div id="space"></div>
 
 <table border="1" width="80%" align="center">
-
 <?php
 /* __ DRUHA TABULKA __*/
 $counter=0;
@@ -140,7 +138,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td colspan='2'>Cestovné:</td>";
-                echo "<td>" . "<input type='text' size='8' name='[$row][$col+1]'></td>";
+                echo "<td>" . "<input type='text' size='8' name='t2[$row][$col+1]'></td>";
               }
             }
             // row - Nemoc
@@ -150,7 +148,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td colspan='2'>Stravenky:</td>";
-                echo "<td>" . "<input type='text' size='8' name='[$row][$col+1]'></td>";
+                echo "<td>" . "<input type='text' size='8' name='t2[$row][$col+1]'></td>";
               }
             }
             // row - Svatek
@@ -160,7 +158,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td colspan='2'>Obědy:</td>";
-                echo "<td>" . "<input type='text' size='8' name='[$row][$col]'></td>";
+                echo "<td>" . "<input type='text' size='8' name='t2[$row][$col]'></td>";
               }
             }
             if ( $row == 5 ){

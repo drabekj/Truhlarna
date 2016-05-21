@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<!--
+/**
+* Webový systém truhlárna umožňuje evidenci zaměstnanců a projektů na kterých daní zaměstnanci pracovali.
+* Je možné vyplňovat pracovní výaz či generovat úkolové mzdy a odváděcí výkaz, na základě zvoleného měsíce.
+* Systém rozlišuje úrovně oprávnění při přihlášení.
+*
+* @author  Jan Drábek, Jan Zimolka, Lukáš Buňát, Jan Parma, Jiří Růžička
+* @version 1.0
+* @since   2016-04-22 
+*/
+-->
 <html>
     <head>
         <title>@yield('title')</title>
