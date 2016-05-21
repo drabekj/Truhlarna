@@ -86,6 +86,7 @@ class RozcestiController extends Controller
           'svatek'        => $svatek,
           'celkemAbsenceHodiny' => $celkemAbsenceHodiny
         ]);
+
     }
 
 

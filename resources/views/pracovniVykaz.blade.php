@@ -178,16 +178,6 @@ for ($row = 0; $row < $numOfRows; $row++) {
             if ( $row == 7 ){
               echo "<td></td>";
             }
-
-
-            // else{
-            //     if ( ($row == 1 || $row == 2 || $row == 6 || $row == 7) && ($col > $Datum->numOfDays+2) )
-            //         echo "<td></td>";
-            //     else{
-            //     $value = 0;
-            //         echo "<td>" . "<input type='text' size='4' name='[$row][$col]' value=$value></td>";
-            //     }
-            // }
         }
 
     }
@@ -208,5 +198,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
 </form>
 
 <hr>
+
+
 
 @stop
