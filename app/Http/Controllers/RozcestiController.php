@@ -57,6 +57,7 @@ class RozcestiController extends Controller
         $numOfCols = $Datum->numOfDays + 5;
         // $numOfRowsT1 = $VPs->count() + 2;
         $numOfRowsT1 = 11 + 2;
+        // $numOfRowsT1 = 4;
         $numOfRowsT2 = 8;
 
         // Ziskej dvourozmerne pole pracovnich dnu truhlar k datu

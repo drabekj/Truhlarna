@@ -40,8 +40,11 @@ class Pracovni_den extends Model
         $pracDen->Hodiny = $Hodiny;
         $pracDen->ID_Zam = $ID_Zam;
         $pracDen->ID_Obj = $ID_Obj;
-        
+
         $pracDen->save();
+      }
+      if ($pracDen && !$Hodiny){
+        $pracDen->delete();
       }
 
     }
