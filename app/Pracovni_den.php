@@ -54,6 +54,7 @@ class Pracovni_den extends Model
     *
     * @param  Collection $Truhlar truhlar ke kteremu ziskame data
     * @param  Collection $Datum   mesic a rok kde kteremu chceme ziskat data
+    * @param  Collection $numOfCols   pocetPracovnich dnu v mesici
     *
     * @return Collection          Dvourozmerne pole kolekci pracovnich dnu
     */
