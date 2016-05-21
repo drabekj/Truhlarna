@@ -55,7 +55,8 @@ class RozcestiController extends Controller
 
         // Dimenze tabulek, pocet sloupcu je pro obe stejny.
         $numOfCols = $Datum->numOfDays + 5;
-        $numOfRowsT1 = $VPs->count() + 2;
+        // $numOfRowsT1 = $VPs->count() + 2;
+        $numOfRowsT1 = 11 + 2;
         $numOfRowsT2 = 8;
 
         // Ziskej dvourozmerne pole pracovnich dnu truhlar k datu

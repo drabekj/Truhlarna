@@ -38,7 +38,7 @@ class PracovniVykazController extends Controller
       unset($input['rok']);
 
       // kolik mam VPs vyplnenych !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      $numberOfRows = 2;
+      $numberOfRows = 11;
       $parsedVPs = null;
       $parsedData = null;
       // kolik mam VPs vyplnenych !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
