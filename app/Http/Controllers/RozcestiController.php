@@ -169,7 +169,7 @@ class RozcestiController extends Controller
 
 
        return view('odvadeciVykaz', [
-         '$numOfRows'    => $numOfRows,
+         'numOfRows'    => $numOfRows,
          'numOfCols'     => $numOfCols,
          'Datum'         => $Datum,
          'VPs'           => $VPs,
