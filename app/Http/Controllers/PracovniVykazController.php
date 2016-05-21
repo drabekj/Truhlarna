@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Objednavka;
 use App\Pracovni_den;
+use App\Zamestnanec;
+use App\Absencni_den;
 
 class PracovniVykazController extends Controller
 {
@@ -37,6 +39,9 @@ class PracovniVykazController extends Controller
       unset($input['mesic']);
       unset($input['rok']);
 
+      // debug
+      // var_dump($input['t2']);
+
       // kolik mam VPs vyplnenych !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       $numberOfRows = 11;
       $parsedVPs = null;
@@ -65,7 +70,18 @@ class PracovniVykazController extends Controller
         }
       }
 
-      return redirect('/pracovniVykaz');
+      // ABSENCNI_DEN
+      $duvody = ['dovolena', 'nemoc', 'svatek'];
+      for ($row=2; $row<5; $row++){
+        for ($col=1; $col<=$Datum->numOfDays; $col++){
+          $Hodiny = $input['t2'][$row][$col];
+          $Truhlar = Zamestnanec::getTruhlar($TruhlarID);
+
+          Absencni_den::store($Truhlar, $Datum, $Hodiny, $TruhlarID, $duvody[$row-2], $col);
+          }
+        }
+
+      return redirect('/rozcesti');
     }
 
 
