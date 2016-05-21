@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `Objednavka` CASCADE
 
 CREATE TABLE `Zamestnanec`
 (
-	`ID_Zam` INT NOT NULL,
+	`ID_Zam` INT NOT NULL AUTO_INCREMENT,
 	`Jmeno` VARCHAR(50) 	 NULL,
 	`Prijmeni` VARCHAR(50) 	 NULL,
 	`Sazba` INT 	 NULL,
@@ -38,9 +38,9 @@ CREATE TABLE `Zamestnanec`
 
 CREATE TABLE `Login`
 (
-	`id` INT NOT NULL,
+	`id` INT NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(50) 	 NULL,
-	`password` VARCHAR(50) 	 NULL,
+	`password` VARCHAR(255) 	 NULL,
   	`role` VARCHAR(50)  NULL,
   	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   	`updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -53,7 +53,7 @@ CREATE TABLE `Login`
 
 CREATE TABLE `Pracovni_den`
 (
-	`id` INT NOT NULL,
+	`id` INT NOT NULL AUTO_INCREMENT,
 	`Datum` DATE NOT NULL,
 	`Hodiny` INT 	 NULL,
 	`ID_Zam` INT 	 NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `Pracovni_den`
 
 CREATE TABLE `Absencni_den`
 (
-	`id` INT NOT NULL,
+	`id` INT NOT NULL AUTO_INCREMENT,
 	`Datum` DATE NOT NULL,
 	`ID_Zam` INT 	 NULL,
 	`Hodiny` INT 	 NULL,
@@ -78,7 +78,6 @@ CREATE TABLE `Absencni_den`
 CREATE TABLE `Objednavka`
 (
 	`id` INT NOT NULL,
-	`Cislo_VP` INT NOT NULL,
 	`Jmeno` VARCHAR(50) 	 NULL,
 	`Od` DATE 	 NULL,
 	`Do` DATE 	 NULL,

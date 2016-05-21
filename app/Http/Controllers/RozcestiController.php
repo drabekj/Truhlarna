@@ -6,6 +6,7 @@ use DB;
 use App\Pracovni_den;
 use App\Zamestnanec;
 use App\Absencni_den;
+use App\IntegrityChecks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -27,12 +28,22 @@ class RozcestiController extends Controller
         return view('rozcesti');
     }
 
-    public function pracovniVykaz(Request $vykaz_data)
-    {
-        $this->validate($vykaz_data, [
+    /**
+   * This method is used to add two integers. This is
+   * a the simplest form of a class method, just to
+   * 
+   * @param numA This is the first paramter to addNum method
+   * @return 
+   */
+    public function pracovniVykaz(/*Request $vykaz_data*/)
+    {   $vykaz_data=(object) array(
+        'username' => 1,
+        'datumPracvykaz' => '2015-1'
+        );
+  /*      $this->validate($vykaz_data, [
           'username' => 'exists:Zamestnanec,ID_Zam',
         ]);
-
+*/
         // Objekt s informacemi o truhlari podle ID z formulare
         // promenne: id, jmeno, prijmeni
         $Truhlar = Zamestnanec::getTruhlar($vykaz_data->username);
@@ -90,6 +101,13 @@ class RozcestiController extends Controller
 
 
 
+    /**
+   * This method is used to add two integers. This is
+   * a the simplest form of a class method, just to
+   * 
+   * @param 
+   * @return 
+   */
     public function ukolovaMzda(Request $mzda_data)
     {
          // Get Year send from Rozcesti
@@ -109,7 +127,13 @@ class RozcestiController extends Controller
     }
 
 
-
+    /**
+   * This method is used to add two integers. This is
+   * a the simplest form of a class method, just to
+   * 
+   * @param numA This is the first paramter to addNum method
+   * @return 
+   */
     public function odvadeciVykaz(Request $odvod_data)
    {
        // 31 days + 5 (Cislo VP, Hod, sazba, Mzda U, Mzda C)
