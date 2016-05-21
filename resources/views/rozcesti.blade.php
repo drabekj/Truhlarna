@@ -22,6 +22,11 @@
     ul:not(.nav):hover{
         padding-bottom:2em;
     }
+    
+    input{
+        width:60%;
+        height:2em;
+    }
 
     .validate_error{
       margin: auto;

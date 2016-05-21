@@ -9,6 +9,7 @@
 <style type="text/css">
     table{
         text-align:center;
+        width:90%;
     }
     td{
         width:100px;
@@ -18,12 +19,15 @@
         /*width:100px;*/
         width:100%;
     }
+    .firstRow{
+        background-color:#6BB9F0; /*#6699CC;*/
+    }
     .col-md-4{
         width:100%;
     }
 </style>
 
-<table border="1" width="80%" align="center">
+<table border="1" align="center">
 
 <?php
 $numberofVPs  = count($VPs);
@@ -39,57 +43,57 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         //naplaneni prvniho radku
         if ($row == 0) {
             if ( $col == 0 )
-                echo "<td rowspan='2'>Číslo VP</td>";
+                echo "<td class='firstRow' rowspan='2'>Číslo VP</td>";
             if ( $col == 1 )
-              echo "<td rowspan='2'>Název Akce</td>";
+              echo "<td class='firstRow' rowspan='2'>Název Akce</td>";
             if ( $col == 2 )
-                echo "<td colspan='3'>Počáteční stav nedokončené výroby</td>";
+                echo "<td class='firstRow' colspan='3'>Počáteční stav nedokončené výroby</td>";
             if ( $col == 5 )
-                echo "<td colspan='2'> Náběh nákladů v běžném měsíci</td>";
+                echo "<td class='firstRow' colspan='2'> Náběh nákladů v běžném měsíci</td>";
             if ( $col == 7 )
-                echo "<td colspan='2'>Počáteční stav nedokončené výroby</td>";
+                echo "<td class='firstRow' colspan='2'>Počáteční stav nedokončené výroby</td>";
             if ( $col == 7 )
-                echo "<td colspan='2'>Celkem náklady</td>";
+                echo "<td class='firstRow' colspan='2'>Celkem náklady</td>";
             if ( $col == 9 )
-                echo "<td colspan='2'>Náklady na dokončené výkony</td>";
+                echo "<td class='firstRow' colspan='2'>Náklady na dokončené výkony</td>";
             if ( $col == 11 )
-                echo "<td colspan='2'>Konečný stav nedokončené výroby</td>";
+                echo "<td class='firstRow' colspan='2'>Konečný stav nedokončené výroby</td>";
             if ( $col == 13 )
-                echo "<td rowspan='2'>Fakturace</td>";
+                echo "<td class='firstRow' rowspan='2'>Fakturace</td>";
              if ( $col == 14 )
-                echo "<td colspan='3'>Rozpracovanost</td>";
+                echo "<td class='firstRow' colspan='3'>Rozpracovanost</td>";
         }
         if ( $row == 1){
             if ( $col == 2 )
-                echo "<td>Materiál</td>";
+                echo "<td class='firstRow'>Materiál</td>";
             if ( $col == 3 )
-                echo "<td>Polotovary vlastní výroby</td>";
+                echo "<td class='firstRow'>Polotovary vlastní výroby</td>";
             if ( $col == 4 )
-                echo "<td>Mzdy</td>";
+                echo "<td class='firstRow'>Mzdy</td>";
             if ( $col == 5 )
-                echo "<td>Materiál</td>";
+                echo "<td class='firstRow'>Materiál</td>";
             if ( $col == 6 )
-                echo "<td>Mzdy</td>";
+                echo "<td class='firstRow'>Mzdy</td>";
             if ( $col == 7 )
-                echo "<td>Materiál</td>";
+                echo "<td class='firstRow'>Materiál</td>";
             if ( $col == 8 )
-                echo "<td>Mzdy</td>";
+                echo "<td class='firstRow'>Mzdy</td>";
             if ( $col == 9 )
-                echo "<td>Materiál</td>";
+                echo "<td class='firstRow'>Materiál</td>";
             if ( $col == 10 )
-                echo "<td>Mzdy</td>";
+                echo "<td class='firstRow'>Mzdy</td>";
             if ( $col == 11 )
-                echo "<td>Materiál</td>";
+                echo "<td class='firstRow'>Materiál</td>";
             if ( $col == 12 )
-                echo "<td>Polotovary vlastní výroby</td>";
+                echo "<td class='firstRow'>Polotovary vlastní výroby</td>";
             if ( $col == 13 )
-                echo "<td>Mzdy</td>";
+                echo "<td class='firstRow'>Mzdy</td>";
             if ( $col == 15 )
-                echo "<td>Minulý měsíc</td>";
+                echo "<td class='firstRow'>Minulý měsíc</td>";
             if ( $col == 16 )
-                echo "<td>Aktuální měsíc</td>";
+                echo "<td class='firstRow'>Aktuální měsíc</td>";
             if ( $col == 17 )
-                echo "<td>Rozdíl</td>";
+                echo "<td class='firstRow'>Rozdíl</td>";
         }
         //vypsani sloupecku cisel VP
         if ($col == 0 && $row > 1) {
