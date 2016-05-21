@@ -86,8 +86,6 @@ class RozcestiController extends Controller
           // return json_encode($VPs);
         $soucetOdpracovanychHodin = Pracovni_den::getSoucetOdpracovanychHodin($Truhlar, $Datum);
 
-        // echo "QueryData <br>";
-        // var_dump($T1Data);
         $sazba = Zamestnanec::find($Truhlar->id)->Sazba;
         $sumSazba = 0;
         $pravyPanelData = null;
@@ -109,6 +107,21 @@ class RozcestiController extends Controller
         }
         $pravyPanelData[$Datum->numOfDays+3][14] =  $sumSazba;
 
+        // celkem jednotlive dny
+        $celkemJednotliveDny = null;
+        $superSum = 0;
+        for ( $col=1; $col<=$Datum->numOfDays; $col++){
+          $sum = 0;
+          for ( $row=1; $row<=count($VPs); $row++){
+            // if (array_key_exists($col, $T1Data[$row] )){
+            if (count($T1Data[$row][$col])){
+              $sum += $T1Data[$row][$col][0]->Hodiny;
+            }
+          }
+          $celkemJednotliveDny[$col] = $sum;
+          $superSum += $sum;
+        }
+
         return view('pracovniVykaz', [
           'Truhlar'       => $Truhlar,
           'Datum'         => $Datum,
@@ -122,7 +135,8 @@ class RozcestiController extends Controller
           'nemoc'         => $nemoc,
           'svatek'        => $svatek,
           'celkemAbsenceHodiny' => $celkemAbsenceHodiny,
-          'pravyPanelData' => $pravyPanelData
+          'pravyPanelData' => $pravyPanelData,
+          'celkemJednotliveDny' => $celkemJednotliveDny
         ]);
 
     }

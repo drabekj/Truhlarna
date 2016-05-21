@@ -229,11 +229,8 @@ class Pracovni_den extends Model
 
       $result = null;
       $VPs = Pracovni_den::getVPsForUser($Truhlar->id, $Datum);
-      // echo $VPs[0]->ID_Obj;
       $pracovniDnyTruhlare = Pracovni_den::getPracovniDnyTruhlare($Truhlar, $Datum, $Datum->numOfDays+5);
-      // var_dump($pracovniDnyTruhlare);
-      // echo "Days=" . $Datum->numOfDays;
-
+    
       $result = null;
       $sum = 0;
       $superSum = 0;
