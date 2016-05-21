@@ -8,6 +8,7 @@ class Objednavka extends Model
 {
   protected $primaryKey = 'id';
   protected $table = 'Objednavka';
+  public $timestamps = false;
 
   protected $fillable = ['id', 'Cislo_VP', 'Jmeno', 'Cislo_VP','Od', 'Do'];
 

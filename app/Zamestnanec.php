@@ -8,6 +8,7 @@ class Zamestnanec extends Model
 {
   protected $primaryKey = 'ID_Zam';
   protected $table = 'Zamestnanec';
+  public $timestamps = false;
 
   protected $fillable = [ 'Jmeno', 'Prijmeni'];
 
@@ -16,13 +17,29 @@ class Zamestnanec extends Model
   }
 
   /**
-  * Podle ID truhlare v parametru dohleda jmeno a prijmeni a vsechna data vrati v
-  * objektu.
+  * Ziskej ID vyrobnich prikazu pro danneho truhlare
+  * pro zadane datum.
   *
-  * @param int $truhlarID ID truhlare ktereho hledame
+  * @param int        $TruhlarID   ID truhlare pro ktereho chceme ziskat vystup.
+  * @param Collection $TruhlarID   Kolekce obsahujici rok a mesic pro ktere
+  * chceme ziskat vystup.
   *
-  * @return Objekt obsahujici id,jmeno a prijmeni
-  */
+  * @return Collection  Kolekce obsahujici vyrobni prikazy filtrovane podle
+  * pravidel v argumentu.
+  **/
+  public static function getVPs($TruhlarID, $datum){
+    $VPs = Zamestnanec::find($TruhlarID)
+    ->hasPracovniDny()
+    ->whereRaw('extract(month from Datum) = ?', [$datum->mesic])
+    ->whereRaw('extract(year from Datum) = ?', [$datum->rok])
+    ->select("ID_Obj")
+    ->distinct()
+    ->orderBy('ID_Obj', 'asc')
+    ->get();
+
+    return $VPs;
+  }
+
   public static function getTruhlar($truhlarID){
     $truhlarJmeno = Zamestnanec::find($truhlarID)
     ->select("Jmeno", "Prijmeni")

@@ -9,6 +9,7 @@ use DB;
 class Pracovni_den extends Model
 {
     protected $table = 'Pracovni_den';
+    public $timestamps = false;
 
     protected $fillable = ['datum', 'ID_Obj', 'Hodiny', 'ID_Zam'];
 
