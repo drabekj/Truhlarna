@@ -219,15 +219,15 @@ for ($row = 0; $row < $numOfRows; $row++) {
             }
             if ( $row == 5 ){
               if ($celkemAbsenceHodiny[$col])
-                echo "<td class='colorfull'>" . $celkemAbsenceHodiny[$col] . "</td>";
+                echo "<td class='colorfull'>" . $celkemAbsenceHodiny[$col] / 8 . "</td>";
               else
-                echo "<td class='colorfull'></td>";
+                echo "<td class='colorfull'>0</td>";
             }
             if ( $row == 6 ){
               if ($celkemAbsenceHodiny[$col])
-                echo "<td class='colorfull'>" . $celkemAbsenceHodiny[$col]*8 . "</td>";
+                echo "<td class='colorfull'>" . $celkemAbsenceHodiny[$col] . "</td>";
               else
-                echo "<td class='colorfull'></td>";
+                echo "<td class='colorfull'>0</td>";
             }
             if ( $row == 7 ){
               echo "<td class='colorfull'></td>";

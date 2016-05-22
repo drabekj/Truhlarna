@@ -81,7 +81,7 @@ class RozcestiController extends Controller
         $svatek   = Absencni_den::getAbsence($Truhlar, $Datum, 'svatek');
 
         for ($i=1; $i<=count($dovolena); $i++)
-          $celkemAbsenceHodiny[$i] = $odpracovaneDny[$i] + $dovolena[$i] + $nemoc[$i] + $svatek[$i];
+          $celkemAbsenceHodiny[$i] = $odpracovaneDny[$i] * 8 + $dovolena[$i] + $nemoc[$i] + $svatek[$i];
 
           // return json_encode($VPs);
         $soucetOdpracovanychHodin = Pracovni_den::getSoucetOdpracovanychHodin($Truhlar, $Datum);
