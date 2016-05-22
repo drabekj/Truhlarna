@@ -62,6 +62,11 @@
         border:2px solid black;
         height:6em;
     }
+    #narrowDiv{
+        width: 0;
+        word-wrap: break-word;
+        font-weight:bold;
+    }
 
     .col-md-4{
         width:100%;
@@ -217,7 +222,8 @@ for ($row = 0; $row < $numOfRows; $row++) {
                 echo "<td class='text'><input type='text' name='t2[$row][$col]' value=$value></td>";
               else{
                 if ($col == 1)
-                   echo "<td><div id='hod'>H<br>O<div></div>D</div><input type='text' name='t2[$row][$col]' value=$value></td>";
+                   echo "<td><div id='hod'><div id='narrowDiv'>HOD</div></div>
+                   <input type='text' name='t2[$row][$col]' value=$value></td>";
                 else
                     echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
               }
