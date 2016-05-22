@@ -28,12 +28,17 @@
     .textLonger{
         /*width has to 2times more than in .text*/
         width:10%;
+        background-color:#cccccc;
     }
 
     .firstRow{
         font-weight: bold;
         height:3em;
         background-color:#6BB9F0; /*#6699CC;*/
+    }
+    
+    .colorfull{
+         background-color:#cccccc;
     }
 
     #space{
@@ -108,6 +113,7 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
                 $value=$queryData[$row][$col][0]->Hodiny;
             }
             if ( $row == 14 && $col < 32 )
+            if($col <= count($celkemJednotliveDny))
                 $value = $celkemJednotliveDny[$col];
             // naplneni hodnot souctu na prave strane tabulky
             else{
@@ -175,7 +181,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
             // row - Odpracovane dny
             if ( $row == 1 ){
               $value = $odpracovaneDny[$col];
-              echo "<td>" . $value . "</td>";
+              echo "<td class='colorfull'>" . $value . "</td>";
             }
             //row - Dovolena
             if ( $row == 2 ){
@@ -196,7 +202,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
               echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
 
               if ( $col == $Datum->numOfDays+1 ){
-                echo "<td colspan='2'>Stravenky:</td>";
+                echo "<td class='textLonger' colspan='2'>Stravenky:</td>";
                 echo "<td>" . "<input type='text' name='t2[$row][$col+1]'></td>";
               }
             }
@@ -206,24 +212,24 @@ for ($row = 0; $row < $numOfRows; $row++) {
               echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
 
               if ( $col == $Datum->numOfDays+1 ){
-                echo "<td colspan='2'>Obědy:</td>";
+                echo "<td class='textLonger' colspan='2'>Obědy:</td>";
                 echo "<td>" . "<input type='text' name='t2[$row][$col]'></td>";
               }
             }
             if ( $row == 5 ){
               if ($celkemAbsenceHodiny[$col])
-                echo "<td>" . $celkemAbsenceHodiny[$col] . "</td>";
+                echo "<td class='colorfull'>" . $celkemAbsenceHodiny[$col] . "</td>";
               else
-                echo "<td></td>";
+                echo "<td class='colorfull'></td>";
             }
             if ( $row == 6 ){
               if ($celkemAbsenceHodiny[$col])
-                echo "<td>" . $celkemAbsenceHodiny[$col]*8 . "</td>";
+                echo "<td class='colorfull'>" . $celkemAbsenceHodiny[$col]*8 . "</td>";
               else
-                echo "<td></td>";
+                echo "<td class='colorfull'></td>";
             }
             if ( $row == 7 ){
-              echo "<td></td>";
+              echo "<td class='colorfull'></td>";
             }
         }
 
