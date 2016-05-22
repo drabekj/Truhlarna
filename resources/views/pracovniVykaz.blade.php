@@ -4,7 +4,7 @@
 
 @section('content')
 <h1 align="center">Pracovní výkaz</h1>
-<p align="center">Zaměstnanec: {{ $Truhlar->jmeno }} {{ $Truhlar->prijmeni }} Odbdobí: {{ $Datum->rok }}-{{ $Datum->mesic }}  </p>
+<p align="center"><b>Zaměstnanec:</b>  {{ $Truhlar->jmeno }} {{ $Truhlar->prijmeni }} (id:{{$Truhlar->id}}) <b>Odbdobí:</b> 1.{{ $Datum->mesic }}.{{ $Datum->rok }}-{{ $Datum->numOfDays }}.{{ $Datum->mesic }}.{{ $Datum->rok }}  </p>
 
 <style type="text/css">
     table{
@@ -15,10 +15,15 @@
     input{
         width:100%;
         height:2em;
+        text-align:center;
     }
 
     td{
         height:2em;
+        z-index: initial;
+    }
+    tr{
+        z-index: 10;
     }
     .text{
         width:5%;
@@ -28,7 +33,7 @@
     .textLonger{
         /*width has to 2times more than in .text*/
         width:10%;
-        background-color:#cccccc;
+        background-color:#eeeeee;
     }
 
     .firstRow{
@@ -36,13 +41,41 @@
         height:3em;
         background-color:#6BB9F0; /*#6699CC;*/
     }
-    
+
     .colorfull{
-         background-color:#cccccc;
+         background-color:#eeeeee;
+    }
+
+    .colorfull_VPs{
+         background-color:#F0F8FF;
+    }
+
+    .colorfull_T2_left{
+         background-color:#6BB9F0;
+    }
+
+    .color_result{
+         background-color:#FDE3A7;
     }
 
     #space{
         padding:2em;
+    }
+
+    #hod{
+        z-index: -1;
+        left:5.5%;
+        width:2%;
+        position:absolute;
+        border:2px solid black;
+        height:6em;
+    }
+
+    #narrowDiv{
+        width: 0;
+        word-wrap: break-word;
+        font-weight:bold;
+        padding: 25% 33%;
     }
 
     .col-md-4{
@@ -92,17 +125,17 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
         if ($col == 0 && $row != 0) {
             //cislo VP
             if ($row < $VPs->count() + 1)
-                echo "<td><input name='$row.$col' value='" . $VPs[$row - 1]->ID_Obj . "'></td>";
+                echo "<td><input name='$row.$col' value='" . $VPs[$row - 1]->ID_Obj . "' class='colorfull_VPs'></td>";
             else if ($row < 12){
                 //jinak vypise policko pro vlozeni hodnoty
-                echo "<td><input type='text' name='$row.$col'>" . "</td>";
+                echo "<td><input type='text' name='$row.$col' class='colorfull_VPs'>" . "</td>";
             }
             else if ( $row == 12)
-                echo "<td>C.hod.úkol</td>";
+                echo "<td class='colorfull'>C.hod.úkol</td>";
             else if ( $row == 13)
-                echo "<td>Režie</td>";
+                echo "<td class='colorfull'>Režie</td>";
             else if ( $row == 14)
-                echo "<td>Celkem</td>";
+                echo "<td class='colorfull'>Celkem</td>";
 
         //naplneni hodnot do tabulky
       } elseif ($col != 0 && $row != 0) {
@@ -112,9 +145,10 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
               if(count($queryData[$row][$col])!=0)
                 $value=$queryData[$row][$col][0]->Hodiny;
             }
-            if ( $row == 14 && $col < 32 )
-            if($col <= count($celkemJednotliveDny))
+            if ( $row == 14 && $col < 32 ){
+              if($col <= count($celkemJednotliveDny))
                 $value = $celkemJednotliveDny[$col];
+            }
             // naplneni hodnot souctu na prave strane tabulky
             else{
               if ( $col == $Datum->numOfDays+1 )
@@ -125,7 +159,12 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
                 $value = $pravyPanelData[$Datum->numOfDays+3][$row];
             }
             //hodiny z databaze
-            echo "<td>" . "<input type='text' name='$row.$col' value=$value></td>";
+            if ( $row == 14 && $col >= $Datum->numOfDays+3)
+              echo "<td class='color_result'>" . $value . "</td>";
+            else if ( $row > 11 || $col > $Datum->numOfDays )
+              echo "<td class='colorfull'>" . $value . "</td>";
+            else
+              echo "<td>" . "<input type='text' name='$row.$col' value=$value></td>";
             $counter++;
         }
     }
@@ -161,19 +200,19 @@ for ($row = 0; $row < $numOfRows; $row++) {
         if ($col == 0 && $row != 0) {
             //vypise cislo VP
             if ($row == 1)
-                echo "<td>Odp dny</td>";
+                echo "<td class='colorfull_T2_left'>Odp dny</td>";
             if ($row == 2)
-                echo "<td>Dovolena</td>";
+                echo "<td class='colorfull_T2_left'>Dovolena</td>";
             if ($row == 3)
-                echo "<td>Nemoc</td>";
+                echo "<td class='colorfull_T2_left'>Nemoc</td>";
             if ($row == 4)
-                echo "<td>Svátek</td>";
+                echo "<td class='colorfull_T2_left'>Svátek</td>";
             if ($row == 5)
-                echo "<td>Celkem dny</td>";
+                echo "<td class='colorfull_T2_left'>Celkem dny</td>";
             if ($row == 6)
-                echo "<td>Celkem hod</td>";
+                echo "<td class='colorfull_T2_left'>Celkem hod</td>";
             if ($row == 7)
-                echo "<td>Přesčas</td>";
+                echo "<td class='colorfull_T2_left'>Přesčas</td>";
         }
         elseif($col > 0 && $col<$Datum->numOfDays+2 && $row > 0){
             //dotaz do DB pro poc hod - nemoc, dovolena atd.
@@ -188,12 +227,17 @@ for ($row = 0; $row < $numOfRows; $row++) {
               $value = $dovolena[$col];
               if ( $col>=32 )
                 echo "<td class='text'><input type='text' name='t2[$row][$col]' value=$value></td>";
-              else
-                echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
+              else{
+                if ($col == 1)
+                   echo "<td><div id='hod'><div id='narrowDiv'>HOD</div></div>
+                   <input type='text' name='t2[$row][$col]' value=$value></td>";
+                else
+                    echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
+              }
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td class='textLonger' colspan='2'>Cestovné:</td>";
-                echo "<td class='text'>" . "<input type='text' name='t2[$row][$col+1]'></td>";
+                echo "<td class='text'>" . "<input type='text' name='t2[$row][$col+1]' class='color_result'></td>";
               }
             }
             // row - Nemoc
@@ -203,7 +247,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td class='textLonger' colspan='2'>Stravenky:</td>";
-                echo "<td>" . "<input type='text' name='t2[$row][$col+1]'></td>";
+                echo "<td>" . "<input type='text' name='t2[$row][$col+1]' class='color_result'></td>";
               }
             }
             // row - Svatek
@@ -213,20 +257,20 @@ for ($row = 0; $row < $numOfRows; $row++) {
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td class='textLonger' colspan='2'>Obědy:</td>";
-                echo "<td>" . "<input type='text' name='t2[$row][$col]'></td>";
+                echo "<td>" . "<input type='text' name='t2[$row][$col]' class='color_result'></td>";
               }
             }
             if ( $row == 5 ){
               if ($celkemAbsenceHodiny[$col])
-                echo "<td class='colorfull'>" . $celkemAbsenceHodiny[$col] . "</td>";
+                echo "<td class='colorfull'>" . $celkemAbsenceHodiny[$col] / 8 . "</td>";
               else
-                echo "<td class='colorfull'></td>";
+                echo "<td class='colorfull'>0</td>";
             }
             if ( $row == 6 ){
               if ($celkemAbsenceHodiny[$col])
-                echo "<td class='colorfull'>" . $celkemAbsenceHodiny[$col]*8 . "</td>";
+                echo "<td class='colorfull'>" . $celkemAbsenceHodiny[$col] . "</td>";
               else
-                echo "<td class='colorfull'></td>";
+                echo "<td class='colorfull'>0</td>";
             }
             if ( $row == 7 ){
               echo "<td class='colorfull'></td>";

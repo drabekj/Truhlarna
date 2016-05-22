@@ -19,7 +19,6 @@
         width:100%;
         height:2em;
         text-align:center;
-
     }
     .firstRow{
         background-color:#6BB9F0; /*#6699CC;*/

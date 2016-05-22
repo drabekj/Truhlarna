@@ -25,7 +25,8 @@ class RozcestiController extends Controller
 
     public function rozcesti()
     {
-        return view('rozcesti');
+        $truhlari = Zamestnanec::select(\DB::raw('CONCAT(ID_ZAM , " ", jmeno, " ", prijmeni) AS fulljmeno, ID_ZAM'))->lists('fulljmeno', 'ID_ZAM');
+        return view('rozcesti')->with( 'truhlari', $truhlari);
     }
 
     /**
@@ -43,10 +44,10 @@ class RozcestiController extends Controller
         $this->validate($vykaz_data, [
           'username' => 'exists:Zamestnanec,ID_Zam',
         ]);
-
         // Objekt s informacemi o truhlari podle ID z formulare
         // promenne: id, jmeno, prijmeni
         $Truhlar = Zamestnanec::getTruhlar($vykaz_data->username);
+        //$Truhlar = Zamestnanec::getTruhlar($vykaz_data->ids);
 
         // Ziskej mesic datumu z formulare na rozcesti
         $mesic = date("m",strtotime($vykaz_data->datumPracvykaz));
@@ -81,7 +82,7 @@ class RozcestiController extends Controller
         $svatek   = Absencni_den::getAbsence($Truhlar, $Datum, 'svatek');
 
         for ($i=1; $i<=count($dovolena); $i++)
-          $celkemAbsenceHodiny[$i] = $odpracovaneDny[$i] + $dovolena[$i] + $nemoc[$i] + $svatek[$i];
+          $celkemAbsenceHodiny[$i] = $odpracovaneDny[$i] * 8 + $dovolena[$i] + $nemoc[$i] + $svatek[$i];
 
           // return json_encode($VPs);
         $soucetOdpracovanychHodin = Pracovni_den::getSoucetOdpracovanychHodin($Truhlar, $Datum);

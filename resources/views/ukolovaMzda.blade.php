@@ -26,6 +26,9 @@
         text-align:center;
         width:80%;
     }
+    input{
+        text-align:center;
+    }
     .col-md-4{
         width:100%;
     }
