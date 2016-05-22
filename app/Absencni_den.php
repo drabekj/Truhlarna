@@ -31,8 +31,8 @@ class Absencni_den extends Model
 
     $sum = 0;
     foreach ($queryData as $item){
-      $result[intval(date("d", strtotime($item->Datum)))] = $item->Hodiny / 8;
-      $sum += $item->Hodiny / 8;
+      $result[intval(date("d", strtotime($item->Datum)))] = $item->Hodiny;
+      $sum += $item->Hodiny;
     }
 
     $result[$Datum->numOfDays+1] = $sum;
@@ -42,10 +42,10 @@ class Absencni_den extends Model
 
   /**
      * Ulozi zaznam absencniho dne do databaze.
-     * 
+     *
      * Ulozi zaznam absencniho dne do databaze, pokud jiz existuje takovy zaznam,
      * aktualizuje jeho hodnotu.
-     * 
+     *
      * @param $Truhlar Object Truhlar ke kteremu se absenchni den vztahuje,
      *        objekt obsahuje id, jmeno, prijmeni
      * @param $Datum  Object  datum ke kteremu se absenchni zaznam vztahuje
