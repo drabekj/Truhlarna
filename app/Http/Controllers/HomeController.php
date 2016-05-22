@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     /**
      * Vytvoří novou instanci HomeController
-     * 
+     *
      * Do rout v tomto controleru ma pristup pouze prihlaseny uzivatel.
      *
      * @return void
@@ -66,7 +66,7 @@ class HomeController extends Controller
       $zamestnanci = Zamestnanec::select(\DB::raw('CONCAT(ID_ZAM , " ", jmeno, " ", prijmeni) AS fulljmeno, ID_ZAM'))->lists('fulljmeno', 'ID_ZAM');
       return view('auth/deleteUser')->with( 'zamestnanci', $zamestnanci);
     }*/
-    
+
     /**
      * Smaze uzivatele z databaze
      *
@@ -79,15 +79,15 @@ class HomeController extends Controller
       //$zamestnanci = User::select(\DB::raw('CONCAT(id , " ", username, " (", role, ")") AS fulljmeno, id'))->lists('fulljmeno', 'id');
       return view('auth/deleteUser')->with( 'zamestnanci', $zamestnanci);
     }
-    
-    
+
+
      /**
      * Smaze uzivatele z databaze
      *
      * @return view deleteUser with var zamestnanci
      */
     public function destroy(Request $request){
-      
+
       if (Hash::check($request->password, \Auth::user()->password))
       {
          User::deleteLogin($request->ids);
@@ -97,8 +97,7 @@ class HomeController extends Controller
       else {
         return \Redirect::back()->withErrors('password');
       }
-      
-    }
-  
-}
 
+    }
+
+}
