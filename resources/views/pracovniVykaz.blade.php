@@ -15,6 +15,7 @@
     input{
         width:100%;
         height:2em;
+        text-align:center;
     }
 
     td{
@@ -64,6 +65,7 @@ echo "<input hidden name='mesic' value='" . $Datum->mesic . "'>";
 
 $numOfRows = $numOfRowsT1;
 $counter=0;
+echo $Truhlar->id;
 for ($row = 0; $row <= $numOfRows+1; $row++) {
     for ($col = 0; $col < $numOfCols; $col++) {
         //zacatek radku
