@@ -45,6 +45,10 @@
     #space{
         padding:2em;
     }
+    
+    #hod{
+        z-index: -1;
+    }
 
     .col-md-4{
         width:100%;
@@ -65,7 +69,6 @@ echo "<input hidden name='mesic' value='" . $Datum->mesic . "'>";
 
 $numOfRows = $numOfRowsT1;
 $counter=0;
-echo $Truhlar->id;
 for ($row = 0; $row <= $numOfRows+1; $row++) {
     for ($col = 0; $col < $numOfCols; $col++) {
         //zacatek radku
@@ -193,9 +196,13 @@ for ($row = 0; $row < $numOfRows; $row++) {
             if ( $row == 2 ){
               $value = $dovolena[$col];
               if ( $col>=32 )
-                echo "<div id='hod'>Hod</div><td class='text'><input type='text' name='t2[$row][$col]' value=$value></td>";
-              else
-                echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
+                echo "<td class='text'><input type='text' name='t2[$row][$col]' value=$value></td>";
+              else{
+                if ($col == 0)
+                   echo "<td><div id='hod'>Hod</div><input type='text' name='t2[$row][$col]' value=$value></td>";
+                else
+                    echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
+              }
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td class='textLonger' colspan='2'>Cestovné:</td>";
