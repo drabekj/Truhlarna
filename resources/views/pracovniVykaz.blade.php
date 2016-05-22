@@ -112,8 +112,10 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
               if(count($queryData[$row][$col])!=0)
                 $value=$queryData[$row][$col][0]->Hodiny;
             }
-            if ( $row == 14 && $col < 32 )
+            if ( $row == 14 && $col < 32 ){
+              if($col <= count($celkemJednotliveDny))
                 $value = $celkemJednotliveDny[$col];
+            }
             // naplneni hodnot souctu na prave strane tabulky
             else{
               if ( $col == $Datum->numOfDays+1 )
