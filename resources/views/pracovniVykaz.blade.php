@@ -36,7 +36,7 @@
         height:3em;
         background-color:#6BB9F0; /*#6699CC;*/
     }
-    
+
     .colorfull{
          background-color:#cccccc;
     }
@@ -113,7 +113,6 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
                 $value=$queryData[$row][$col][0]->Hodiny;
             }
             if ( $row == 14 && $col < 32 )
-            if($col <= count($celkemJednotliveDny))
                 $value = $celkemJednotliveDny[$col];
             // naplneni hodnot souctu na prave strane tabulky
             else{
