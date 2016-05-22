@@ -70,7 +70,7 @@ class Absencni_den extends Model
 
       $absDen->Datum  = $formatDatum;
       $absDen->ID_Zam = $ID_Zam;
-      $absDen->Hodiny = $Hodiny * 8;
+      $absDen->Hodiny = $Hodiny;
       $absDen->Duvod  = $Duvod;
 
       $absDen->save();
