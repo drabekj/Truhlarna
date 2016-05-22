@@ -56,16 +56,18 @@
 
     #hod{
         z-index: -1;
-        left:5%;
-        width:2.5%;
+        left:5.5%;
+        width:2%;
         position:absolute;
         border:2px solid black;
         height:6em;
     }
+    
     #narrowDiv{
         width: 0;
         word-wrap: break-word;
         font-weight:bold;
+        margin:auto; 
     }
 
     .col-md-4{
