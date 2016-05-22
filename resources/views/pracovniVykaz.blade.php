@@ -46,6 +46,14 @@
          background-color:#eeeeee;
     }
 
+    .colorfull_VPs{
+         background-color:#F0F8FF;
+    }
+
+    .colorfull_T2_left{
+         background-color:#6BB9F0;
+    }
+
     .color_result{
          background-color:#FDE3A7;
     }
@@ -117,10 +125,10 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
         if ($col == 0 && $row != 0) {
             //cislo VP
             if ($row < $VPs->count() + 1)
-                echo "<td><input name='$row.$col' value='" . $VPs[$row - 1]->ID_Obj . "'></td>";
+                echo "<td><input name='$row.$col' value='" . $VPs[$row - 1]->ID_Obj . "' class='colorfull_VPs'></td>";
             else if ($row < 12){
                 //jinak vypise policko pro vlozeni hodnoty
-                echo "<td><input type='text' name='$row.$col'>" . "</td>";
+                echo "<td><input type='text' name='$row.$col' class='colorfull_VPs'>" . "</td>";
             }
             else if ( $row == 12)
                 echo "<td class='colorfull'>C.hod.úkol</td>";
@@ -192,19 +200,19 @@ for ($row = 0; $row < $numOfRows; $row++) {
         if ($col == 0 && $row != 0) {
             //vypise cislo VP
             if ($row == 1)
-                echo "<td>Odp dny</td>";
+                echo "<td class='colorfull_T2_left'>Odp dny</td>";
             if ($row == 2)
-                echo "<td>Dovolena</td>";
+                echo "<td class='colorfull_T2_left'>Dovolena</td>";
             if ($row == 3)
-                echo "<td>Nemoc</td>";
+                echo "<td class='colorfull_T2_left'>Nemoc</td>";
             if ($row == 4)
-                echo "<td>Svátek</td>";
+                echo "<td class='colorfull_T2_left'>Svátek</td>";
             if ($row == 5)
-                echo "<td>Celkem dny</td>";
+                echo "<td class='colorfull_T2_left'>Celkem dny</td>";
             if ($row == 6)
-                echo "<td>Celkem hod</td>";
+                echo "<td class='colorfull_T2_left'>Celkem hod</td>";
             if ($row == 7)
-                echo "<td>Přesčas</td>";
+                echo "<td class='colorfull_T2_left'>Přesčas</td>";
         }
         elseif($col > 0 && $col<$Datum->numOfDays+2 && $row > 0){
             //dotaz do DB pro poc hod - nemoc, dovolena atd.
@@ -212,10 +220,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
             // row - Odpracovane dny
             if ( $row == 1 ){
               $value = $odpracovaneDny[$col];
-              if ( $col >= 32 )
-               echo "<td class='colorfull'>" . $value . "</td>";
-              else
-                echo "<td>" . $value . "</td>";
+              echo "<td class='colorfull'>" . $value . "</td>";
             }
             //row - Dovolena
             if ( $row == 2 ){
@@ -232,7 +237,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td class='textLonger' colspan='2'>Cestovné:</td>";
-                echo "<td class='text'>" . "<input type='text' name='t2[$row][$col+1]'></td>";
+                echo "<td class='text'>" . "<input type='text' name='t2[$row][$col+1]' class='color_result'></td>";
               }
             }
             // row - Nemoc
@@ -242,7 +247,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td class='textLonger' colspan='2'>Stravenky:</td>";
-                echo "<td>" . "<input type='text' name='t2[$row][$col+1]'></td>";
+                echo "<td>" . "<input type='text' name='t2[$row][$col+1]' class='color_result'></td>";
               }
             }
             // row - Svatek
@@ -252,7 +257,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
 
               if ( $col == $Datum->numOfDays+1 ){
                 echo "<td class='textLonger' colspan='2'>Obědy:</td>";
-                echo "<td>" . "<input type='text' name='t2[$row][$col]'></td>";
+                echo "<td>" . "<input type='text' name='t2[$row][$col]' class='color_result'></td>";
               }
             }
             if ( $row == 5 ){
