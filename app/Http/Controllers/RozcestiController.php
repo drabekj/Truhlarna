@@ -25,7 +25,8 @@ class RozcestiController extends Controller
 
     public function rozcesti()
     {
-        return view('rozcesti');
+        $truhlari = Zamestnanec::select(\DB::raw('CONCAT(ID_ZAM , " ", jmeno, " ", prijmeni) AS fulljmeno, ID_ZAM'))->lists('fulljmeno', 'ID_ZAM');
+        return view('rozcesti')->with( 'truhlari', $truhlari);
     }
 
     /**
@@ -47,6 +48,7 @@ class RozcestiController extends Controller
         // promenne: id, jmeno, prijmeni
         $Truhlar = Zamestnanec::getTruhlar($vykaz_data->username);
         //$Truhlar = Zamestnanec::getTruhlar($vykaz_data->ids);
+        
         // Ziskej mesic datumu z formulare na rozcesti
         $mesic = date("m",strtotime($vykaz_data->datumPracvykaz));
 

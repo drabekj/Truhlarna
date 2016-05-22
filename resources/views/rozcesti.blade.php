@@ -49,9 +49,9 @@
                 </button>
             </li>
             <li class="skryte"><input type="username" name="username" placeholder="Uživatelské ID" required></li>
-            <li class="skryte">{{ Form::select('ids', $truhlari, null, array('class' => 'form-control')) }}</li>
+            <!--<li class="skryte">{{ Form::select('ids', $truhlari, null, array('class' => 'form-control')) }}</li>-->
             @if (count($errors) > 0)
-              <div class="help-block validate_error alert-warning">
+             <div class="help-block validate_error alert-warning">
                   <strong class="validate_error_text">Pracovník neexistuje.</strong>
               </div>
             @endif
