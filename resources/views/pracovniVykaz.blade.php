@@ -75,7 +75,7 @@
         width: 0;
         word-wrap: break-word;
         font-weight:bold;
-        margin:auto; 
+        padding: 25% 33%;
     }
 
     .col-md-4{
