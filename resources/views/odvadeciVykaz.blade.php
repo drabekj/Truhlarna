@@ -130,8 +130,10 @@ for ($row = 0; $row <= $numOfRows; $row++) {
 
 <p>
     <div class = "col-md-4" align="center">
-            <a href="{{action('RozcestiController@rozcesti')}}"
+            <a href="rozcesti"
             class="btn btn-primary btn-lg">Zpět</a>
+            <button onclick="myFunction()"
+            class="btn btn-primary btn-lg">Uložit PDF</button>
     </div>
 </p>
 @stop
