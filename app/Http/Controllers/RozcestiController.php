@@ -43,11 +43,10 @@ class RozcestiController extends Controller
         $this->validate($vykaz_data, [
           'username' => 'exists:Zamestnanec,ID_Zam',
         ]);
-
         // Objekt s informacemi o truhlari podle ID z formulare
         // promenne: id, jmeno, prijmeni
         $Truhlar = Zamestnanec::getTruhlar($vykaz_data->username);
-
+        //$Truhlar = Zamestnanec::getTruhlar($vykaz_data->ids);
         // Ziskej mesic datumu z formulare na rozcesti
         $mesic = date("m",strtotime($vykaz_data->datumPracvykaz));
 

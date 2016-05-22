@@ -152,6 +152,7 @@ class Pracovni_den extends Model
 
       $VPs = Pracovni_den::whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
       ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+      ->where('ID_Zam', '=', $TruhlarID)
       ->select("ID_Obj")
       ->distinct()
       ->orderBy('ID_Obj', 'asc')

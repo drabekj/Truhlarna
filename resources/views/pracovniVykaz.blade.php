@@ -20,6 +20,10 @@
 
     td{
         height:2em;
+        z-index: initial;
+    }
+    tr{
+        z-index: 10;
     }
     .text{
         width:5%;
@@ -52,6 +56,11 @@
 
     #hod{
         z-index: -1;
+        left:5%;
+        width:2.5%;
+        position:absolute;
+        border:2px solid black;
+        height:6em;
     }
 
     .col-md-4{
@@ -207,8 +216,8 @@ for ($row = 0; $row < $numOfRows; $row++) {
               if ( $col>=32 )
                 echo "<td class='text'><input type='text' name='t2[$row][$col]' value=$value></td>";
               else{
-                if ($col == 0)
-                   echo "<td><div id='hod'>Hod</div><input type='text' name='t2[$row][$col]' value=$value></td>";
+                if ($col == 1)
+                   echo "<td><div id='hod'>H<br>O<div></div>D</div><input type='text' name='t2[$row][$col]' value=$value></td>";
                 else
                     echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
               }

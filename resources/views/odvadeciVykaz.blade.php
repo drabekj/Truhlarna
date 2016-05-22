@@ -115,7 +115,7 @@ for ($row = 0; $row <= $numOfRows; $row++) {
             //naplneni druheho sloupce (jmena Obj)
             $value = $VPs[$row-2]->jmeno;
             if ( !empty($value) )
-                echo "<td>" . "<input type='text' name='[$row][$col]' value=$value></td>";
+                echo "<td>" . "<input type='text' name='[$row][$col]' value='$value'></td>";
             else
                 echo "<td></td>";
         }

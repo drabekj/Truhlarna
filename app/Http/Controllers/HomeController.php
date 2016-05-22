@@ -29,7 +29,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('rozcesti');
+        $truhlari = Zamestnanec::select(\DB::raw('CONCAT(ID_ZAM , " ", jmeno, " ", prijmeni) AS fulljmeno, ID_ZAM'))->lists('fulljmeno', 'ID_ZAM');
+        return view('rozcesti')->with( 'truhlari', $truhlari);
     }
 
     public function register(){
