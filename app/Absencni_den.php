@@ -24,7 +24,9 @@ class Absencni_den extends Model
   public static function getAbsence($Truhlar, $Datum, $Duvod){
 
     $queryData = Absencni_den::where('Duvod', $Duvod)->where('ID_Zam', $Truhlar->id)
-    ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])->select('Datum', 'Hodiny')->get();
+    ->whereRaw('extract(year from Datum) = ?', [$Datum->rok])
+    ->whereRaw('extract(month from Datum) = ?', [$Datum->mesic])
+    ->select('Datum', 'Hodiny')->get();
 
     for ($i=1; $i<=$Datum->numOfDays; $i++)
       $result[$i] = "";
