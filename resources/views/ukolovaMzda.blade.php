@@ -31,22 +31,23 @@
     }
 </style>
 
-<table  border="1" align="center">
+<div id="pdf_content">
+<table border="1" align="center">
     <tr>
         <th>PP</th>
         <th></th>
-        <th>Os.čís</th>
+        <th>Os.cis</th>
         <th></th>
-        <th>Přijmení</th>
+        <th>Prijmeni</th>
         <th></th>
-        <th>Jméno</th>
+        <th>Jmeno</th>
         <th></th>
         <th>Hodiny</th>
         <th></th>
         <th></th>
-        <th>Částka</th>
+        <th>Castka</th>
     </tr>
-    
+
 <?php
  for($i=0; $i<count($Objednavky);$i++){
      echo "<tr><td>Zakázka</td><td></td><td colspan='2'>" . $Objednavky[$i]->ID_Obj->ID_Obj . " " . $Objednavky[$i]->jmeno_Obj . "</td><td colspan='8'></td></tr>";
@@ -56,14 +57,14 @@
         //pricitani celkove ceny
         $cena=$cena +  $Objednavky[$i]->truhlari[$j]->pocetHodin*$Objednavky[$i]->truhlari[$j]->sazba;
         echo "<td></td><td></td><td>" . $Objednavky[$i]->truhlari[$j]->ID_Zam . "</td>" .
-        "<td></td><td>" . $Objednavky[$i]->truhlari[$j]->Prijmeni . "</td>" . 
-        "<td></td><td>" . $Objednavky[$i]->truhlari[$j]->Jmeno . "</td>" . 
-        "<td></td><td>" . $Objednavky[$i]->truhlari[$j]->pocetHodin . "</td>" . 
+        "<td></td><td>" . $Objednavky[$i]->truhlari[$j]->Prijmeni . "</td>" .
+        "<td></td><td>" . $Objednavky[$i]->truhlari[$j]->Jmeno . "</td>" .
+        "<td></td><td>" . $Objednavky[$i]->truhlari[$j]->pocetHodin . "</td>" .
         "<td></td><td></td><td>" . $Objednavky[$i]->truhlari[$j]->pocetHodin * $Objednavky[$i]->truhlari[$j]->sazba . "</td>";
         echo "</tr>";
     }
     //celkem na zakazku
-    echo "<tr><td colspan='2'>Celkem za zakázku</td><td colspan='3'></td><td>" . $Objednavky[$i]->ID_Obj->ID_Obj . "</td><td colspan='2'></td><td>" .
+    echo "<tr><td colspan='2'>Celkem za zakazku</td><td colspan='3'></td><td>" . $Objednavky[$i]->ID_Obj->ID_Obj . "</td><td colspan='2'></td><td>" .
     $Objednavky[$i]->celkoveHodin . "</td>" . "<td colspan='2'></td><td>" . $cena . "</td></tr>";
     //oddeleni jednotlivych tabulek
     echo "<tr><td colspan='12' height='5'></td></tr>";
@@ -71,6 +72,7 @@
 ?>
 
 </table>
+</div>
 
 <div ng-controller="customersCtrl">
   <table>
@@ -88,4 +90,39 @@
     </div>
 </p>
 
+<script type="text/javascript" >
+
+  function genPDF(){
+    var pdf = new jsPDF('l', 'mm', [450, 410]);
+
+    source = $('#pdf_content')[0];
+    specialElementHandlers = {
+        '#bypassme': function (element, renderer) {
+           return true
+        }
+    };
+
+    margins = {
+      top: 80,
+      bottom: 60,
+      left: 10,
+      width: 700
+    };
+
+    pdf.fromHTML(
+    source, // HTML string or DOM elem ref.
+    margins.left, // x coord
+    margins.top, { // y coord
+        'width': margins.width, // max width of content on PDF
+        'elementHandlers': specialElementHandlers
+    },
+    function (dispose) {
+      // dispose: object with X, Y of the last line add to the PDF
+      //          this allow the insertion of new lines after html
+      pdf.save('ukolova_mzda.pdf');
+    }, margins);
+  }
+
+</script>
+  <button onclick="genPDF()" class="button">Run Code</button>
 @stop

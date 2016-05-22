@@ -25,6 +25,11 @@
         <!-- AngularJS -->
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
          {{-- @yield('js') --}}
+         <!-- PDF -->
+         <script src="{{asset('js/jquery.min.js')}}"></script>
+         <script type="text/javascript" src="{{URL::asset('js/jspdf.min.js')}}"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.0.16/jspdf.plugin.autotable.js"></script>
+
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -96,17 +101,12 @@
               $interpolateProvider.startSymbol('<%');
               $interpolateProvider.endSymbol('%>');
           });
-          
-          // app.controller('customersCtrl', function($scope, $http) {
-          //    $http.get("http://www.w3schools.com/angular/customers.php")
-          //    .then(function (response) {$scope.names = response.data.records;});
-          // });
 
           app.controller('customersCtrl', function($scope, $http) {
                 then(function (response) {$scope.names = $Objednavky;});
           });
 
         </script>
-        {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+        
     </body>
     </html>
