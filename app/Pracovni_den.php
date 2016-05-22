@@ -107,6 +107,7 @@ class Pracovni_den extends Model
         $VPs = Pracovni_den::getVPsAll($Datum);
         $numberOfVPs=count($VPs);
 
+        $objednavky = null;
         for($j=0;$j<$numberOfVPs;$j++){
             $sum[$j]=DB::table("Pracovni_den")
             ->leftJoin('Zamestnanec', 'Zamestnanec.ID_Zam', '=', 'Pracovni_den.ID_Zam')
@@ -230,7 +231,7 @@ class Pracovni_den extends Model
       $result = null;
       $VPs = Pracovni_den::getVPsForUser($Truhlar->id, $Datum);
       $pracovniDnyTruhlare = Pracovni_den::getPracovniDnyTruhlare($Truhlar, $Datum, $Datum->numOfDays+5);
-    
+
       $result = null;
       $sum = 0;
       $superSum = 0;
