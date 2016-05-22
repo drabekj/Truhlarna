@@ -16,11 +16,12 @@
         height:2em;
     }
     input{
-        /*width:100px;*/
         width:100%;
+        height:2em;
     }
     .firstRow{
         background-color:#6BB9F0; /*#6699CC;*/
+        font-weight:bold;
     }
     .col-md-4{
         width:100%;
@@ -36,7 +37,7 @@ $numOfCols = 18;
 
 $counter=0;
 for ($row = 0; $row <= $numOfRows; $row++) {
-    for ($col = 0; $col <= $numOfCols; $col++) {
+    for ($col = 0; $col < $numOfCols; $col++) {
         //zacatek radku
         if ($col == 0)
             echo "<tr>";
@@ -97,18 +98,20 @@ for ($row = 0; $row <= $numOfRows; $row++) {
         }
         //vypsani sloupecku cisel VP
         if ($col == 0 && $row > 1) {
-            $value=$VPs[$row-2]->Id_Obj; //$Objednavky[$i]->ID_Obj->ID_Obj; 
+            //naplneni prvniho sloupce (ID obj)
+            $value=$VPs[$row-2]->ID_Obj;
             if ( !empty($value) )
                 echo "<td>" . "<input type='text' name='[$row][$col]' value=$value></td>";
             else
                 echo "<td></td>";
             }
-        elseif ($col == 1 && $row > 1) {
-            //forem vypsat jednotlive nazvy akci (asi jen jmeno k vp) do slopecku
+        elseif ($col > 1 && $row > 1) {
+            //vypis tela tabulky
+            echo "<td><input></td>";
             }
-        elseif ($col > 1 && $row > 1 ){
-            //nejakej dotazt do DB - podle struktury ulozeni v DB
-            $value = $VPs[$row-2]->jmeno_Obj; //$Objednavky[$i]->jmeno_Obj;
+        elseif ($col == 1 && $row > 1 ){
+            //naplneni druheho sloupce (jmena Obj)
+            $value = $VPs[$row-2]->jmeno;
             if ( !empty($value) )
                 echo "<td>" . "<input type='text' name='[$row][$col]' value=$value></td>";
             else

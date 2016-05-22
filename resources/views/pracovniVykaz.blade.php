@@ -181,7 +181,10 @@ for ($row = 0; $row < $numOfRows; $row++) {
             // row - Odpracovane dny
             if ( $row == 1 ){
               $value = $odpracovaneDny[$col];
-              echo "<td class='colorfull'>" . $value . "</td>";
+              if ( $col >= 32 )
+               echo "<td class='colorfull'>" . $value . "</td>";
+              else
+                echo "<td>" . $value . "</td>";
             }
             //row - Dovolena
             if ( $row == 2 ){
