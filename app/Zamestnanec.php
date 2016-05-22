@@ -48,9 +48,13 @@ class Zamestnanec extends Model
    * @return Truhlar objekt obsahujici id, jmeno a prijmeni
    **/
   public static function getTruhlar($truhlarID){
-    $truhlarJmeno = Zamestnanec::find($truhlarID)
+    $truhlarJmeno = Zamestnanec::where('ID_Zam', '=', '$truhlarID')
     ->select("Jmeno", "Prijmeni")
-    ->first();
+    ->get();
+    
+    
+    // nechci ti psat do kodu, ale var_dump($truhlarJmeno) by asi pomohl
+    // var_dump($truhlarJmeno);
 
     $Truhlar = (object) array(
       'id'       => $truhlarID,

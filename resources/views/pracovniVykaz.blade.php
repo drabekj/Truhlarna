@@ -193,7 +193,7 @@ for ($row = 0; $row < $numOfRows; $row++) {
             if ( $row == 2 ){
               $value = $dovolena[$col];
               if ( $col>=32 )
-                echo "<td class='text'><input type='text' name='t2[$row][$col]' value=$value></td>";
+                echo "<div id='hod'>Hod</div><td class='text'><input type='text' name='t2[$row][$col]' value=$value></td>";
               else
                 echo "<td><input type='text' name='t2[$row][$col]' value=$value></td>";
 
