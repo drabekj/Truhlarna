@@ -95,7 +95,7 @@
     </div>
 </p>
 
-<div height='3em'>AAA</div>
+<div heigth='3em'>AAA</div>
 
 <script type="text/javascript" >
 
