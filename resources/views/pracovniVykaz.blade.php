@@ -4,7 +4,7 @@
 
 @section('content')
 <h1 align="center">Pracovní výkaz</h1>
-<p align="center">Zaměstnanec:  {{ $Truhlar->jmeno }} {{ $Truhlar->prijmeni }} Odbdobí: {{ $Datum->rok }}-{{ $Datum->mesic }}  </p>
+<p align="center"><b>Zaměstnanec:</b>  {{ $Truhlar->jmeno }} {{ $Truhlar->prijmeni }} (id:{{$Truhlar->id}}) <b>Odbdobí:</b> 1.{{ $Datum->mesic }}.{{ $Datum->rok }}-{{ $Datum->numOfDays }}.{{ $Datum->mesic }}.{{ $Datum->rok }}  </p>
 
 <style type="text/css">
     table{
@@ -70,7 +70,7 @@
         border:2px solid black;
         height:6em;
     }
-    
+
     #narrowDiv{
         width: 0;
         word-wrap: break-word;
