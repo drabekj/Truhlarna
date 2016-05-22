@@ -87,13 +87,15 @@
     <div class = "col-md-4" align="center">
             <a href="{{action('RozcestiController@rozcesti')}}"
             class="btn btn-primary btn-lg">Zpět</a>
+            <button onclick="genPDF()"
+            class="btn btn-primary btn-lg">Uložit PDF</button>
     </div>
 </p>
 
 <script type="text/javascript" >
 
   function genPDF(){
-    var pdf = new jsPDF('l', 'mm', [450, 410]);
+    var pdf = new jsPDF('p', 'mm', [550, 650]);
 
     source = $('#pdf_content')[0];
     specialElementHandlers = {
@@ -124,5 +126,4 @@
   }
 
 </script>
-  <button onclick="genPDF()" class="button">Run Code</button>
 @stop

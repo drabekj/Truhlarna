@@ -30,7 +30,6 @@
     }
 </style>
 
-<div id="pdf_content">
 <table border="1" align="center">
 
 <?php
@@ -127,7 +126,6 @@ for ($row = 0; $row <= $numOfRows; $row++) {
 }
 ?>
 </table>
-</div>
 
 
 
@@ -137,40 +135,4 @@ for ($row = 0; $row <= $numOfRows; $row++) {
             class="btn btn-primary btn-lg">Zpět</a>
     </div>
 </p>
-
-<script type="text/javascript" >
-
-  function genPDF(){
-    var pdf = new jsPDF('l', 'mm', [450, 410]);
-
-    source = $('#pdf_content')[0];
-    specialElementHandlers = {
-        '#bypassme': function (element, renderer) {
-           return true
-        }
-    };
-
-    margins = {
-      top: 80,
-      bottom: 60,
-      left: 10,
-      width: 700
-    };
-
-    pdf.fromHTML(
-    source, // HTML string or DOM elem ref.
-    margins.left, // x coord
-    margins.top, { // y coord
-        'width': margins.width, // max width of content on PDF
-        'elementHandlers': specialElementHandlers
-    },
-    function (dispose) {
-      // dispose: object with X, Y of the last line add to the PDF
-      //          this allow the insertion of new lines after html
-      pdf.save('odvadeci_vykaz.pdf');
-    }, margins);
-  }
-
-</script>
-  <button onclick="genPDF()" class="button">Run Code</button>
 @stop
