@@ -62,7 +62,9 @@ class Absencni_den extends Model
       $den = "0" . $den;
     $formatDatum = $Datum->rok . '-' . $Datum->mesic . '-' . $den;
 
-    $absDen = Absencni_den::where('Datum', $formatDatum)->first();
+    $absDen = Absencni_den::where('Datum', $formatDatum)
+    ->where('ID_Zam', $ID_Zam)
+    ->first();
 
     if ($Hodiny != ""){
       if (!$absDen)
