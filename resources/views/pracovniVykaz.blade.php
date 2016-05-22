@@ -29,7 +29,7 @@
     .textLonger{
         /*width has to 2times more than in .text*/
         width:10%;
-        background-color:#cccccc;
+        background-color:#eeeeee;
     }
 
     .firstRow{
@@ -39,13 +39,17 @@
     }
 
     .colorfull{
-         background-color:#cccccc;
+         background-color:#eeeeee;
+    }
+
+    .color_result{
+         background-color:#FDE3A7;
     }
 
     #space{
         padding:2em;
     }
-    
+
     #hod{
         z-index: -1;
     }
@@ -103,11 +107,11 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
                 echo "<td><input type='text' name='$row.$col'>" . "</td>";
             }
             else if ( $row == 12)
-                echo "<td>C.hod.úkol</td>";
+                echo "<td class='colorfull'>C.hod.úkol</td>";
             else if ( $row == 13)
-                echo "<td>Režie</td>";
+                echo "<td class='colorfull'>Režie</td>";
             else if ( $row == 14)
-                echo "<td>Celkem</td>";
+                echo "<td class='colorfull'>Celkem</td>";
 
         //naplneni hodnot do tabulky
       } elseif ($col != 0 && $row != 0) {
@@ -131,7 +135,12 @@ for ($row = 0; $row <= $numOfRows+1; $row++) {
                 $value = $pravyPanelData[$Datum->numOfDays+3][$row];
             }
             //hodiny z databaze
-            echo "<td>" . "<input type='text' name='$row.$col' value=$value></td>";
+            if ( $row == 14 && $col >= $Datum->numOfDays+3)
+              echo "<td class='color_result'>" . $value . "</td>";
+            else if ( $row > 11 || $col > $Datum->numOfDays )
+              echo "<td class='colorfull'>" . $value . "</td>";
+            else
+              echo "<td>" . "<input type='text' name='$row.$col' value=$value></td>";
             $counter++;
         }
     }
