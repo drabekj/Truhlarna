@@ -20,7 +20,7 @@ class RozcestiController extends Controller
     */
     public function __construct()
     {
-      // $this->middleware('auth');
+      $this->middleware('auth');
     }
 
     public function rozcesti()
@@ -48,7 +48,7 @@ class RozcestiController extends Controller
         // promenne: id, jmeno, prijmeni
         $Truhlar = Zamestnanec::getTruhlar($vykaz_data->username);
         //$Truhlar = Zamestnanec::getTruhlar($vykaz_data->ids);
-        
+
         // Ziskej mesic datumu z formulare na rozcesti
         $mesic = date("m",strtotime($vykaz_data->datumPracvykaz));
 
