@@ -32,6 +32,9 @@
     .col-md-4{
         width:100%;
     }
+    #padding{
+        height:10em;
+    }
 </style>
 
 <div id="pdf_content">
@@ -79,11 +82,13 @@
 
 <p>
     <div class = "col-md-4" align="center">
-            <a href="{{action('RozcestiController@rozcesti')}}"
+            <a href="rozcesti"
             class="btn btn-primary btn-lg">Zpět</a>
             <button onclick="myFunction()"
             class="btn btn-primary btn-lg">Uložit PDF</button>
     </div>
 </p>
+
+<div id="padding"></div>
 
 @stop
