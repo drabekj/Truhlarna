@@ -12,7 +12,8 @@ Build an IS (informatin system) for a Joinery to log the daily performance recor
 From all the information it should be easy to generat a monthly report (e.g. PDF) and assigned resources report for customer for specific product.
 
 ## App
-
+<img src="/promo_img/video_app_walkthrough.gif">
+<figcaption>Fig1. - Application walkthrough (Czech)</figcaption>
 
 ## License
 Copyright 2017 The Android Open Source Project, Inc.
