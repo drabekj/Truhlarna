@@ -1,26 +1,16 @@
-# Laravel PHP Framework
+# Truhlarna IS (Joinery Information System)
+This web application was a project for the CS course BI-SP1 (Software project 1) at Czech Technical University in Prague. The purpose of the course was to familiarize students with the process of creation a software project in a small team (of 4 people), emphasize the importance of documentation and introduce the basic principles of project management.
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+The project was ordered by real company (unfortunately can't disclose which).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+My role: project leader
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+## Task
+Build an IS (informatin system) for a Joinery to log the daily performance records of individual workers, so that the company could move prom current paper logs to unified system. The system should log who is working on what product for how many hours. In addition it should be able to log vacation, sick-days and national holiday.
+From all the information it should be easy to generat a monthly report (e.g. PDF) and assigned resources report for customer for specific product.
 
-## Official Documentation
+## App
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
 ## License
 
